@@ -6,10 +6,10 @@ using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace neo_raknet.Packet.MinecraftStruct
+using neo_raknet.Packet.MinecraftStruct;
+namespace neo_raknet.Packet.MinecraftStruct.Entity
 {
-	public class EntityData
+	public class Entity
 	{
 		public string EntityTypeId { get; protected set; }
 		public long EntityId { get; set; }
@@ -23,8 +23,6 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public bool IsOnGround { get; set; } = true;
 
 		public PlayerLocation LastSentPosition { get; set; }
-
-		public HealthManager HealthManager { get; set; }
 
 		public string NameTag { get; set; }
 
@@ -58,12 +56,10 @@ namespace neo_raknet.Packet.MinecraftStruct
 
 		public Entity(string entityTypeId, Level level)
 		{
-			EntityId = EntityManager.EntityIdUndefined;
-			Level = level;
+			EntityId = 0;//TODO: wait for complete 
 			EntityTypeId = entityTypeId;
 			KnownPosition = new PlayerLocation();
 			LastSentPosition = new PlayerLocation();
-			HealthManager = new HealthManager(this);
 		}
 
 		public Entity(EntityType entityTypeId, Level level) : this(entityTypeId.ToStringId(), level)

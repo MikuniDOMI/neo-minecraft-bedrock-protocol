@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace neo_raknet.Utils
+{
+	public class Cape : ICloneable
+	{
+		public string Id { get; set; }
+		public int ImageHeight { get; set; }
+		public int ImageWidth { get; set; }
+		public byte[] Data { get; set; }
+		public bool OnClassicSkin { get; set; }
+
+		public Cape()
+		{
+			Data = new byte[0];
+		}
+
+		public object Clone() => MemberwiseClone();
+	}
+}

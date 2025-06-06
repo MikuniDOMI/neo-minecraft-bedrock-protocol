@@ -1,4 +1,5 @@
-﻿using System;
+﻿using neo_raknet.Packet.MinecraftStruct.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -18,13 +19,13 @@ namespace neo_raknet.Packet.MinecraftStruct
         }
     }
 
-    public abstract class PlayerRecords : List<PlayerData>
+    public abstract class PlayerRecords : List<Player>
     {
         public PlayerRecords()
         {
         }
 
-        public PlayerRecords(IEnumerable<PlayerData> players) : base(players)
+        public PlayerRecords(IEnumerable<Player> players) : base(players)
         {
         }
     }
@@ -36,7 +37,7 @@ namespace neo_raknet.Packet.MinecraftStruct
         }
 
 
-        public PlayerAddRecords(IEnumerable<PlayerData> players) : base(players)
+        public PlayerAddRecords(IEnumerable<Player> players) : base(players)
         {
         }
     }
@@ -48,7 +49,7 @@ namespace neo_raknet.Packet.MinecraftStruct
         }
 
 
-        public PlayerRemoveRecords(IEnumerable<PlayerData> players) : base(players)
+        public PlayerRemoveRecords(IEnumerable<Player> players) : base(players)
         {
         }
     }

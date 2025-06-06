@@ -3,9 +3,9 @@ using neo_raknet.Packet;
 {
 public partial class McpeAnimate : Packet{
 
-		public int actionId; // = null;
-		public long runtimeEntityId; // = null;
-
+		public int   actionId; // = null;
+		public long  runtimeEntityId; // = null;
+		public float unknownFloat;
 		public McpeAnimate()
 		{
 			Id = 0x2c;
@@ -21,7 +21,10 @@ public partial class McpeAnimate : Packet{
 			WriteSignedVarInt(actionId);
 			WriteUnsignedVarLong(runtimeEntityId);
 
-			 
+			if (actionId == 0x80 || actionId == 0x81)
+			{
+				Write(unknownFloat);
+			}
 		}
 
 		 
@@ -36,7 +39,10 @@ public partial class McpeAnimate : Packet{
 			actionId = ReadSignedVarInt();
 			runtimeEntityId = ReadUnsignedVarLong();
 
-			    
+			if (actionId == 0x80 || actionId == 0x81)
+			{
+				unknownFloat = ReadFloat();
+			}
 		}
 
 		  

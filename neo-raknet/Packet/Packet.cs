@@ -3,6 +3,8 @@
 using Microsoft.IO;
 using neo_raknet.Packet.MinecraftPacket;
 using neo_raknet.Packet.MinecraftStruct;
+using neo_raknet.Packet.MinecraftStruct.Block;
+using neo_raknet.Packet.MinecraftStruct.Entity;
 using neo_raknet.Packet.MinecraftStruct.Item;
 using neo_raknet.Packet.MinecraftStruct.Metadata;
 using neo_raknet.Packet.MinecraftStruct.NBT;
@@ -542,7 +544,7 @@ namespace neo_raknet.Packet
 					records = new PlayerAddRecords();
 					for (int i = 0; i < count; i++)
 					{
-						var player = new PlayerData(null, null);
+						var player = new Player(null, null);
 						player.ClientUuid = ReadUUID();
 						player.EntityId = ReadSignedVarLong();
 						player.DisplayName = ReadString();
@@ -575,7 +577,7 @@ namespace neo_raknet.Packet
 					records = new PlayerRemoveRecords();
 					for (int i = 0; i < count; i++)
 					{
-						var player = new PlayerData(null, null);
+						var player = new Player(null, null);
 						player.ClientUuid = ReadUUID();
 						records.Add(player);
 					}
@@ -584,7 +586,7 @@ namespace neo_raknet.Packet
 
 			if (records is PlayerAddRecords)
 			{
-				foreach (PlayerData player in records)
+				foreach (Player player in records)
 				{
 					bool isVerified = ReadBool();
 
@@ -2807,7 +2809,7 @@ namespace neo_raknet.Packet
 							WriteVarInt(rec.Result.Count);
 							foreach (Item item in rec.Result)
 							{
-								item.RuntimeId = (int)BlockFactory.GetItemRuntimeId(item.Id, (byte)item.Metadata);
+								item.RuntimeId = 0;//TODO GetItemRuntimeId
 								Write(item, false);
 							}
 							Write(rec.Id);
@@ -2815,7 +2817,7 @@ namespace neo_raknet.Packet
 							WriteSignedVarInt(0); // priority
 							Write((byte)1); // recipe unlocking requirement 1 - always unlocked
 							WriteVarInt(UniqueId); // unique id
-							if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
+							//if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
 							break;
 						}
 					case ShapedRecipe shapedRecipe:
@@ -2837,7 +2839,7 @@ namespace neo_raknet.Packet
 							WriteVarInt(rec.Result.Count);
 							foreach (Item item in rec.Result)
 							{
-								item.RuntimeId = (int)BlockFactory.GetItemRuntimeId(item.Id, (byte)item.Metadata);
+								item.RuntimeId = 0;//TODO GetItemRuntimeId
 								Write(item, false);
 							}
 							Write(rec.Id);
@@ -2846,7 +2848,7 @@ namespace neo_raknet.Packet
 							Write(true);  // symmetric
 							Write((byte)1); // recipe unlocking requirement 1 - always unlocked
 							WriteVarInt(UniqueId); // unique id
-							if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
+							//if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
 							break;
 						}
 					case SmeltingRecipe smeltingRecipe:
@@ -2879,7 +2881,7 @@ namespace neo_raknet.Packet
 				}
 				UniqueId++;
 			}
-			RecipeManager.resultMapLocked = true;
+		//	RecipeManager.resultMapLocked = true;
 		}
 
 		public Recipes ReadRecipes()
@@ -2887,7 +2889,6 @@ namespace neo_raknet.Packet
 			var recipes = new Recipes();
 
 			int count = (int)ReadUnsignedVarInt();
-			Log.Warn($"[McpeCraftingData] Received {count} recipes");
 
 			for (int i = 0; i < count; i++)
 			{
@@ -2897,7 +2898,7 @@ namespace neo_raknet.Packet
 
 				if (recipeType < 0 /*|| len == 0*/)
 				{
-					Log.Error("Read void recipe");
+					Console.WriteLine("Read void recipe");
 					break;
 				}
 
@@ -2933,7 +2934,7 @@ namespace neo_raknet.Packet
 							recipe.UniqueId = ReadVarInt(); // unique id
 															//recipes.Add(recipe);
 															//Log.Error("Read shapeless recipe");
-							Log.Debug($"Shapeless: {recipe.Id} | {recipe.Block} | {ingrediensCount}  | {resultCount} | {recipe.UniqueId}");
+						
 							break;
 						}
 					case Shaped:
@@ -2975,7 +2976,7 @@ namespace neo_raknet.Packet
 							}
 							recipe.UniqueId = ReadVarInt(); // unique id
 							recipes.Add(recipe);
-							Log.Debug($"Shaped: {recipe.Id} | {recipe.Block} | {width} | {height} | {resultCount} | {recipe.UniqueId} | {symetric} | {unlockReq}");
+						
 							break;
 						}
 					case Furnace:
@@ -2989,7 +2990,6 @@ namespace neo_raknet.Packet
 							recipe.Result = result;
 							//recipes.Add(recipe);
 							//Log.Error("Read furnace recipe");
-							Log.Debug($"Furnace Input={id}, meta={""} Item={result.Id}, Meta={result.Metadata}");
 							break;
 						}
 					case FurnaceData:
@@ -3004,7 +3004,7 @@ namespace neo_raknet.Packet
 							recipe.Result = result;
 							//recipes.Add(recipe);
 							//Log.Error("Read smelting recipe");
-							Log.Debug($"Smelting Input={id}, meta={meta} Item={result.Id}, Meta={result.Metadata}");
+						
 							break;
 						}
 					case Multi:
@@ -3075,7 +3075,7 @@ namespace neo_raknet.Packet
 							recipe.Block = ReadString();
 							recipe.UniqueId = ReadVarInt();
 							//recipes.Add(recipe);
-							Log.Debug($"SmithingTrimRecipe: {recipe.RecipeId} | {recipe.Template} | {recipe.Input} | {recipe.Addition} | {recipe.Block} | {recipe.UniqueId}");
+						
 							break;
 						}
 					case SmithingTransform:
@@ -3089,17 +3089,17 @@ namespace neo_raknet.Packet
 							recipe.Block = ReadString(); // block?
 							recipe.UniqueId = ReadVarInt(); // unique id
 															//recipes.Add(recipe);
-							Log.Debug($"SmithingTransformRecipe: {recipe.RecipeId} | {recipe.Template} | {recipe.Input} | {recipe.Addition} | {recipe.Block} | {recipe.UniqueId}");
+							
 							break;
 						}
 					default:
-						Log.Error($"Read unknown recipe type: {recipeType}");
+						Console.WriteLine($"Read unknown recipe type: {recipeType}");
 						//ReadBytes(len);
 						break;
 				}
 			}
 
-			Log.Warn($"[McpeCraftingData] Done reading {count} recipes\n");
+			
 
 			return recipes;
 		}
@@ -3461,7 +3461,7 @@ namespace neo_raknet.Packet
 				}
 				catch (Exception e)
 				{
-					Log.Error($"Errror while reading map data for map={map}", e);
+					Console.WriteLine($"Errror while reading map data for map={map}", e);
 				}
 			}
 
@@ -4135,9 +4135,7 @@ namespace neo_raknet.Packet
 		{
 			Id = IsMcpe ? ReadVarInt() : ReadByte();
 		}
-
-		public abstract void PutPool();
-
+		
 		public static string HexDump(ReadOnlyMemory<byte> bytes, int bytesPerLine = 16, bool printLineCount = false)
 		{
 			return HexDump(bytes.Span, bytesPerLine, printLineCount);

@@ -7,10 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace neo_raknet.Packet.MinecraftStruct
+using neo_raknet.Packet.MinecraftStruct;
+using neo_raknet.Packet.MinecraftStruct.World;
+namespace neo_raknet.Packet.MinecraftStruct.Entity
 {
-    public class PlayerData : EntityData
+    public class Player : Entity
     {
 		public IPEndPoint EndPoint { get; private set; }
 
@@ -18,8 +19,6 @@ namespace neo_raknet.Packet.MinecraftStruct
 		private ChunkCoordinates _currentChunkPosition;
 
 		internal IInventory _openInventory;
-		public PlayerInventory Inventory { get; set; }
-		public ItemStackInventoryManager ItemStackInventoryManager { get; set; }
 
 		public PlayerLocation SpawnPosition { get; set; }
 		public bool IsSleeping { get; set; } = false;
@@ -42,31 +41,14 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public Skin Skin { get; set; }
 
 		public float MovementSpeed { get; set; } = 0.1f;
-		public ConcurrentDictionary<EffectType, Effect> Effects { get; set; } = new ConcurrentDictionary<EffectType, Effect>();
-
-		public HungerManager HungerManager { get; set; }
-		public ExperienceManager ExperienceManager { get; set; }
-
 		public bool IsFalling { get; set; }
 		public bool IsFlyingHorizontally { get; set; }
-		public AuthInputFlags lastAuthInputFlag { get; set; }
-
 		public Entity LastAttackTarget { get; set; }
+		
 
-		public List<Popup> Popups { get; set; } = new List<Popup>();
-
-		public Session Session { get; set; }
-
-		public DamageCalculator DamageCalculator { get; set; } = new DamageCalculator();
-
-		public TexturePackInfos PlayerPackData { get; set; } = new TexturePackInfos();
-		public ResourcePackInfos PlayerPackDataB { get; set; } = new ResourcePackInfos();
-		public Dictionary<string, PlayerPackMapData> PlayerPackMap = new Dictionary<string, PlayerPackMapData>();
-
-		public PlayerData(string entityTypeId, Level level) : base(entityTypeId, level)
+		public Player(string entityTypeId, Level level) : base(entityTypeId, level)
 		{
 		}
-
-		protected Form CurrentForm { get; set; } = null;
+		
 	}
 }

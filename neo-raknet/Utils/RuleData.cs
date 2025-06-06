@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace neo_raknet.Utils
+{
+	public class Rules : List<RuleData>
+	{
+	}
+
+	public class RuleData
+	{
+		public string Name { get; set; }
+		public bool Unknown1 { get; set; }
+		public bool Unknown2 { get; set; }
+
+		public override string ToString()
+		{
+			return $"Name: {Name}, Unknown1: {Unknown1}, Unknown2: {Unknown2}";
+		}
+	}
+}
