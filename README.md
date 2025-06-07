@@ -4,9 +4,9 @@
  <img src="https://raw.githubusercontent.com/MikuniDOMI/neo-minecraft-bedrock-protocol/refs/heads/master/img/logo.svg"  width="200" alt="logo">
 </div>
 
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/minecraft-bedrock-protocol.svg?style=social)](https://github.comMikuniDOMI/neo-minecraft-bedrock-protocol/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/yourusername/minecraft-bedrock-protocol.svg?style=social)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/network/members)
-[![GitHub Contributors](https://img.shields.io/github/contributors/yourusername/minecraft-bedrock-protocol.svg)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/graphs/contributors)
+[![GitHub Stars](https://img.shields.io/github/stars/MikuniDOMI/neo-minecraft-bedrock-protocol.svg?style=social)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/MikuniDOMI/neo-minecraft-bedrock-protocol.svg?style=social)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/network/members)
+[![GitHub Contributors](https://img.shields.io/github/contributors/MikuniDOMI/neo-minecraft-bedrock-protocol.svg)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/graphs/contributors)
 
 解析和构建 Minecraft Bedrock 协议库，支持最新Minecraft Bedrock 版本协议。
 
