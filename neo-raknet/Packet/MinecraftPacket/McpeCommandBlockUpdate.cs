@@ -1,10 +1,19 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet;
+using neo_raknet.Packet.MinecraftStruct;
+namespace neo_raknet.Packet.MinecraftPacket
 {
 public partial class McpeCommandBlockUpdate : Packet{
 
-		public bool isBlock; // = null;
-
+		public bool             isBlock; // = null;
+		public BlockCoordinates coordinates; // = null;
+		public uint             commandBlockMode; // = null;
+		public bool             isRedstoneMode; // = null;
+		public bool             isConditional; // = null;
+		public long             minecartEntityId; // = null;
+		public string           command; // = null;
+		public string           lastOutput; // = null;
+		public string           name; // = null;
+		public bool             shouldTrackOutput; // = null;
 		public McpeCommandBlockUpdate()
 		{
 			Id = 0x4e;
@@ -19,7 +28,22 @@ public partial class McpeCommandBlockUpdate : Packet{
 
 			Write(isBlock);
 
-			 
+			if (isBlock)
+			{
+				Write(coordinates);
+				WriteUnsignedVarInt(commandBlockMode);
+				Write(isRedstoneMode);
+				Write(isConditional);
+			}
+			else
+			{
+				WriteUnsignedVarLong(minecartEntityId);
+			}
+
+			Write(command);
+			Write(lastOutput);
+			Write(name);
+			Write(shouldTrackOutput);
 		}
 
 		 
@@ -33,7 +57,22 @@ public partial class McpeCommandBlockUpdate : Packet{
 
 			isBlock = ReadBool();
 
-			    
+			if (isBlock)
+			{
+				coordinates = ReadBlockCoordinates();
+				commandBlockMode = ReadUnsignedVarInt();
+				isRedstoneMode = ReadBool();
+				isConditional = ReadBool();
+			}
+			else
+			{
+				minecartEntityId = ReadUnsignedVarLong();
+			}
+
+			command = ReadString();
+			lastOutput = ReadString();
+			name = ReadString();
+			shouldTrackOutput = ReadBool();
 		}
 
 		  
@@ -42,8 +81,16 @@ public partial class McpeCommandBlockUpdate : Packet{
 		protected override void ResetPacket()
 		{
 			base.ResetPacket();
-
-			isBlock=default(bool);
+			coordinates = default;
+			commandBlockMode = default;
+			isRedstoneMode = default;
+			isConditional = default;
+			minecartEntityId = default;
+			command = default;
+			lastOutput = default;
+			name = default;
+			shouldTrackOutput = default;
+			isBlock =default(bool);
 		}
 
 	}

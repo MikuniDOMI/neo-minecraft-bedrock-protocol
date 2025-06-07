@@ -8,6 +8,7 @@ public partial class McpeSubChunkPacket : Packet{
 		public int                   dimension; // = null;
 		public BlockCoordinates      subchunkCoordinates; // = null;
 		public SubChunkEntryCommon[] entries;
+		
 		public McpeSubChunkPacket()
 		{
 			Id = 0xae;

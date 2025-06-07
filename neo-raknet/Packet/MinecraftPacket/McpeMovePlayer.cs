@@ -19,17 +19,17 @@ public partial class McpeMovePlayer : Packet{
 			Count = 5,
 		}
 
-		public long runtimeEntityId; // = null;
+		public long  runtimeEntityId; // = null;
 		public float x; // = null;
 		public float y; // = null;
 		public float z; // = null;
 		public float pitch; // = null;
 		public float yaw; // = null;
 		public float headYaw; // = null;
-		public byte mode; // = null;
-		public bool onGround; // = null;
-		public long otherRuntimeEntityId; // = null;
-
+		public byte  mode; // = null;
+		public bool  onGround; // = null;
+		public long  otherRuntimeEntityId; // = null;
+		public long  tick;
 		public McpeMovePlayer()
 		{
 			Id = 0x13;
@@ -52,8 +52,14 @@ public partial class McpeMovePlayer : Packet{
 			Write(mode);
 			Write(onGround);
 			WriteUnsignedVarLong(otherRuntimeEntityId);
+			if (mode == 2)
+			{
+				Write((int)0);
+				Write((int)0);
+			}
 
-			 
+			WriteUnsignedVarLong(tick);
+
 		}
 
 		 
@@ -75,8 +81,14 @@ public partial class McpeMovePlayer : Packet{
 			mode = ReadByte();
 			onGround = ReadBool();
 			otherRuntimeEntityId = ReadUnsignedVarLong();
+			if (mode == 2)
+			{
+				ReadInt();
+				ReadInt();
+			}
 
-			    
+			tick = ReadUnsignedVarLong();
+
 		}
 
 		  

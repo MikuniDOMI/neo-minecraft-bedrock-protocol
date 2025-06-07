@@ -1,5 +1,6 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet;
+using System.Numerics;
+namespace neo_raknet.Packet.MinecraftPacket
 {
 public partial class McpeInteract : Packet{
 		public enum Actions
@@ -12,8 +13,10 @@ public partial class McpeInteract : Packet{
 			OpenInventory = 6,
 		}
 
-		public byte actionId; // = null;
-		public long targetRuntimeEntityId; // = null;
+		public byte    actionId; // = null;
+		public long    targetRuntimeEntityId; // = null;
+		public Vector3 Position;
+		
 
 		public McpeInteract()
 		{
@@ -30,7 +33,11 @@ public partial class McpeInteract : Packet{
 			Write(actionId);
 			WriteUnsignedVarLong(targetRuntimeEntityId);
 
-			 
+			if (actionId == (int)Actions.MouseOver || actionId == (int)Actions.LeaveVehicle)
+			{
+				// TODO: Something useful with this value
+				Write(Position);
+			}
 		}
 
 		 
@@ -44,8 +51,12 @@ public partial class McpeInteract : Packet{
 
 			actionId = ReadByte();
 			targetRuntimeEntityId = ReadUnsignedVarLong();
+			if (actionId == (int)Actions.MouseOver || actionId == (int)Actions.LeaveVehicle)
+			{
+				// TODO: Something useful with this value
+				Position = ReadVector3();
+			}
 
-			    
 		}
 
 		  

@@ -3,8 +3,8 @@ using neo_raknet.Packet;
 {
 public partial class McpeRequestAbility : Packet{
 
-		public int ability; // = null;
-
+		public int    ability; // = null;
+		public object Value = false;
 		public McpeRequestAbility()
 		{
 			Id = 0xb8;
@@ -19,7 +19,24 @@ public partial class McpeRequestAbility : Packet{
 
 			WriteVarInt(ability);
 
-			 
+			switch (Value)
+			{
+				case bool boolean:
+				{
+					Write((byte)1);
+					Write(boolean);
+					Write(0f);
+					break;
+				}
+
+				case float floatingPoint:
+				{
+					Write((byte)2);
+					Write(false);
+					Write(floatingPoint);
+					break;
+				}
+			}
 		}
 
 		 
@@ -33,7 +50,19 @@ public partial class McpeRequestAbility : Packet{
 
 			ability = ReadVarInt();
 
-			    
+			var type = ReadByte();
+			var boolValue = ReadBool();
+			var floatValue = ReadFloat();
+
+			switch (type)
+			{
+				case 1:
+					Value = boolValue;
+					break;
+				case 2:
+					Value = floatValue;
+					break;
+			}
 		}
 
 		  

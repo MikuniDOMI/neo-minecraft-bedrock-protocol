@@ -3,8 +3,8 @@ using neo_raknet.Packet;
 {
 public partial class McpeClientCacheMissResponse : Packet{
 
-
-		public McpeClientCacheMissResponse()
+    public Dictionary<ulong, byte[]> blobs;
+        public McpeClientCacheMissResponse()
 		{
 			Id = 0x88;
 			IsMcpe = true;
@@ -27,11 +27,25 @@ public partial class McpeClientCacheMissResponse : Packet{
 		{
 			base.DecodePacket();
 
-			   
 
 
-			    
-		}
+
+            blobs = new Dictionary<ulong, byte[]>();
+            var count = ReadUnsignedVarInt();
+            for (int i = 0; i < count; i++)
+            {
+                ulong hash = ReadUlong();
+                byte[] blob = ReadByteArray();
+                if (blobs.ContainsKey(hash))
+                {
+                   continue;
+                }
+                else
+                {
+                    blobs.Add(hash, blob);
+                }
+            }
+        }
 
 		  
 		   

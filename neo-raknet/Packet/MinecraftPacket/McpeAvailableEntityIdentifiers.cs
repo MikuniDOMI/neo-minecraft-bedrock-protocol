@@ -1,5 +1,6 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet;
+using neo_raknet.Packet.MinecraftStruct.NBT;
+namespace neo_raknet.Packet.MinecraftPacket
 {
 public partial class McpeAvailableEntityIdentifiers : Packet{
 
