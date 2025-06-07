@@ -1,58 +1,46 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeTransfer : Packet
 {
-public partial class McpeTransfer : Packet{
+    public ushort port; // = null;
+    public bool   reload; // = null;
 
-		public string serverAddress; // = null;
-		public ushort port; // = null;
-		public bool reload; // = null;
+    public string serverAddress; // = null;
 
-		public McpeTransfer()
-		{
-			Id = 0x55;
-			IsMcpe = true;
-		}
+    public McpeTransfer()
+    {
+        Id = 0x55;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(serverAddress);
-			Write(port);
-			Write(reload);
+        Write(serverAddress);
+        Write(port);
+        Write(reload);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        serverAddress = ReadString();
+        port = ReadUshort();
+        reload = ReadBool();
+    }
 
-			serverAddress = ReadString();
-			port = ReadUshort();
-			reload = ReadBool();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			serverAddress=default(string);
-			port=default(ushort);
-			reload=default(bool);
-		}
-
-	}
+        serverAddress = default;
+        port = default;
+        reload = default;
+    }
 }

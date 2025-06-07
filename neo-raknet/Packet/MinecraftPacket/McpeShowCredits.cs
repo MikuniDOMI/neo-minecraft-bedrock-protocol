@@ -1,54 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeShowCredits : Packet
 {
-public partial class McpeShowCredits : Packet{
+    public long runtimeEntityId; // = null;
+    public int  status; // = null;
 
-		public long runtimeEntityId; // = null;
-		public int status; // = null;
+    public McpeShowCredits()
+    {
+        Id = 0x4b;
+        IsMcpe = true;
+    }
 
-		public McpeShowCredits()
-		{
-			Id = 0x4b;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteUnsignedVarLong(runtimeEntityId);
+        WriteSignedVarInt(status);
+    }
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			WriteSignedVarInt(status);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        runtimeEntityId = ReadUnsignedVarLong();
+        status = ReadSignedVarInt();
+    }
 
-			   
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			status = ReadSignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-			status=default(int);
-		}
-
-	}
+        runtimeEntityId = default;
+        status = default;
+    }
 }

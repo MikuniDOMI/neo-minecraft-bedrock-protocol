@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace neo_raknet.Packet.MinecraftStruct.Entity
+﻿namespace neo_raknet.Packet.MinecraftStruct.Entity
 {
 	public class ScoreEntries : List<ScoreEntry>
 	{

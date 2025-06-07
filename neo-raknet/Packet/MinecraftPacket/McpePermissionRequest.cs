@@ -1,55 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePermissionRequest : Packet
 {
-public partial class McpePermissionRequest : Packet{
+    public short flagss; // = null;
+    public uint  permission; // = null;
 
-		public long runtimeEntityId; // = null;
-		public uint permission; // = null;
-		public short flagss; // = null;
+    public long runtimeEntityId; // = null;
 
-		public McpePermissionRequest()
-		{
-			Id = 0xb9;
-			IsMcpe = true;
-		}
+    public McpePermissionRequest()
+    {
+        Id = 0xb9;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
+    }
 
-			 
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        runtimeEntityId = ReadLong();
+        permission = ReadUnsignedVarInt();
+        flagss = ReadShort();
+    }
 
-			   
 
-			runtimeEntityId = ReadLong();
-			permission = ReadUnsignedVarInt();
-			flagss = ReadShort();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId = default(long);
-			permission = default(int);
-			flagss = default(short);
-
-		}
-
-	}
+        runtimeEntityId = default;
+        permission = default(int);
+        flagss = default;
+    }
 }

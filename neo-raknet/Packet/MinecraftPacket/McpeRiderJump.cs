@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeRiderJump : Packet
 {
-public partial class McpeRiderJump : Packet{
+    public int unknown; // = null;
 
-		public int unknown; // = null;
+    public McpeRiderJump()
+    {
+        Id = 0x14;
+        IsMcpe = true;
+    }
 
-		public McpeRiderJump()
-		{
-			Id = 0x14;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarInt(unknown);
+    }
 
-			WriteSignedVarInt(unknown);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        unknown = ReadSignedVarInt();
+    }
 
-			   
 
-			unknown = ReadSignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			unknown=default(int);
-		}
-
-	}
+        unknown = default;
+    }
 }

@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Utils;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeBiomeDefinitionList : Packet
 {
-public partial class McpeBiomeDefinitionList : Packet{
+    public Biome[] biomes; // = null;
 
-		public Biome[] biomes; // = null;
+    public McpeBiomeDefinitionList()
+    {
+        Id = 0x7a;
+        IsMcpe = true;
+    }
 
-		public McpeBiomeDefinitionList()
-		{
-			Id = 0x7a;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(biomes);
+    }
 
-			Write(biomes);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        biomes = ReadBiomes();
+    }
 
-			   
 
-			biomes = ReadBiomes();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			biomes = default(Biome[]);
-		}
-
-	}
+        biomes = default;
+    }
 }

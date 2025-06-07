@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeChunkRadiusUpdate : Packet
 {
-public partial class McpeChunkRadiusUpdate : Packet{
+    public int chunkRadius; // = null;
 
-		public int chunkRadius; // = null;
+    public McpeChunkRadiusUpdate()
+    {
+        Id = 0x46;
+        IsMcpe = true;
+    }
 
-		public McpeChunkRadiusUpdate()
-		{
-			Id = 0x46;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarInt(chunkRadius);
+    }
 
-			WriteSignedVarInt(chunkRadius);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        chunkRadius = ReadSignedVarInt();
+    }
 
-			   
 
-			chunkRadius = ReadSignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			chunkRadius=default(int);
-		}
-
-	}
+        chunkRadius = default;
+    }
 }

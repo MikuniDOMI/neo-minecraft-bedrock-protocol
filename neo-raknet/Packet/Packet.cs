@@ -10,24 +10,15 @@ using neo_raknet.Packet.MinecraftStruct.Metadata;
 using neo_raknet.Packet.MinecraftStruct.NBT;
 using neo_raknet.Utils;
 using Newtonsoft.Json;
-using System;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading;
-using System.Transactions;
-using System.Xml;
 using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
 using Transaction = neo_raknet.Utils.Transaction;
 
@@ -36,7 +27,7 @@ namespace neo_raknet.Packet
 {
 	public abstract partial class Packet
 	{
-	
+
 
 		private byte[] _encodedMessage;
 
@@ -1771,7 +1762,9 @@ namespace neo_raknet.Packet
 		private const int ShieldId = 355;
 		public void Write(Item stack, bool writeUniqueId = true)
 		{
-			if (stack == null || stack.Id == 0 || !ItemFactory.Translator.TryGetNetworkId(stack.Id, stack.Metadata, out var netData))
+			stack = new ItemAir();
+			var netData = new TranslatedItem(0, 0);
+			if (stack == null || stack.Id == 0)
 			{
 				WriteSignedVarInt(0);
 				return;
@@ -1837,9 +1830,9 @@ namespace neo_raknet.Packet
 
 			short count = (short)ReadShort();
 			var metadata = ReadUnsignedVarInt();
-			var translated = ItemFactory.Translator.FromNetworkId(id, (short)metadata);
+		
 
-			Item stack = ItemFactory.GetItem((short)translated.Id, translated.Meta, count);
+			Item stack = new ItemAir();
 
 			if (readUniqueId)
 			{
@@ -2817,7 +2810,7 @@ namespace neo_raknet.Packet
 							WriteSignedVarInt(0); // priority
 							Write((byte)1); // recipe unlocking requirement 1 - always unlocked
 							WriteVarInt(UniqueId); // unique id
-							//if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
+												   //if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
 							break;
 						}
 					case ShapedRecipe shapedRecipe:
@@ -2848,7 +2841,7 @@ namespace neo_raknet.Packet
 							Write(true);  // symmetric
 							Write((byte)1); // recipe unlocking requirement 1 - always unlocked
 							WriteVarInt(UniqueId); // unique id
-							//if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
+												   //if (!RecipeManager.resultMapLocked) { RecipeManager.resultMap.Add(UniqueId, rec.Result[0]); }
 							break;
 						}
 					case SmeltingRecipe smeltingRecipe:
@@ -2881,7 +2874,7 @@ namespace neo_raknet.Packet
 				}
 				UniqueId++;
 			}
-		//	RecipeManager.resultMapLocked = true;
+			//	RecipeManager.resultMapLocked = true;
 		}
 
 		public Recipes ReadRecipes()
@@ -2934,7 +2927,7 @@ namespace neo_raknet.Packet
 							recipe.UniqueId = ReadVarInt(); // unique id
 															//recipes.Add(recipe);
 															//Log.Error("Read shapeless recipe");
-						
+
 							break;
 						}
 					case Shaped:
@@ -2976,7 +2969,7 @@ namespace neo_raknet.Packet
 							}
 							recipe.UniqueId = ReadVarInt(); // unique id
 							recipes.Add(recipe);
-						
+
 							break;
 						}
 					case Furnace:
@@ -3004,7 +2997,7 @@ namespace neo_raknet.Packet
 							recipe.Result = result;
 							//recipes.Add(recipe);
 							//Log.Error("Read smelting recipe");
-						
+
 							break;
 						}
 					case Multi:
@@ -3075,7 +3068,7 @@ namespace neo_raknet.Packet
 							recipe.Block = ReadString();
 							recipe.UniqueId = ReadVarInt();
 							//recipes.Add(recipe);
-						
+
 							break;
 						}
 					case SmithingTransform:
@@ -3089,7 +3082,7 @@ namespace neo_raknet.Packet
 							recipe.Block = ReadString(); // block?
 							recipe.UniqueId = ReadVarInt(); // unique id
 															//recipes.Add(recipe);
-							
+
 							break;
 						}
 					default:
@@ -3099,7 +3092,7 @@ namespace neo_raknet.Packet
 				}
 			}
 
-			
+
 
 			return recipes;
 		}
@@ -3113,7 +3106,7 @@ namespace neo_raknet.Packet
 				return;
 			}
 			Write(true);
-			var translated = ItemFactory.Translator.ToNetworkId(stack.Id, stack.Metadata);
+			var translated = new TranslatedItem(0,0);//TODO: need To Complete
 			if (translated.Id != stack.Id)
 			{
 				Write((short)translated.Id);    // item is item
@@ -3436,7 +3429,7 @@ namespace neo_raknet.Packet
 				}
 				catch (Exception e)
 				{
-					
+
 				}
 			}
 
@@ -4135,7 +4128,7 @@ namespace neo_raknet.Packet
 		{
 			Id = IsMcpe ? ReadVarInt() : ReadByte();
 		}
-		
+
 		public static string HexDump(ReadOnlyMemory<byte> bytes, int bytesPerLine = 16, bool printLineCount = false)
 		{
 			return HexDump(bytes.Span, bytesPerLine, printLineCount);

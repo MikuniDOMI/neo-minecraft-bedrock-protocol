@@ -1,75 +1,62 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeClientCacheBlobStatus : Packet
 {
-public partial class McpeClientCacheBlobStatus : Packet{
-    public ulong[] hashMisses; // = null;
     public ulong[] hashHits; // = null;
+    public ulong[] hashMisses; // = null;
 
-        public McpeClientCacheBlobStatus()
-		{
-			Id = 0x87;
-			IsMcpe = true;
-		}
+    public McpeClientCacheBlobStatus()
+    {
+        Id = 0x87;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
-
-
-            WriteUnsignedVarInt((uint)hashMisses.Length);
-            WriteUnsignedVarInt((uint)hashHits.Length);
-            WriteSpecial(hashMisses);
-            WriteSpecial(hashHits);
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
 
+        WriteUnsignedVarInt((uint)hashMisses.Length);
+        WriteUnsignedVarInt((uint)hashHits.Length);
+        WriteSpecial(hashMisses);
+        WriteSpecial(hashHits);
+    }
 
-        }
-        public void WriteSpecial(ulong[] values)
+    public void WriteSpecial(ulong[] values)
+    {
+        if (values == null) return;
+
+        if (values.Length == 0) return;
+        for (var i = 0; i < values.Length; i++)
         {
-            if (values == null) return;
-
-            if (values.Length == 0) return;
-            for (int i = 0; i < values.Length; i++)
-            {
-                ulong val = values[i];
-                Write(val);
-            }
+            var val = values[i];
+            Write(val);
         }
+    }
 
-        public ulong[] ReadUlongsSpecial(uint len)
-        {
-            var values = new ulong[len];
-            for (int i = 0; i < values.Length; i++)
-            {
-                values[i] = ReadUlong();
-            }
-            return values;
-        }
+    public ulong[] ReadUlongsSpecial(uint len)
+    {
+        var values = new ulong[len];
+        for (var i = 0; i < values.Length; i++) values[i] = ReadUlong();
+        return values;
+    }
 
 
-
-        protected override void DecodePacket()
-		{
-			base.DecodePacket();
-
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
 
-            var lenMisses = ReadUnsignedVarInt();
-            var lenHits = ReadUnsignedVarInt();
+        var lenMisses = ReadUnsignedVarInt();
+        var lenHits = ReadUnsignedVarInt();
 
-            hashMisses = ReadUlongsSpecial(lenMisses);
-            hashHits = ReadUlongsSpecial(lenHits);
+        hashMisses = ReadUlongsSpecial(lenMisses);
+        hashHits = ReadUlongsSpecial(lenHits);
+    }
 
-        }
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-		}
-
-	}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+    }
 }

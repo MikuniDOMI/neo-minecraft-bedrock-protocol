@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Utils;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeItemStackResponse : Packet
 {
-public partial class McpeItemStackResponse : Packet{
+    public ItemStackResponses responses; // = null;
 
-		public ItemStackResponses responses; // = null;
+    public McpeItemStackResponse()
+    {
+        Id = 0x94;
+        IsMcpe = true;
+    }
 
-		public McpeItemStackResponse()
-		{
-			Id = 0x94;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(responses);
+    }
 
-			Write(responses);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        responses = ReadItemStackResponses();
+    }
 
-			   
 
-			responses = ReadItemStackResponses();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			responses=default(ItemStackResponses);
-		}
-
-	}
+        responses = default(ItemStackResponses);
+    }
 }

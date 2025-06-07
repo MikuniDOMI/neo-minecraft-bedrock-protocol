@@ -1,71 +1,60 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeNetworkSettings : Packet
 {
-public partial class McpeNetworkSettings : Packet{
-		public enum Compression
-		{
-			Nothing = 0,
-			Everything = 1,
-		}
+    public bool  clientThrottleEnabled; // = null;
+    public float clientThrottleScalar; // = null;
+    public byte  clientThrottleThreshold; // = null;
+    public short compressionAlgorithm; // = null;
 
-		public short compressionThreshold; // = null;
-		public short compressionAlgorithm; // = null;
-		public bool clientThrottleEnabled; // = null;
-		public byte clientThrottleThreshold; // = null;
-		public float clientThrottleScalar; // = null;
+    public short compressionThreshold; // = null;
 
-		public McpeNetworkSettings()
-		{
-			Id = 0x8f;
-			IsMcpe = true;
-		}
+    public enum Compression
+    {
+        Nothing    = 0,
+        Everything = 1
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    public McpeNetworkSettings()
+    {
+        Id = 0x8f;
+        IsMcpe = true;
+    }
 
-			 
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			Write(compressionThreshold);
-			Write(compressionAlgorithm);
-			Write(clientThrottleEnabled);
-			Write(clientThrottleThreshold);
-			Write(clientThrottleScalar);
 
-			 
-		}
+        Write(compressionThreshold);
+        Write(compressionAlgorithm);
+        Write(clientThrottleEnabled);
+        Write(clientThrottleThreshold);
+        Write(clientThrottleScalar);
+    }
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			   
 
-			compressionThreshold = ReadShort();
-			compressionAlgorithm = ReadShort();
-			clientThrottleEnabled = ReadBool();
-			clientThrottleThreshold = ReadByte();
-			clientThrottleScalar = ReadFloat();
+        compressionThreshold = ReadShort();
+        compressionAlgorithm = ReadShort();
+        clientThrottleEnabled = ReadBool();
+        clientThrottleThreshold = ReadByte();
+        clientThrottleScalar = ReadFloat();
+    }
 
-			    
-		}
 
-		  
-		   
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			compressionThreshold=default(short);
-			compressionAlgorithm=default(short);
-			clientThrottleEnabled=default(bool);
-			clientThrottleThreshold=default(byte);
-			clientThrottleScalar=default(float);
-		}
-
-	}
+        compressionThreshold = default;
+        compressionAlgorithm = default;
+        clientThrottleEnabled = default;
+        clientThrottleThreshold = default;
+        clientThrottleScalar = default;
+    }
 }

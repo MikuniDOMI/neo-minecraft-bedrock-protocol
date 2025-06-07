@@ -23,8 +23,6 @@
 
 #endregion
 
-using System.IO;
-
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 {
 	public class MetadataShort : MetadataEntry

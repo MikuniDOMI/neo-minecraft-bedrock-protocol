@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace neo_raknet.Utils
+﻿namespace neo_raknet.Utils
 {
 	public class pixelList
 	{
@@ -12,7 +6,7 @@ namespace neo_raknet.Utils
 	}
 	public class pixelsData
 	{
-		public uint  pixel;
+		public uint pixel;
 		public short index;
 	}
 }

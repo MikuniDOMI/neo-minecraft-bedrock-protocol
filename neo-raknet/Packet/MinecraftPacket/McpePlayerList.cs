@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePlayerList : Packet
 {
-public partial class McpePlayerList : Packet{
+    public PlayerRecords records; // = null;
 
-		public PlayerRecords records; // = null;
+    public McpePlayerList()
+    {
+        Id = 0x3f;
+        IsMcpe = true;
+    }
 
-		public McpePlayerList()
-		{
-			Id = 0x3f;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(records);
+    }
 
-			Write(records);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        records = ReadPlayerRecords();
+    }
 
-			   
 
-			records = ReadPlayerRecords();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			records=default(PlayerRecords);
-		}
-
-	}
+        records = default(PlayerRecords);
+    }
 }

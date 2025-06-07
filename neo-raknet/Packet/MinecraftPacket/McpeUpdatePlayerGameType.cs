@@ -1,46 +1,27 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeUpdatePlayerGameType : Packet
 {
-public partial class McpeUpdatePlayerGameType : Packet{
+    public McpeUpdatePlayerGameType()
+    {
+        Id = 0x97;
+        IsMcpe = true;
+    }
+
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
+    }
 
 
-		public McpeUpdatePlayerGameType()
-		{
-			Id = 0x97;
-			IsMcpe = true;
-		}
-
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
-
-			 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
+    }
 
 
-			 
-		}
-
-		 
-		 
-
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
-
-			   
-
-
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-		}
-
-	}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+    }
 }

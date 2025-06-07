@@ -1,12 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace neo_raknet.Utils
 {
@@ -24,7 +19,9 @@ namespace neo_raknet.Utils
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
+#pragma warning disable CS8604 // 引用类型参数可能为 null。
 			return IPAddress.Parse((string)reader.Value);
+#pragma warning restore CS8604 // 引用类型参数可能为 null。
 		}
 	}
 

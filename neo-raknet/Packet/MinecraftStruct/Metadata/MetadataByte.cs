@@ -1,6 +1,3 @@
-
-using System.IO;
-
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 {
 	public class MetadataByte : MetadataEntry
@@ -28,7 +25,7 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 
 		public MetadataByte(bool value)
 		{
-			Value = (byte) (value ? 1 : 0);
+			Value = (byte)(value ? 1 : 0);
 		}
 
 		public MetadataByte(byte value)

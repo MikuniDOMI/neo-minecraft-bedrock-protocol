@@ -23,9 +23,6 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Runtime.CompilerServices;
 
 
@@ -39,25 +36,25 @@ namespace neo_raknet.Utils
 		private static uint EncodeZigZag32(int n)
 		{
 			// Note:  the right-shift must be arithmetic
-			return (uint) (n << 1 ^ n >> 31);
+			return (uint)(n << 1 ^ n >> 31);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static int DecodeZigZag32(uint n)
 		{
-			return (int) (n >> 1) ^ -(int) (n & 1);
+			return (int)(n >> 1) ^ -(int)(n & 1);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static ulong EncodeZigZag64(long n)
 		{
-			return (ulong) (n << 1 ^ n >> 63);
+			return (ulong)(n << 1 ^ n >> 63);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static long DecodeZigZag64(ulong n)
 		{
-			return (long) (n >> 1) ^ -(long) (n & 1);
+			return (long)(n >> 1) ^ -(long)(n & 1);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -72,7 +69,7 @@ namespace neo_raknet.Utils
 				b0 = buf.ReadByte(); // -1 if EOS
 				if (b0 < 0) throw new EndOfStreamException("Not enough bytes for VarInt");
 
-				result |= (uint) (b0 & 0x7f) << j++ * 7;
+				result |= (uint)(b0 & 0x7f) << j++ * 7;
 
 				if (j > maxSize)
 				{
@@ -95,10 +92,10 @@ namespace neo_raknet.Utils
 			do
 			{
 				b0 = buf.ReadByte(); // -1 if EOS
-				bytes.Add((byte) b0);
+				bytes.Add((byte)b0);
 				if (b0 < 0) throw new EndOfStreamException("Not enough bytes for VarInt");
 
-				result |= (ulong) (b0 & 0x7f) << j++ * 7;
+				result |= (ulong)(b0 & 0x7f) << j++ * 7;
 
 				if (j > maxSize)
 				{
@@ -108,7 +105,7 @@ namespace neo_raknet.Utils
 
 			byte[] byteArray = bytes.ToArray();
 
-			if (printBytes) Console.WriteLine($"Long bytes: {Packet.HexDump(byteArray)} ");
+			if (printBytes) Console.WriteLine($"Long bytes: {Packet.Packet.HexDump(byteArray)} ");
 
 			return result;
 		}
@@ -118,11 +115,11 @@ namespace neo_raknet.Utils
 		{
 			while ((value & -128) != 0)
 			{
-				buf.WriteByte((byte) (value & 0x7F | 0x80));
+				buf.WriteByte((byte)(value & 0x7F | 0x80));
 				value >>= 7;
 			}
 
-			buf.WriteByte((byte) value);
+			buf.WriteByte((byte)value);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -130,11 +127,11 @@ namespace neo_raknet.Utils
 		{
 			while ((value & 0xFFFFFFFFFFFFFF80) != 0)
 			{
-				buf.WriteByte((byte) (value & 0x7F | 0x80));
+				buf.WriteByte((byte)(value & 0x7F | 0x80));
 				value >>= 7;
 			}
 
-			buf.WriteByte((byte) value);
+			buf.WriteByte((byte)value);
 		}
 
 		// Int
@@ -142,13 +139,13 @@ namespace neo_raknet.Utils
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void WriteInt32(Stream stream, int value)
 		{
-			WriteRawVarInt32(stream, (uint) value);
+			WriteRawVarInt32(stream, (uint)value);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static int ReadInt32(Stream stream)
 		{
-			return (int) ReadRawVarInt32(stream, 5);
+			return (int)ReadRawVarInt32(stream, 5);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -180,13 +177,13 @@ namespace neo_raknet.Utils
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void WriteInt64(Stream stream, long value)
 		{
-			WriteRawVarInt64(stream, (ulong) value);
+			WriteRawVarInt64(stream, (ulong)value);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static long ReadInt64(Stream stream, bool printBytes = false)
 		{
-			return (long) ReadRawVarInt64(stream, 10, printBytes);
+			return (long)ReadRawVarInt64(stream, 10, printBytes);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

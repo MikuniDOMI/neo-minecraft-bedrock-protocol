@@ -1,62 +1,52 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetSpawnPosition : Packet
 {
-public partial class McpeSetSpawnPosition : Packet{
+    public BlockCoordinates coordinates; // = null;
+    public int              dimension; // = null;
 
-		public int spawnType; // = null;
-		public BlockCoordinates coordinates; // = null;
-		public int dimension; // = null;
-		public BlockCoordinates unknownCoordinates; // = null;
+    public int              spawnType; // = null;
+    public BlockCoordinates unknownCoordinates; // = null;
 
-		public McpeSetSpawnPosition()
-		{
-			Id = 0x2b;
-			IsMcpe = true;
-		}
+    public McpeSetSpawnPosition()
+    {
+        Id = 0x2b;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteSignedVarInt(spawnType);
-			Write(coordinates);
-			WriteSignedVarInt(dimension);
-			Write(unknownCoordinates);
+        WriteSignedVarInt(spawnType);
+        Write(coordinates);
+        WriteSignedVarInt(dimension);
+        Write(unknownCoordinates);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        spawnType = ReadSignedVarInt();
+        coordinates = ReadBlockCoordinates();
+        dimension = ReadSignedVarInt();
+        unknownCoordinates = ReadBlockCoordinates();
+    }
 
-			spawnType = ReadSignedVarInt();
-			coordinates = ReadBlockCoordinates();
-			dimension = ReadSignedVarInt();
-			unknownCoordinates = ReadBlockCoordinates();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			spawnType=default(int);
-			coordinates=default(BlockCoordinates);
-			dimension=default(int);
-			unknownCoordinates=default(BlockCoordinates);
-		}
-
-	}
+        spawnType = default;
+        coordinates = default(BlockCoordinates);
+        dimension = default;
+        unknownCoordinates = default(BlockCoordinates);
+    }
 }

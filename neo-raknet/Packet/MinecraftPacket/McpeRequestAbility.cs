@@ -1,79 +1,71 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeRequestAbility : Packet
 {
-public partial class McpeRequestAbility : Packet{
+    public int    ability; // = null;
+    public object Value = false;
 
-		public int    ability; // = null;
-		public object Value = false;
-		public McpeRequestAbility()
-		{
-			Id = 0xb8;
-			IsMcpe = true;
-		}
+    public McpeRequestAbility()
+    {
+        Id = 0xb8;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteVarInt(ability);
+        WriteVarInt(ability);
 
-			switch (Value)
-			{
-				case bool boolean:
-				{
-					Write((byte)1);
-					Write(boolean);
-					Write(0f);
-					break;
-				}
+        switch (Value)
+        {
+            case bool boolean:
+            {
+                Write((byte)1);
+                Write(boolean);
+                Write(0f);
+                break;
+            }
 
-				case float floatingPoint:
-				{
-					Write((byte)2);
-					Write(false);
-					Write(floatingPoint);
-					break;
-				}
-			}
-		}
+            case float floatingPoint:
+            {
+                Write((byte)2);
+                Write(false);
+                Write(floatingPoint);
+                break;
+            }
+        }
+    }
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			   
 
-			ability = ReadVarInt();
+        ability = ReadVarInt();
 
-			var type = ReadByte();
-			var boolValue = ReadBool();
-			var floatValue = ReadFloat();
+        var type = ReadByte();
+        var boolValue = ReadBool();
+        var floatValue = ReadFloat();
 
-			switch (type)
-			{
-				case 1:
-					Value = boolValue;
-					break;
-				case 2:
-					Value = floatValue;
-					break;
-			}
-		}
+        switch (type)
+        {
+            case 1:
+                Value = boolValue;
+                break;
+            case 2:
+                Value = floatValue;
+                break;
+        }
+    }
 
-		  
-		   
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			ability=default(int);
-		}
-
-	}
+        ability = default;
+    }
 }

@@ -1,70 +1,59 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Utils;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeCommandRequest : Packet
 {
-public partial class McpeCommandRequest : Packet{
+    public string command; // = null;
+    public uint   commandType; // = null;
+    public bool   isinternal; // = null;
+    public string requestId; // = null;
+    public UUID   unknownUuid; // = null;
+    public int    version; // = null;
 
-		public string command; // = null;
-		public uint commandType; // = null;
-		public UUID unknownUuid; // = null;
-		public string requestId; // = null;
-		public bool isinternal; // = null;
-		public int version; // = null;
+    public McpeCommandRequest()
+    {
+        Id = 0x4d;
+        IsMcpe = true;
+    }
 
-		public McpeCommandRequest()
-		{
-			Id = 0x4d;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(command);
+        WriteUnsignedVarInt(commandType);
+        Write(unknownUuid);
+        Write(requestId);
+        Write(isinternal);
+        WriteSignedVarInt(version);
+    }
 
-			Write(command);
-			WriteUnsignedVarInt(commandType);
-			Write(unknownUuid);
-			Write(requestId);
-			Write(isinternal);
-			WriteSignedVarInt(version);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        command = ReadString();
+        commandType = ReadUnsignedVarInt();
+        unknownUuid = ReadUUID();
+        requestId = ReadString();
+        isinternal = ReadBool();
+        version = ReadSignedVarInt();
+    }
 
-			   
 
-			command = ReadString();
-			commandType = ReadUnsignedVarInt();
-			unknownUuid = ReadUUID();
-			requestId = ReadString();
-			isinternal = ReadBool();
-			version = ReadSignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			command=default(string);
-			commandType=default(uint);
-			unknownUuid=default(UUID);
-			requestId=default(string);
-			isinternal=default(bool);
-			version=default(int);
-		}
-
-	}
+        command = default;
+        commandType = default;
+        unknownUuid = default(UUID);
+        requestId = default;
+        isinternal = default;
+        version = default;
+    }
 }

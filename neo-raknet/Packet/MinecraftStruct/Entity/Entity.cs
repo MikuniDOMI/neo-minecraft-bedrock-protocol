@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Concurrent;
 using System.Numerics;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using neo_raknet.Packet.MinecraftStruct;
 namespace neo_raknet.Packet.MinecraftStruct.Entity
 {
 	public class Entity

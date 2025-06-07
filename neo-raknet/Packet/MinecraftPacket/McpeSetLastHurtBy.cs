@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetLastHurtBy : Packet
 {
-public partial class McpeSetLastHurtBy : Packet{
+    public int unknown; // = null;
 
-		public int unknown; // = null;
+    public McpeSetLastHurtBy()
+    {
+        Id = 0x60;
+        IsMcpe = true;
+    }
 
-		public McpeSetLastHurtBy()
-		{
-			Id = 0x60;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteVarInt(unknown);
+    }
 
-			WriteVarInt(unknown);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        unknown = ReadVarInt();
+    }
 
-			   
 
-			unknown = ReadVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			unknown=default(int);
-		}
-
-	}
+        unknown = default;
+    }
 }

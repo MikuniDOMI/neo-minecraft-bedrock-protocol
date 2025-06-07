@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace neo_raknet.Server
+﻿namespace neo_raknet.Server
 {
-    internal class RakServerSession
-    {
-    }
+	internal class RakServerSession
+	{
+	}
 }

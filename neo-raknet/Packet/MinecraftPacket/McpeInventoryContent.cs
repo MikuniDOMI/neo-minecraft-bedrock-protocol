@@ -1,62 +1,53 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Item;
+using neo_raknet.Utils;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeInventoryContent : Packet
 {
-public partial class McpeInventoryContent : Packet{
+    public FullContainerName ContainerName = new FullContainerName();
+    public ItemStacks        input; // = null;
 
-		public uint inventoryId; // = null;
-		public ItemStacks input; // = null;
-		public FullContainerName ContainerName = new FullContainerName();
-		public Item storageItem; // = null;
+    public uint inventoryId; // = null;
+    public Item storageItem; // = null;
 
-		public McpeInventoryContent()
-		{
-			Id = 0x31;
-			IsMcpe = true;
-		}
+    public McpeInventoryContent()
+    {
+        Id = 0x31;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarInt(inventoryId);
-			Write(input);
-			Write(ContainerName);
-			Write(storageItem);
+        WriteUnsignedVarInt(inventoryId);
+        Write(input);
+        Write(ContainerName);
+        Write(storageItem);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        inventoryId = ReadUnsignedVarInt();
+        input = ReadItemStacks();
+        ContainerName = readFullContainerName();
+        storageItem = ReadItem();
+    }
 
-			inventoryId = ReadUnsignedVarInt();
-			input = ReadItemStacks();
-			ContainerName = readFullContainerName();
-			storageItem = ReadItem();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			inventoryId=default(uint);
-			input=default(ItemStacks);
-			storageItem=default(Item);
-			ContainerName=default(FullContainerName);
-		}
-
-	}
+        inventoryId = default;
+        input = default(ItemStacks);
+        storageItem = default(Item);
+        ContainerName = default(FullContainerName);
+    }
 }

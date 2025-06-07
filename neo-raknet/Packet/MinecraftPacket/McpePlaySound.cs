@@ -1,62 +1,52 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePlaySound : Packet
 {
-public partial class McpePlaySound : Packet{
+    public BlockCoordinates coordinates; // = null;
 
-		public string name; // = null;
-		public BlockCoordinates coordinates; // = null;
-		public float volume; // = null;
-		public float pitch; // = null;
+    public string name; // = null;
+    public float  pitch; // = null;
+    public float  volume; // = null;
 
-		public McpePlaySound()
-		{
-			Id = 0x56;
-			IsMcpe = true;
-		}
+    public McpePlaySound()
+    {
+        Id = 0x56;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(name);
-			Write(coordinates);
-			Write(volume);
-			Write(pitch);
+        Write(name);
+        Write(coordinates);
+        Write(volume);
+        Write(pitch);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        name = ReadString();
+        coordinates = ReadBlockCoordinates();
+        volume = ReadFloat();
+        pitch = ReadFloat();
+    }
 
-			name = ReadString();
-			coordinates = ReadBlockCoordinates();
-			volume = ReadFloat();
-			pitch = ReadFloat();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			name=default(string);
-			coordinates=default(BlockCoordinates);
-			volume=default(float);
-			pitch=default(float);
-		}
-
-	}
+        name = default;
+        coordinates = default(BlockCoordinates);
+        volume = default;
+        pitch = default;
+    }
 }

@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeShowProfile : Packet
 {
-public partial class McpeShowProfile : Packet{
+    public string xuid; // = null;
 
-		public string xuid; // = null;
+    public McpeShowProfile()
+    {
+        Id = 0x68;
+        IsMcpe = true;
+    }
 
-		public McpeShowProfile()
-		{
-			Id = 0x68;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(xuid);
+    }
 
-			Write(xuid);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        xuid = ReadString();
+    }
 
-			   
 
-			xuid = ReadString();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			xuid=default(string);
-		}
-
-	}
+        xuid = default;
+    }
 }

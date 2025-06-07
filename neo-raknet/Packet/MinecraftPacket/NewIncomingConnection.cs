@@ -1,63 +1,51 @@
-using neo_raknet.Packet;
 using System.Net;
-namespace neo_raknet.Packet.MinecraftPacket
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class NewIncomingConnection : Packet
 {
-public partial class NewIncomingConnection : Packet{
+    public IPEndPoint   clientendpoint; // = null;
+    public long         incomingTimestamp; // = null;
+    public long         serverTimestamp; // = null;
+    public IPEndPoint[] systemAddresses; // = null;
 
-		public IPEndPoint clientendpoint; // = null;
-		public IPEndPoint[] systemAddresses; // = null;
-		public long incomingTimestamp; // = null;
-		public long serverTimestamp; // = null;
+    public NewIncomingConnection()
+    {
+        Id = 0x13;
+        IsMcpe = false;
+    }
 
-		public NewIncomingConnection()
-		{
-			Id = 0x13;
-			IsMcpe = false;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(clientendpoint);
+        Write(systemAddresses);
+        Write(incomingTimestamp);
+        Write(serverTimestamp);
+    }
 
-			Write(clientendpoint);
-			Write(systemAddresses);
-			Write(incomingTimestamp);
-			Write(serverTimestamp);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        clientendpoint = ReadIPEndPoint();
+        systemAddresses = ReadIPEndPoints(20);
+        incomingTimestamp = ReadLong();
+        serverTimestamp = ReadLong();
+    }
 
-			   
 
-			clientendpoint = ReadIPEndPoint();
-			systemAddresses = ReadIPEndPoints(20);
-			incomingTimestamp = ReadLong();
-			serverTimestamp = ReadLong();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			clientendpoint=default(IPEndPoint);
-			systemAddresses=default(IPEndPoint[]);
-			incomingTimestamp=default(long);
-			serverTimestamp=default(long);
-		}
-
-	}
+        clientendpoint = default;
+        systemAddresses = default;
+        incomingTimestamp = default;
+        serverTimestamp = default;
+    }
 }

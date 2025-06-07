@@ -1,70 +1,58 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeEmotePacket : Packet
 {
-public partial class McpeEmotePacket : Packet{
+    public string emoteId; // = null;
+    public byte   flags; // = null;
+    public string platformId; // = null;
 
-		public long runtimeEntityId; // = null;
-		public string xuid; // = null;
-		public string platformId; // = null;
-		public string emoteId; // = null;
-		public byte flags; // = null;
-		public uint tick; // = null;
+    public long   runtimeEntityId; // = null;
+    public uint   tick; // = null;
+    public string xuid; // = null;
 
-		public McpeEmotePacket()
-		{
-			Id = 0x8a;
-			IsMcpe = true;
-		}
+    public McpeEmotePacket()
+    {
+        Id = 0x8a;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			Write(emoteId);
-			WriteUnsignedVarInt(tick);
-			Write(xuid);
-			Write(platformId);
-			Write(flags);
+        WriteUnsignedVarLong(runtimeEntityId);
+        Write(emoteId);
+        WriteUnsignedVarInt(tick);
+        Write(xuid);
+        Write(platformId);
+        Write(flags);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        runtimeEntityId = ReadUnsignedVarLong();
+        emoteId = ReadString();
+        tick = ReadUnsignedVarInt();
+        xuid = ReadString();
+        platformId = ReadString();
+        flags = ReadByte();
+    }
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			emoteId = ReadString();
-			tick = ReadUnsignedVarInt();
-			xuid = ReadString();
-			platformId = ReadString();
-			flags = ReadByte();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId = default(long);
-			xuid = default(string);
-			platformId = default(string);
-			emoteId = default(string);
-			tick = default(uint);
-			flags = default(byte);
-		}
-
-	}
+        runtimeEntityId = default;
+        xuid = default;
+        platformId = default;
+        emoteId = default;
+        tick = default;
+        flags = default;
+    }
 }

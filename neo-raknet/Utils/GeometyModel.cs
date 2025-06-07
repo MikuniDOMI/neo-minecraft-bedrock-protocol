@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace neo_raknet.Utils
 {
@@ -18,8 +13,8 @@ namespace neo_raknet.Utils
 		public Geometry FindGeometry(string geometryName, bool matchPartial = true)
 		{
 			string fullName = Geometry.FirstOrDefault(g => matchPartial ?
-				                                          g.Description.Identifier.StartsWith(geometryName, StringComparison.InvariantCultureIgnoreCase)
-				                                          : g.Description.Identifier.Equals(geometryName, StringComparison.InvariantCultureIgnoreCase))
+														  g.Description.Identifier.StartsWith(geometryName, StringComparison.InvariantCultureIgnoreCase)
+														  : g.Description.Identifier.Equals(geometryName, StringComparison.InvariantCultureIgnoreCase))
 				?.Description.Identifier;
 
 			if (fullName == null) return null;

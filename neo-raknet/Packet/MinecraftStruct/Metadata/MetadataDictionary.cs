@@ -1,11 +1,6 @@
 ﻿using neo_raknet.Utils;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 {
@@ -114,12 +109,12 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 
 		public byte[] GetBytes()
 		{
-			using (var stream = MiNetServer.MemoryStreamManager.GetStream())
+			using (var stream = MemoryStreamManger.stream.GetStream())
 			{
 				var writer = new BinaryWriter(stream);
 				WriteTo(writer);
 				writer.Flush();
-				return stream.ToArray();
+				return stream.GetBuffer();
 			}
 		}
 

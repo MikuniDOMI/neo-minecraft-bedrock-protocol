@@ -1,54 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class ConnectedPong : Packet
 {
-public partial class ConnectedPong : Packet{
+    public long sendpingtime; // = null;
+    public long sendpongtime; // = null;
 
-		public long sendpingtime; // = null;
-		public long sendpongtime; // = null;
+    public ConnectedPong()
+    {
+        Id = 0x03;
+        IsMcpe = false;
+    }
 
-		public ConnectedPong()
-		{
-			Id = 0x03;
-			IsMcpe = false;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(sendpingtime);
+        Write(sendpongtime);
+    }
 
-			Write(sendpingtime);
-			Write(sendpongtime);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        sendpingtime = ReadLong();
+        sendpongtime = ReadLong();
+    }
 
-			   
 
-			sendpingtime = ReadLong();
-			sendpongtime = ReadLong();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			sendpingtime=default(long);
-			sendpongtime=default(long);
-		}
-
-	}
+        sendpingtime = default;
+        sendpongtime = default;
+    }
 }

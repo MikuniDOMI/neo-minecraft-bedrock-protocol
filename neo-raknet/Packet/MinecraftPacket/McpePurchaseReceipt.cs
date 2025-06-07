@@ -1,46 +1,27 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePurchaseReceipt : Packet
 {
-public partial class McpePurchaseReceipt : Packet{
+    public McpePurchaseReceipt()
+    {
+        Id = 0x5c;
+        IsMcpe = true;
+    }
+
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
+    }
 
 
-		public McpePurchaseReceipt()
-		{
-			Id = 0x5c;
-			IsMcpe = true;
-		}
-
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
-
-			 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
+    }
 
 
-			 
-		}
-
-		 
-		 
-
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
-
-			   
-
-
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-		}
-
-	}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+    }
 }

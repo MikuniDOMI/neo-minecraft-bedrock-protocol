@@ -23,9 +23,6 @@
 
 #endregion
 
-using System;
-using System.Linq;
-
 
 namespace neo_raknet.Utils
 {
@@ -89,7 +86,7 @@ namespace neo_raknet.Utils
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != GetType()) return false;
-			return Equals((UUID) obj);
+			return Equals((UUID)obj);
 		}
 
 		public override int GetHashCode()

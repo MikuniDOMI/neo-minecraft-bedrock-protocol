@@ -1,54 +1,44 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeAnvilDamage : Packet
 {
-public partial class McpeAnvilDamage : Packet{
+    public BlockCoordinates coordinates; // = null;
 
-		public byte damageAmount; // = null;
-		public BlockCoordinates coordinates; // = null;
+    public byte damageAmount; // = null;
 
-		public McpeAnvilDamage()
-		{
-			Id = 0x8D;
-			IsMcpe = true;
-		}
+    public McpeAnvilDamage()
+    {
+        Id = 0x8D;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(damageAmount);
-			Write(coordinates);
+        Write(damageAmount);
+        Write(coordinates);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        damageAmount = ReadByte();
+        coordinates = ReadBlockCoordinates();
+    }
 
-			damageAmount = ReadByte();
-			coordinates = ReadBlockCoordinates();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			damageAmount = default(byte);
-			coordinates = default(BlockCoordinates);
-
-		}
-	}
+        damageAmount = default;
+        coordinates = default(BlockCoordinates);
+    }
 }

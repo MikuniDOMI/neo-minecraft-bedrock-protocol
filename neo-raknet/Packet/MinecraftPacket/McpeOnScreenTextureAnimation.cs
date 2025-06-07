@@ -1,49 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeOnScreenTextureAnimation : Packet
 {
-public partial class McpeOnScreenTextureAnimation : Packet{
-		public int effectId; // = null;
+    public int effectId; // = null;
 
-		public McpeOnScreenTextureAnimation()
-		{
-			Id = 0x82;
-			IsMcpe = true;
-		}
+    public McpeOnScreenTextureAnimation()
+    {
+        Id = 0x82;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(effectId);
+        Write(effectId);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        effectId = ReadInt();
+    }
 
-			effectId = ReadInt();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			effectId = default(int);
-		}
-
-	}
+        effectId = default;
+    }
 }

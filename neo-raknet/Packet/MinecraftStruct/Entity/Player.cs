@@ -1,24 +1,17 @@
 ﻿using neo_raknet.Packet.MinecraftPacket;
-using neo_raknet.Utils;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using neo_raknet.Packet.MinecraftStruct;
 using neo_raknet.Packet.MinecraftStruct.World;
+using neo_raknet.Utils;
+using System.Net;
 namespace neo_raknet.Packet.MinecraftStruct.Entity
 {
-    public class Player : Entity
-    {
+	public class Player : Entity
+	{
 		public IPEndPoint EndPoint { get; private set; }
 
 		private Dictionary<ChunkCoordinates, McpeWrapper> _chunksUsed = new Dictionary<ChunkCoordinates, McpeWrapper>();
 		private ChunkCoordinates _currentChunkPosition;
 
-		internal IInventory _openInventory;
+		internal IInventory _openInventory = null;
 
 		public PlayerLocation SpawnPosition { get; set; }
 		public bool IsSleeping { get; set; } = false;
@@ -44,11 +37,11 @@ namespace neo_raknet.Packet.MinecraftStruct.Entity
 		public bool IsFalling { get; set; }
 		public bool IsFlyingHorizontally { get; set; }
 		public Entity LastAttackTarget { get; set; }
-		
+
 
 		public Player(string entityTypeId, Level level) : base(entityTypeId, level)
 		{
 		}
-		
+
 	}
 }

@@ -1,54 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeShowStoreOffer : Packet
 {
-public partial class McpeShowStoreOffer : Packet{
+    public string unknown0; // = null;
+    public bool   unknown1; // = null;
 
-		public string unknown0; // = null;
-		public bool unknown1; // = null;
+    public McpeShowStoreOffer()
+    {
+        Id = 0x5b;
+        IsMcpe = true;
+    }
 
-		public McpeShowStoreOffer()
-		{
-			Id = 0x5b;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(unknown0);
+        Write(unknown1);
+    }
 
-			Write(unknown0);
-			Write(unknown1);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        unknown0 = ReadString();
+        unknown1 = ReadBool();
+    }
 
-			   
 
-			unknown0 = ReadString();
-			unknown1 = ReadBool();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			unknown0=default(string);
-			unknown1=default(bool);
-		}
-
-	}
+        unknown0 = default;
+        unknown1 = default;
+    }
 }

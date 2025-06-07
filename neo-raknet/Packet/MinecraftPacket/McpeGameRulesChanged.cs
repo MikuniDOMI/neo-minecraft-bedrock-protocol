@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Entity;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeGameRulesChanged : Packet
 {
-public partial class McpeGameRulesChanged : Packet{
+    public GameRules rules; // = null;
 
-		public GameRules rules; // = null;
+    public McpeGameRulesChanged()
+    {
+        Id = 0x48;
+        IsMcpe = true;
+    }
 
-		public McpeGameRulesChanged()
-		{
-			Id = 0x48;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(rules);
+    }
 
-			Write(rules);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        rules = ReadGameRules();
+    }
 
-			   
 
-			rules = ReadGameRules();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			rules=default(GameRules);
-		}
-
-	}
+        rules = default(GameRules);
+    }
 }

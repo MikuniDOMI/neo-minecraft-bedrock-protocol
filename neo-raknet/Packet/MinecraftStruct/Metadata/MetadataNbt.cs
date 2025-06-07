@@ -1,12 +1,10 @@
-﻿
-using System.IO;
-using fNbt;
+﻿using fNbt;
 
 
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 
 {
-    public class MetadataNbt : MetadataEntry
+	public class MetadataNbt : MetadataEntry
 	{
 		public override byte Identifier
 		{
@@ -31,7 +29,7 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 
 		public override void FromStream(BinaryReader reader)
 		{
-			Value = (NbtCompound) Packet.ReadNbt(reader.BaseStream).NbtFile.RootTag;
+			Value = (NbtCompound)Packet.ReadNbt(reader.BaseStream).NbtFile.RootTag;
 		}
 
 		public override void WriteTo(BinaryWriter stream)
@@ -39,8 +37,8 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 			NbtCompound nbt = Value;
 
 			byte[] bytes = Packet.GetNbtData(nbt);
-			stream.Write((ushort) 0xffff);
-			stream.Write((byte) 0x01);
+			stream.Write((ushort)0xffff);
+			stream.Write((byte)0x01);
 			stream.Write(bytes);
 		}
 	}

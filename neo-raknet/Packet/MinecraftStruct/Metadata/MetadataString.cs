@@ -24,8 +24,6 @@
 #endregion
 
 using neo_raknet.Utils;
-using System;
-using System.IO;
 using System.Text;
 
 
@@ -64,12 +62,12 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 		public override void FromStream(BinaryReader reader)
 		{
 
-				var len = VarInt.ReadInt32(reader.BaseStream);
+			var len = VarInt.ReadInt32(reader.BaseStream);
 
-				byte[] bytes = new byte[len];
-				reader.BaseStream.Read(bytes, 0, len);
-				Value = Encoding.UTF8.GetString(bytes);
-	
+			byte[] bytes = new byte[len];
+			reader.BaseStream.ReadExactly(bytes, 0, len);
+			Value = Encoding.UTF8.GetString(bytes);
+
 		}
 
 		public override void WriteTo(BinaryWriter stream)

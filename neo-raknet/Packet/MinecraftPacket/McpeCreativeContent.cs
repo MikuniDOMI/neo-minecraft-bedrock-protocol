@@ -1,54 +1,43 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Item;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeCreativeContent : Packet
 {
-public partial class McpeCreativeContent : Packet{
+    public List<creativeGroup>     groups; // = null;
+    public List<CreativeItemEntry> input; // = null;
 
-		public List<creativeGroup> groups; // = null;
-		public List<CreativeItemEntry> input; // = null;
+    public McpeCreativeContent()
+    {
+        Id = 0x91;
+        IsMcpe = true;
+    }
 
-		public McpeCreativeContent()
-		{
-			Id = 0x91;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(groups);
+        Write(input);
+    }
 
-			Write(groups);
-			Write(input);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        groups = ReadCreativeGroups();
+        input = ReadCreativeItemStacks();
+    }
 
-			   
 
-			groups = ReadCreativeGroups();
-			input = ReadCreativeItemStacks();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			groups=default(List<creativeGroup>);
-			input=default(List<CreativeItemEntry>);
-		}
-
-	}
+        groups = default;
+        input = default;
+    }
 }

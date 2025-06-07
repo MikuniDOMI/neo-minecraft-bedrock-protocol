@@ -1,62 +1,50 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePacketViolationWarning : Packet
 {
-public partial class McpePacketViolationWarning : Packet{
+    public int    packetId; // = null;
+    public string reason; // = null;
+    public int    severity; // = null;
 
-		public int violationType; // = null;
-		public int severity; // = null;
-		public int packetId; // = null;
-		public string reason; // = null;
+    public int violationType; // = null;
 
-		public McpePacketViolationWarning()
-		{
-			Id = 0x9c;
-			IsMcpe = true;
-		}
+    public McpePacketViolationWarning()
+    {
+        Id = 0x9c;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteSignedVarInt(violationType);
-			WriteSignedVarInt(severity);
-			WriteSignedVarInt(packetId);
-			Write(reason);
+        WriteSignedVarInt(violationType);
+        WriteSignedVarInt(severity);
+        WriteSignedVarInt(packetId);
+        Write(reason);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        violationType = ReadSignedVarInt();
+        severity = ReadSignedVarInt();
+        packetId = ReadSignedVarInt();
+        reason = ReadString();
+    }
 
-			violationType = ReadSignedVarInt();
-			severity = ReadSignedVarInt();
-			packetId = ReadSignedVarInt();
-			reason = ReadString();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			violationType=default(int);
-			severity=default(int);
-			packetId=default(int);
-			reason=default(string);
-		}
-
-	}
+        violationType = default;
+        severity = default;
+        packetId = default;
+        reason = default;
+    }
 }

@@ -1,63 +1,45 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeModalFormResponse : Packet
 {
-public partial class McpeModalFormResponse : Packet{
+    public byte   cancelReason; // = null;
+    public string data = "";
 
-		public uint formId; // = null;
-		public string data = "";
-		public byte cancelReason; // = null;
+    public uint formId; // = null;
 
-		public McpeModalFormResponse()
-		{
-			Id = 0x65;
-			IsMcpe = true;
-		}
+    public McpeModalFormResponse()
+    {
+        Id = 0x65;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarInt(formId);
-			Write(data);
+        WriteUnsignedVarInt(formId);
+        Write(data);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        formId = ReadUnsignedVarInt();
+        if (ReadBool()) data = ReadString();
+        if (ReadBool()) cancelReason = ReadByte();
+    }
 
-			formId = ReadUnsignedVarInt();
-			if (ReadBool())
-			{
-				data = ReadString();
-			}
-			if (ReadBool())
-			{
-				cancelReason = ReadByte();
-			}
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			formId=default(uint);
-			data=default(string);
-			cancelReason=default(byte);
-		}
-
-	}
+        formId = default;
+        data = default;
+        cancelReason = default;
+    }
 }

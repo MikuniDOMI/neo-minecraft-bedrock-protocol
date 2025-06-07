@@ -1,54 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeTakeItemEntity : Packet
 {
-public partial class McpeTakeItemEntity : Packet{
+    public long runtimeEntityId; // = null;
+    public long target; // = null;
 
-		public long runtimeEntityId; // = null;
-		public long target; // = null;
+    public McpeTakeItemEntity()
+    {
+        Id = 0x11;
+        IsMcpe = true;
+    }
 
-		public McpeTakeItemEntity()
-		{
-			Id = 0x11;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteUnsignedVarLong(runtimeEntityId);
+        WriteUnsignedVarLong(target);
+    }
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			WriteUnsignedVarLong(target);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        runtimeEntityId = ReadUnsignedVarLong();
+        target = ReadUnsignedVarLong();
+    }
 
-			   
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			target = ReadUnsignedVarLong();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-			target=default(long);
-		}
-
-	}
+        runtimeEntityId = default;
+        target = default;
+    }
 }

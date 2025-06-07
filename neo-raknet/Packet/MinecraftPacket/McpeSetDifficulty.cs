@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetDifficulty : Packet
 {
-public partial class McpeSetDifficulty : Packet{
+    public uint difficulty; // = null;
 
-		public uint difficulty; // = null;
+    public McpeSetDifficulty()
+    {
+        Id = 0x3c;
+        IsMcpe = true;
+    }
 
-		public McpeSetDifficulty()
-		{
-			Id = 0x3c;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteUnsignedVarInt(difficulty);
+    }
 
-			WriteUnsignedVarInt(difficulty);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        difficulty = ReadUnsignedVarInt();
+    }
 
-			   
 
-			difficulty = ReadUnsignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			difficulty=default(uint);
-		}
-
-	}
+        difficulty = default;
+    }
 }

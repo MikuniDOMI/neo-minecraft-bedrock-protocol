@@ -1,97 +1,91 @@
-using neo_raknet.Packet;
 using neo_raknet.Packet.MinecraftStruct;
-namespace neo_raknet.Packet.MinecraftPacket
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeCommandBlockUpdate : Packet
 {
-public partial class McpeCommandBlockUpdate : Packet{
+    public string           command; // = null;
+    public uint             commandBlockMode; // = null;
+    public BlockCoordinates coordinates; // = null;
 
-		public bool             isBlock; // = null;
-		public BlockCoordinates coordinates; // = null;
-		public uint             commandBlockMode; // = null;
-		public bool             isRedstoneMode; // = null;
-		public bool             isConditional; // = null;
-		public long             minecartEntityId; // = null;
-		public string           command; // = null;
-		public string           lastOutput; // = null;
-		public string           name; // = null;
-		public bool             shouldTrackOutput; // = null;
-		public McpeCommandBlockUpdate()
-		{
-			Id = 0x4e;
-			IsMcpe = true;
-		}
+    public bool   isBlock; // = null;
+    public bool   isConditional; // = null;
+    public bool   isRedstoneMode; // = null;
+    public string lastOutput; // = null;
+    public long   minecartEntityId; // = null;
+    public string name; // = null;
+    public bool   shouldTrackOutput; // = null;
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    public McpeCommandBlockUpdate()
+    {
+        Id = 0x4e;
+        IsMcpe = true;
+    }
 
-			 
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			Write(isBlock);
 
-			if (isBlock)
-			{
-				Write(coordinates);
-				WriteUnsignedVarInt(commandBlockMode);
-				Write(isRedstoneMode);
-				Write(isConditional);
-			}
-			else
-			{
-				WriteUnsignedVarLong(minecartEntityId);
-			}
+        Write(isBlock);
 
-			Write(command);
-			Write(lastOutput);
-			Write(name);
-			Write(shouldTrackOutput);
-		}
+        if (isBlock)
+        {
+            Write(coordinates);
+            WriteUnsignedVarInt(commandBlockMode);
+            Write(isRedstoneMode);
+            Write(isConditional);
+        }
+        else
+        {
+            WriteUnsignedVarLong(minecartEntityId);
+        }
 
-		 
-		 
+        Write(command);
+        Write(lastOutput);
+        Write(name);
+        Write(shouldTrackOutput);
+    }
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			isBlock = ReadBool();
 
-			if (isBlock)
-			{
-				coordinates = ReadBlockCoordinates();
-				commandBlockMode = ReadUnsignedVarInt();
-				isRedstoneMode = ReadBool();
-				isConditional = ReadBool();
-			}
-			else
-			{
-				minecartEntityId = ReadUnsignedVarLong();
-			}
+        isBlock = ReadBool();
 
-			command = ReadString();
-			lastOutput = ReadString();
-			name = ReadString();
-			shouldTrackOutput = ReadBool();
-		}
+        if (isBlock)
+        {
+            coordinates = ReadBlockCoordinates();
+            commandBlockMode = ReadUnsignedVarInt();
+            isRedstoneMode = ReadBool();
+            isConditional = ReadBool();
+        }
+        else
+        {
+            minecartEntityId = ReadUnsignedVarLong();
+        }
 
-		  
-		   
+        command = ReadString();
+        lastOutput = ReadString();
+        name = ReadString();
+        shouldTrackOutput = ReadBool();
+    }
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-			coordinates = default;
-			commandBlockMode = default;
-			isRedstoneMode = default;
-			isConditional = default;
-			minecartEntityId = default;
-			command = default;
-			lastOutput = default;
-			name = default;
-			shouldTrackOutput = default;
-			isBlock =default(bool);
-		}
 
-	}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+        coordinates = default;
+        commandBlockMode = default;
+        isRedstoneMode = default;
+        isConditional = default;
+        minecartEntityId = default;
+        command = default;
+        lastOutput = default;
+        name = default;
+        shouldTrackOutput = default;
+        isBlock = default;
+    }
 }

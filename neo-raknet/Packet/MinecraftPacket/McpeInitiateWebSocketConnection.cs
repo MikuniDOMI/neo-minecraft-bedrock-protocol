@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeInitiateWebSocketConnection : Packet
 {
-public partial class McpeInitiateWebSocketConnection : Packet{
+    public string server; // = null;
 
-		public string server; // = null;
+    public McpeInitiateWebSocketConnection()
+    {
+        Id = 0x5f;
+        IsMcpe = true;
+    }
 
-		public McpeInitiateWebSocketConnection()
-		{
-			Id = 0x5f;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(server);
+    }
 
-			Write(server);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        server = ReadString();
+    }
 
-			   
 
-			server = ReadString();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			server=default(string);
-		}
-
-	}
+        server = default;
+    }
 }

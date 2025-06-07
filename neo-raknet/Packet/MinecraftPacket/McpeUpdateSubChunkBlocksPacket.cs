@@ -1,58 +1,48 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeUpdateSubChunkBlocksPacket : Packet
 {
-public partial class McpeUpdateSubChunkBlocksPacket : Packet{
+    public UpdateSubChunkBlocksPacketEntry[] layerOneUpdates; // = null;
+    public UpdateSubChunkBlocksPacketEntry[] layerZeroUpdates; // = null;
 
-		public BlockCoordinates subchunkCoordinates; // = null;
-		public UpdateSubChunkBlocksPacketEntry[] layerZeroUpdates; // = null;
-		public UpdateSubChunkBlocksPacketEntry[] layerOneUpdates; // = null;
+    public BlockCoordinates subchunkCoordinates; // = null;
 
-		public McpeUpdateSubChunkBlocksPacket()
-		{
-			Id = 0xac;
-			IsMcpe = true;
-		}
+    public McpeUpdateSubChunkBlocksPacket()
+    {
+        Id = 0xac;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(subchunkCoordinates);
-			Write(layerZeroUpdates);
-			Write(layerOneUpdates);
+        Write(subchunkCoordinates);
+        Write(layerZeroUpdates);
+        Write(layerOneUpdates);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        subchunkCoordinates = ReadBlockCoordinates();
+        layerZeroUpdates = ReadUpdateSubChunkBlocksPacketEntrys();
+        layerOneUpdates = ReadUpdateSubChunkBlocksPacketEntrys();
+    }
 
-			subchunkCoordinates = ReadBlockCoordinates();
-			layerZeroUpdates = ReadUpdateSubChunkBlocksPacketEntrys();
-			layerOneUpdates = ReadUpdateSubChunkBlocksPacketEntrys();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			subchunkCoordinates=default(BlockCoordinates);
-			layerZeroUpdates=default(UpdateSubChunkBlocksPacketEntry[]);
-			layerOneUpdates=default(UpdateSubChunkBlocksPacketEntry[]);
-		}
-
-	}
+        subchunkCoordinates = default(BlockCoordinates);
+        layerZeroUpdates = default;
+        layerOneUpdates = default;
+    }
 }

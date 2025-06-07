@@ -1,74 +1,62 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeMobEffect : Packet
 {
-public partial class McpeMobEffect : Packet{
+    public int  amplifier; // = null;
+    public int  duration; // = null;
+    public int  effectId; // = null;
+    public byte eventId; // = null;
+    public bool particles; // = null;
 
-		public long runtimeEntityId; // = null;
-		public byte eventId; // = null;
-		public int effectId; // = null;
-		public int amplifier; // = null;
-		public bool particles; // = null;
-		public int duration; // = null;
-		public long tick; // = null;
+    public long runtimeEntityId; // = null;
+    public long tick; // = null;
 
-		public McpeMobEffect()
-		{
-			Id = 0x1c;
-			IsMcpe = true;
-		}
+    public McpeMobEffect()
+    {
+        Id = 0x1c;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			Write(eventId);
-			WriteSignedVarInt(effectId);
-			WriteSignedVarInt(amplifier);
-			Write(particles);
-			WriteSignedVarInt(duration);
-			WriteUnsignedVarLong(tick);
+        WriteUnsignedVarLong(runtimeEntityId);
+        Write(eventId);
+        WriteSignedVarInt(effectId);
+        WriteSignedVarInt(amplifier);
+        Write(particles);
+        WriteSignedVarInt(duration);
+        WriteUnsignedVarLong(tick);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        runtimeEntityId = ReadUnsignedVarLong();
+        eventId = ReadByte();
+        effectId = ReadSignedVarInt();
+        amplifier = ReadSignedVarInt();
+        particles = ReadBool();
+        duration = ReadSignedVarInt();
+        tick = ReadUnsignedVarLong();
+    }
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			eventId = ReadByte();
-			effectId = ReadSignedVarInt();
-			amplifier = ReadSignedVarInt();
-			particles = ReadBool();
-			duration = ReadSignedVarInt();
-			tick = ReadUnsignedVarLong();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-			eventId=default(byte);
-			effectId=default(int);
-			amplifier=default(int);
-			particles=default(bool);
-			duration=default(int);
-			tick = default(long);
-		}
-
-	}
+        runtimeEntityId = default;
+        eventId = default;
+        effectId = default;
+        amplifier = default;
+        particles = default;
+        duration = default;
+        tick = default;
+    }
 }

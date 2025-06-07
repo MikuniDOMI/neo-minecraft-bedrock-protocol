@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetCommandsEnabled : Packet
 {
-public partial class McpeSetCommandsEnabled : Packet{
+    public bool enabled; // = null;
 
-		public bool enabled; // = null;
+    public McpeSetCommandsEnabled()
+    {
+        Id = 0x3b;
+        IsMcpe = true;
+    }
 
-		public McpeSetCommandsEnabled()
-		{
-			Id = 0x3b;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(enabled);
+    }
 
-			Write(enabled);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        enabled = ReadBool();
+    }
 
-			   
 
-			enabled = ReadBool();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			enabled=default(bool);
-		}
-
-	}
+        enabled = default;
+    }
 }

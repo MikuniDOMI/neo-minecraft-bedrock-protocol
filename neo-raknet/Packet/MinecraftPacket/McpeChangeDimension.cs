@@ -1,59 +1,48 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using System.Numerics;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeChangeDimension : Packet
 {
-public partial class McpeChangeDimension : Packet{
+    public int     dimension; // = null;
+    public Vector3 position; // = null;
+    public bool    respawn; // = null;
 
-		public int dimension; // = null;
-		public Vector3 position; // = null;
-		public bool respawn; // = null;
+    public McpeChangeDimension()
+    {
+        Id = 0x3d;
+        IsMcpe = true;
+    }
 
-		public McpeChangeDimension()
-		{
-			Id = 0x3d;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarInt(dimension);
+        Write(position);
+        Write(respawn);
+        Write(false);
+    }
 
-			WriteSignedVarInt(dimension);
-			Write(position);
-			Write(respawn);
-			Write(false);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        dimension = ReadSignedVarInt();
+        position = ReadVector3();
+        respawn = ReadBool();
+    }
 
-			   
 
-			dimension = ReadSignedVarInt();
-			position = ReadVector3();
-			respawn = ReadBool();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			dimension=default(int);
-			position=default(Vector3);
-			respawn=default(bool);
-		}
-
-	}
+        dimension = default;
+        position = default(Vector3);
+        respawn = default;
+    }
 }

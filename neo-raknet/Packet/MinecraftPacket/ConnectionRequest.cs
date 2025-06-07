@@ -1,58 +1,45 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class ConnectionRequest : Packet
 {
-public partial class ConnectionRequest : Packet{
+    public long clientGuid; // = null;
+    public byte doSecurity; // = null;
+    public long timestamp; // = null;
 
-		public long clientGuid; // = null;
-		public long timestamp; // = null;
-		public byte doSecurity; // = null;
+    public ConnectionRequest()
+    {
+        Id = 0x09;
+        IsMcpe = false;
+    }
 
-		public ConnectionRequest()
-		{
-			Id = 0x09;
-			IsMcpe = false;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(clientGuid);
+        Write(timestamp);
+        Write(doSecurity);
+    }
 
-			Write(clientGuid);
-			Write(timestamp);
-			Write(doSecurity);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        clientGuid = ReadLong();
+        timestamp = ReadLong();
+        doSecurity = ReadByte();
+    }
 
-			   
 
-			clientGuid = ReadLong();
-			timestamp = ReadLong();
-			doSecurity = ReadByte();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			clientGuid=default(long);
-			timestamp=default(long);
-			doSecurity=default(byte);
-		}
-
-	}
+        clientGuid = default;
+        timestamp = default;
+        doSecurity = default;
+    }
 }

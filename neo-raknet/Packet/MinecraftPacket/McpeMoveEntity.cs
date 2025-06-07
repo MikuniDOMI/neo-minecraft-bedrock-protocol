@@ -1,58 +1,48 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeMoveEntity : Packet
 {
-public partial class McpeMoveEntity : Packet{
+    public byte           flags; // = null;
+    public PlayerLocation position; // = null;
 
-		public long runtimeEntityId; // = null;
-		public byte flags; // = null;
-		public PlayerLocation position; // = null;
+    public long runtimeEntityId; // = null;
 
-		public McpeMoveEntity()
-		{
-			Id = 0x12;
-			IsMcpe = true;
-		}
+    public McpeMoveEntity()
+    {
+        Id = 0x12;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			Write(flags);
-			Write(position);
+        WriteUnsignedVarLong(runtimeEntityId);
+        Write(flags);
+        Write(position);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        runtimeEntityId = ReadUnsignedVarLong();
+        flags = ReadByte();
+        position = ReadPlayerLocation();
+    }
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			flags = ReadByte();
-			position = ReadPlayerLocation();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-			flags=default(byte);
-			position=default(PlayerLocation);
-		}
-
-	}
+        runtimeEntityId = default;
+        flags = default;
+        position = default(PlayerLocation);
+    }
 }

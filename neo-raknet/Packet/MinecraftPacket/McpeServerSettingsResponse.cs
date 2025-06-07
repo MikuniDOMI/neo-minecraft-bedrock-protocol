@@ -1,54 +1,42 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeServerSettingsResponse : Packet
 {
-public partial class McpeServerSettingsResponse : Packet{
+    public string data; // = null;
 
-		public long formId; // = null;
-		public string data; // = null;
+    public long formId; // = null;
 
-		public McpeServerSettingsResponse()
-		{
-			Id = 0x67;
-			IsMcpe = true;
-		}
+    public McpeServerSettingsResponse()
+    {
+        Id = 0x67;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarLong(formId);
-			Write(data);
+        WriteUnsignedVarLong(formId);
+        Write(data);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        formId = ReadUnsignedVarLong();
+        data = ReadString();
+    }
 
-			formId = ReadUnsignedVarLong();
-			data = ReadString();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			formId=default(long);
-			data=default(string);
-		}
-
-	}
+        formId = default;
+        data = default;
+    }
 }

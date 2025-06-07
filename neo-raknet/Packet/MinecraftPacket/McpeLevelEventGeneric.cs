@@ -1,58 +1,46 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.NBT;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeLevelEventGeneric : Packet
 {
-public partial class McpeLevelEventGeneric : Packet{
+    public Nbt eventData; // = null;
 
-		public int eventId; // = null;
-		public Nbt eventData; // = null;
+    public int eventId; // = null;
 
-		public McpeLevelEventGeneric()
-		{
-			Id = 0x7c;
-			IsMcpe = true;
-		}
+    public McpeLevelEventGeneric()
+    {
+        Id = 0x7c;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteSignedVarInt(eventId);
-			Write(eventData);
+        WriteSignedVarInt(eventId);
+        Write(eventData);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        eventId = ReadSignedVarInt();
+        //eventData = ReadNbt(); todo wrong
+        for (byte i = 0; i < 60; i++) //shhhh
+            ReadByte();
+    }
 
-			eventId = ReadSignedVarInt();
-			//eventData = ReadNbt(); todo wrong
-			for (byte i = 0; i < 60; i++) //shhhh
-			{
-				ReadByte();
-			}
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			eventId = default(int);
-			eventData = default(Nbt);
-		}
-
-	}
+        eventId = default;
+        eventData = default(Nbt);
+    }
 }

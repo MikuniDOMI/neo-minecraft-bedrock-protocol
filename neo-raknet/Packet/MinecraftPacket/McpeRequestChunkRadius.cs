@@ -1,54 +1,41 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeRequestChunkRadius : Packet
 {
-public partial class McpeRequestChunkRadius : Packet{
+    public int  chunkRadius; // = null;
+    public byte maxRadius; // = null;
 
-		public int chunkRadius; // = null;
-		public byte maxRadius; // = null;
+    public McpeRequestChunkRadius()
+    {
+        Id = 0x45;
+        IsMcpe = true;
+    }
 
-		public McpeRequestChunkRadius()
-		{
-			Id = 0x45;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarInt(chunkRadius);
+        Write(maxRadius);
+    }
 
-			WriteSignedVarInt(chunkRadius);
-			Write(maxRadius);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        chunkRadius = ReadSignedVarInt();
+        maxRadius = ReadByte();
+    }
 
-			   
 
-			chunkRadius = ReadSignedVarInt();
-			maxRadius = ReadByte();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			chunkRadius=default(int);
-			maxRadius=default(byte);
-		}
-
-	}
+        chunkRadius = default;
+        maxRadius = default;
+    }
 }

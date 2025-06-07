@@ -23,8 +23,6 @@
 
 #endregion
 
-using System;
-
 namespace neo_raknet.Utils
 {
 	public struct Int24 : IComparable // later , IConvertible
@@ -60,22 +58,24 @@ namespace neo_raknet.Utils
 		public static byte[] FromInt(int value)
 		{
 			byte[] buffer = new byte[3];
-			buffer[0] = (byte) value;
-			buffer[1] = (byte) (value >> 8);
-			buffer[2] = (byte) (value >> 16);
+			buffer[0] = (byte)value;
+			buffer[1] = (byte)(value >> 8);
+			buffer[2] = (byte)(value >> 16);
 			return buffer;
 		}
 
 		public static byte[] FromInt24(Int24 value)
 		{
 			byte[] buffer = new byte[3];
-			buffer[0] = (byte) value.IntValue();
-			buffer[1] = (byte) (value.IntValue() >> 8);
-			buffer[2] = (byte) (value.IntValue() >> 16);
+			buffer[0] = (byte)value.IntValue();
+			buffer[1] = (byte)(value.IntValue() >> 8);
+			buffer[2] = (byte)(value.IntValue() >> 16);
 			return buffer;
 		}
 
+#pragma warning disable CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
 		public int CompareTo(object value)
+#pragma warning restore CS8767 // 参数类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
 		{
 			return _value.CompareTo(value);
 		}

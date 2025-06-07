@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeAddBehaviorTree : Packet
 {
-public partial class McpeAddBehaviorTree : Packet{
+    public string behaviortree; // = null;
 
-		public string behaviortree; // = null;
+    public McpeAddBehaviorTree()
+    {
+        Id = 0x59;
+        IsMcpe = true;
+    }
 
-		public McpeAddBehaviorTree()
-		{
-			Id = 0x59;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(behaviortree);
+    }
 
-			Write(behaviortree);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        behaviortree = ReadString();
+    }
 
-			   
 
-			behaviortree = ReadString();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			behaviortree=default(string);
-		}
-
-	}
+        behaviortree = default;
+    }
 }

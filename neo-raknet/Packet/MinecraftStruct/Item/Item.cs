@@ -1,10 +1,5 @@
 ﻿using fNbt;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace neo_raknet.Packet.MinecraftStruct.Item
 {
@@ -59,7 +54,7 @@ namespace neo_raknet.Packet.MinecraftStruct.Item
 		{
 			return $"{GetType().Name}(Id={Id}, Meta={Metadata}, UniqueId={UniqueId}) Count={Count}, NBT={ExtraData}";
 		}
-		
+
 	}
 	public enum ItemMaterial
 	{

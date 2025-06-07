@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Entity;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeItemComponent : Packet
 {
-public partial class McpeItemComponent : Packet{
+    public Itemstates entries; // = null;
 
-		public Itemstates entries; // = null;
+    public McpeItemComponent()
+    {
+        Id = 0xa2;
+        IsMcpe = true;
+    }
 
-		public McpeItemComponent()
-		{
-			Id = 0xa2;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(entries);
+    }
 
-			Write(entries);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        entries = ReadItemstates();
+    }
 
-			   
 
-			entries = ReadItemstates();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entries=default(Itemstates);
-		}
-
-	}
+        entries = default(Itemstates);
+    }
 }

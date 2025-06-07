@@ -1,66 +1,54 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeLabTable : Packet
 {
-public partial class McpeLabTable : Packet{
+    public int  labTableX; // = null;
+    public int  labTableY; // = null;
+    public int  labTableZ; // = null;
+    public byte reactionType; // = null;
 
-		public byte uselessByte; // = null;
-		public int labTableX; // = null;
-		public int labTableY; // = null;
-		public int labTableZ; // = null;
-		public byte reactionType; // = null;
+    public byte uselessByte; // = null;
 
-		public McpeLabTable()
-		{
-			Id = 0x6d;
-			IsMcpe = true;
-		}
+    public McpeLabTable()
+    {
+        Id = 0x6d;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(uselessByte);
-			WriteVarInt(labTableX);
-			WriteVarInt(labTableY);
-			WriteVarInt(labTableZ);
-			Write(reactionType);
+        Write(uselessByte);
+        WriteVarInt(labTableX);
+        WriteVarInt(labTableY);
+        WriteVarInt(labTableZ);
+        Write(reactionType);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        uselessByte = ReadByte();
+        labTableX = ReadVarInt();
+        labTableY = ReadVarInt();
+        labTableZ = ReadVarInt();
+        reactionType = ReadByte();
+    }
 
-			uselessByte = ReadByte();
-			labTableX = ReadVarInt();
-			labTableY = ReadVarInt();
-			labTableZ = ReadVarInt();
-			reactionType = ReadByte();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			uselessByte=default(byte);
-			labTableX=default(int);
-			labTableY=default(int);
-			labTableZ=default(int);
-			reactionType=default(byte);
-		}
-
-	}
+        uselessByte = default;
+        labTableX = default;
+        labTableY = default;
+        labTableZ = default;
+        reactionType = default;
+    }
 }

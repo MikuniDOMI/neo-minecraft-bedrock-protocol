@@ -1,132 +1,120 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public enum SubChunkRequestMode
 {
-    public enum SubChunkRequestMode
+    SubChunkRequestModeLegacy,
+    SubChunkRequestModeLimitless,
+    SubChunkRequestModeLimited
+}
+
+public class McpeLevelChunk : Packet
+{
+    public ulong[] blobHashes = null;
+    public bool    cacheEnabled;
+    public byte[]  chunkData;
+
+    public int  chunkX; // = null;
+    public int  chunkZ; // = null;
+    public uint count;
+
+    public int dimension; // = null;
+
+    //public bool subChunkRequestsEnabled;
+    public uint                subChunkCount;
+    public SubChunkRequestMode subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLegacy;
+
+    public McpeLevelChunk()
     {
-        SubChunkRequestModeLegacy,
-        SubChunkRequestModeLimitless,
-        SubChunkRequestModeLimited
+        Id = 0x3a;
+        IsMcpe = true;
     }
-    public partial class McpeLevelChunk : Packet{
 
-		public int     chunkX; // = null;
-		public int     chunkZ; // = null;
-		public int     dimension; // = null;
-        public ulong[] blobHashes = null;
-        public byte[]  chunkData  = null;
-        public bool    cacheEnabled;
-        //public bool subChunkRequestsEnabled;
-        public uint                subChunkCount;
-        public uint                count;
-        public SubChunkRequestMode subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLegacy;
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-        public McpeLevelChunk()
-		{
-			Id = 0x3a;
-			IsMcpe = true;
-		}
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+        WriteSignedVarInt(chunkX);
+        WriteSignedVarInt(chunkZ);
+        WriteSignedVarInt(0); //dimension id. TODO if dimensions will ever be added back again....
 
-			 
-
-			WriteSignedVarInt(chunkX);
-			WriteSignedVarInt(chunkZ);
-			WriteSignedVarInt(0);  //dimension id. TODO if dimensions will ever be added back again....
-
-            switch (subChunkRequestMode)
+        switch (subChunkRequestMode)
+        {
+            case SubChunkRequestMode.SubChunkRequestModeLegacy:
             {
-                case SubChunkRequestMode.SubChunkRequestModeLegacy:
-                {
-                    WriteUnsignedVarInt(subChunkCount);
+                WriteUnsignedVarInt(subChunkCount);
 
-                    break;
-                }
-
-                case SubChunkRequestMode.SubChunkRequestModeLimitless:
-                {
-                    WriteUnsignedVarInt(uint.MaxValue);
-                    break;
-                }
-
-                case SubChunkRequestMode.SubChunkRequestModeLimited:
-                {
-                    WriteUnsignedVarInt(uint.MaxValue - 1);
-                    Write((ushort)subChunkCount);
-                    break;
-                }
+                break;
             }
 
-            Write(cacheEnabled);
-
-            if (cacheEnabled)
+            case SubChunkRequestMode.SubChunkRequestModeLimitless:
             {
-                foreach (var blobHashe in blobHashes)
-                {
-                    Write(blobHashe);
-                }
+                WriteUnsignedVarInt(uint.MaxValue);
+                break;
             }
 
-            WriteByteArray(chunkData);
+            case SubChunkRequestMode.SubChunkRequestModeLimited:
+            {
+                WriteUnsignedVarInt(uint.MaxValue - 1);
+                Write((ushort)subChunkCount);
+                break;
+            }
         }
 
-		 
-		 
+        Write(cacheEnabled);
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        if (cacheEnabled)
+            foreach (var blobHashe in blobHashes)
+                Write(blobHashe);
 
-			   
+        WriteByteArray(chunkData);
+    }
 
-			chunkX = ReadSignedVarInt();
-			chunkZ = ReadSignedVarInt();
-			dimension = ReadSignedVarInt();
 
-            var subChunkCountButNotReally = ReadUnsignedVarInt();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-            switch (subChunkCountButNotReally)
-            {
-                case uint.MaxValue:
-                    subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLimitless;
-                    break;
-                case uint.MaxValue - 1:
-                    subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLimited;
-                    subChunkCount = (uint)ReadUshort();
-                    break;
-                default:
-                    subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLegacy;
-                    subChunkCount = subChunkCountButNotReally;
-                    break;
-            }
 
-            cacheEnabled = ReadBool();
+        chunkX = ReadSignedVarInt();
+        chunkZ = ReadSignedVarInt();
+        dimension = ReadSignedVarInt();
 
-            if (cacheEnabled)
-            {
-                count = ReadUnsignedVarInt();
-                for (int i = 0; i < count; i++)
-                {
-                    blobHashes[i] = ReadUlong();
-                }
-            }
+        var subChunkCountButNotReally = ReadUnsignedVarInt();
 
-            chunkData = ReadByteArray();
+        switch (subChunkCountButNotReally)
+        {
+            case uint.MaxValue:
+                subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLimitless;
+                break;
+            case uint.MaxValue - 1:
+                subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLimited;
+                subChunkCount = ReadUshort();
+                break;
+            default:
+                subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLegacy;
+                subChunkCount = subChunkCountButNotReally;
+                break;
         }
 
-		  
-		   
+        cacheEnabled = ReadBool();
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+        if (cacheEnabled)
+        {
+            count = ReadUnsignedVarInt();
+            for (var i = 0; i < count; i++) blobHashes[i] = ReadUlong();
+        }
 
-			chunkX=default(int);
-			chunkZ=default(int);
-			dimension=default(int);
-		}
+        chunkData = ReadByteArray();
+    }
 
-	}
+
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+
+        chunkX = default;
+        chunkZ = default;
+        dimension = default;
+    }
 }

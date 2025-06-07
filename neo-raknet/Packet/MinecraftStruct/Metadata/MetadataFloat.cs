@@ -1,6 +1,3 @@
-
-using System.IO;
-
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 {
 	public class MetadataFloat : MetadataEntry
@@ -33,7 +30,7 @@ namespace neo_raknet.Packet.MinecraftStruct.Metadata
 
 		public MetadataFloat(double value)
 		{
-			Value = (float) value;
+			Value = (float)value;
 		}
 
 		public override void FromStream(BinaryReader reader)

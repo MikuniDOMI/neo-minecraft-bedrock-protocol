@@ -1,58 +1,46 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeEntityEvent : Packet
 {
-public partial class McpeEntityEvent : Packet{
+    public int  data; // = null;
+    public byte eventId; // = null;
 
-		public long runtimeEntityId; // = null;
-		public byte eventId; // = null;
-		public int data; // = null;
+    public long runtimeEntityId; // = null;
 
-		public McpeEntityEvent()
-		{
-			Id = 0x1b;
-			IsMcpe = true;
-		}
+    public McpeEntityEvent()
+    {
+        Id = 0x1b;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteUnsignedVarLong(runtimeEntityId);
-			Write(eventId);
-			WriteSignedVarInt(data);
+        WriteUnsignedVarLong(runtimeEntityId);
+        Write(eventId);
+        WriteSignedVarInt(data);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        runtimeEntityId = ReadUnsignedVarLong();
+        eventId = ReadByte();
+        data = ReadSignedVarInt();
+    }
 
-			runtimeEntityId = ReadUnsignedVarLong();
-			eventId = ReadByte();
-			data = ReadSignedVarInt();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-			eventId=default(byte);
-			data=default(int);
-		}
-
-	}
+        runtimeEntityId = default;
+        eventId = default;
+        data = default;
+    }
 }

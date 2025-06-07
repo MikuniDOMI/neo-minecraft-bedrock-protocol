@@ -1,58 +1,45 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpePlayerHotbar : Packet
 {
-public partial class McpePlayerHotbar : Packet{
+    public uint selectedSlot; // = null;
+    public bool selectSlot; // = null;
+    public byte windowId; // = null;
 
-		public uint selectedSlot; // = null;
-		public byte windowId; // = null;
-		public bool selectSlot; // = null;
+    public McpePlayerHotbar()
+    {
+        Id = 0x30;
+        IsMcpe = true;
+    }
 
-		public McpePlayerHotbar()
-		{
-			Id = 0x30;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteUnsignedVarInt(selectedSlot);
+        Write(windowId);
+        Write(selectSlot);
+    }
 
-			WriteUnsignedVarInt(selectedSlot);
-			Write(windowId);
-			Write(selectSlot);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        selectedSlot = ReadUnsignedVarInt();
+        windowId = ReadByte();
+        selectSlot = ReadBool();
+    }
 
-			   
 
-			selectedSlot = ReadUnsignedVarInt();
-			windowId = ReadByte();
-			selectSlot = ReadBool();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			selectedSlot=default(uint);
-			windowId=default(byte);
-			selectSlot=default(bool);
-		}
-
-	}
+        selectedSlot = default;
+        windowId = default;
+        selectSlot = default;
+    }
 }

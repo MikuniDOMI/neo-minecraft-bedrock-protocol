@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetLocalPlayerAsInitialized : Packet
 {
-public partial class McpeSetLocalPlayerAsInitialized : Packet{
+    public long runtimeEntityId; // = null;
 
-		public long runtimeEntityId; // = null;
+    public McpeSetLocalPlayerAsInitialized()
+    {
+        Id = 0x71;
+        IsMcpe = true;
+    }
 
-		public McpeSetLocalPlayerAsInitialized()
-		{
-			Id = 0x71;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteUnsignedVarLong(runtimeEntityId);
+    }
 
-			WriteUnsignedVarLong(runtimeEntityId);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        runtimeEntityId = ReadUnsignedVarLong();
+    }
 
-			   
 
-			runtimeEntityId = ReadUnsignedVarLong();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			runtimeEntityId=default(long);
-		}
-
-	}
+        runtimeEntityId = default;
+    }
 }

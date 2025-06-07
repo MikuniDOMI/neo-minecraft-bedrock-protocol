@@ -1,6 +1,5 @@
 
 using neo_raknet.Utils;
-using System.IO;
 
 namespace neo_raknet.Packet.MinecraftStruct.Metadata
 {

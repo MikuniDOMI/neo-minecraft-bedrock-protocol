@@ -1,62 +1,50 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeResourcePackChunkData : Packet
 {
-public partial class McpeResourcePackChunkData : Packet{
+    public uint chunkIndex; // = null;
 
-		public string packageId; // = null;
-		public uint chunkIndex; // = null;
-		public ulong progress; // = null;
-		public byte[] payload; // = null;
+    public string packageId; // = null;
+    public byte[] payload; // = null;
+    public ulong  progress; // = null;
 
-		public McpeResourcePackChunkData()
-		{
-			Id = 0x53;
-			IsMcpe = true;
-		}
+    public McpeResourcePackChunkData()
+    {
+        Id = 0x53;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(packageId);
-			Write(chunkIndex);
-			Write(progress);
-			WriteByteArray(payload);
+        Write(packageId);
+        Write(chunkIndex);
+        Write(progress);
+        WriteByteArray(payload);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        packageId = ReadString();
+        chunkIndex = ReadUint();
+        progress = ReadUlong();
+        payload = ReadByteArray();
+    }
 
-			packageId = ReadString();
-			chunkIndex = ReadUint();
-			progress = ReadUlong();
-			payload = ReadByteArray();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			packageId=default(string);
-			chunkIndex=default(uint);
-			progress=default(ulong);
-			payload=default(byte[]);
-		}
-
-	}
+        packageId = default;
+        chunkIndex = default;
+        progress = default;
+        payload = default;
+    }
 }

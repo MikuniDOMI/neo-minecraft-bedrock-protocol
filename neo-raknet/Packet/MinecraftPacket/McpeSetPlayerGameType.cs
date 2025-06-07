@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetPlayerGameType : Packet
 {
-public partial class McpeSetPlayerGameType : Packet{
+    public int gamemode; // = null;
 
-		public int gamemode; // = null;
+    public McpeSetPlayerGameType()
+    {
+        Id = 0x3e;
+        IsMcpe = true;
+    }
 
-		public McpeSetPlayerGameType()
-		{
-			Id = 0x3e;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarInt(gamemode);
+    }
 
-			WriteSignedVarInt(gamemode);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        gamemode = ReadSignedVarInt();
+    }
 
-			   
 
-			gamemode = ReadSignedVarInt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			gamemode=default(int);
-		}
-
-	}
+        gamemode = default;
+    }
 }

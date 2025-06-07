@@ -1,49 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.NBT;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSyncEntityProperty : Packet
 {
-public partial class McpeSyncEntityProperty : Packet{
-		public Nbt propertyData; // = null;
+    public Nbt propertyData; // = null;
 
-		public McpeSyncEntityProperty()
-		{
-			Id = 0xa5;
-			IsMcpe = true;
-		}
+    public McpeSyncEntityProperty()
+    {
+        Id = 0xa5;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(propertyData);
+        Write(propertyData);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        propertyData = ReadNbt();
+    }
 
-			propertyData = ReadNbt();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			propertyData = default(Nbt);
-		}
-
-	}
+        propertyData = default(Nbt);
+    }
 }

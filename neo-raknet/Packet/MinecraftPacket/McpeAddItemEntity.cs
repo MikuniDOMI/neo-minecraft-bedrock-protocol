@@ -1,90 +1,80 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Item;
+using neo_raknet.Packet.MinecraftStruct.Metadata;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeAddItemEntity : Packet
 {
-public partial class McpeAddItemEntity : Packet{
+    public long               entityIdSelf; // = null;
+    public bool               isFromFishing; // = null;
+    public Item               item; // = null;
+    public MetadataDictionary metadata; // = null;
+    public long               runtimeEntityId; // = null;
+    public float              speedX; // = null;
+    public float              speedY; // = null;
+    public float              speedZ; // = null;
+    public float              x; // = null;
+    public float              y; // = null;
+    public float              z; // = null;
 
-		public long entityIdSelf; // = null;
-		public long runtimeEntityId; // = null;
-		public Item item; // = null;
-		public float x; // = null;
-		public float y; // = null;
-		public float z; // = null;
-		public float speedX; // = null;
-		public float speedY; // = null;
-		public float speedZ; // = null;
-		public MetadataDictionary metadata; // = null;
-		public bool isFromFishing; // = null;
+    public McpeAddItemEntity()
+    {
+        Id = 0x0f;
+        IsMcpe = true;
+    }
 
-		public McpeAddItemEntity()
-		{
-			Id = 0x0f;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarLong(entityIdSelf);
+        WriteUnsignedVarLong(runtimeEntityId);
+        Write(item);
+        Write(x);
+        Write(y);
+        Write(z);
+        Write(speedX);
+        Write(speedY);
+        Write(speedZ);
+        Write(metadata);
+        Write(isFromFishing);
+    }
 
-			WriteSignedVarLong(entityIdSelf);
-			WriteUnsignedVarLong(runtimeEntityId);
-			Write(item);
-			Write(x);
-			Write(y);
-			Write(z);
-			Write(speedX);
-			Write(speedY);
-			Write(speedZ);
-			Write(metadata);
-			Write(isFromFishing);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        entityIdSelf = ReadSignedVarLong();
+        runtimeEntityId = ReadUnsignedVarLong();
+        item = ReadItem();
+        x = ReadFloat();
+        y = ReadFloat();
+        z = ReadFloat();
+        speedX = ReadFloat();
+        speedY = ReadFloat();
+        speedZ = ReadFloat();
+        metadata = ReadMetadataDictionary();
+        isFromFishing = ReadBool();
+    }
 
-			   
 
-			entityIdSelf = ReadSignedVarLong();
-			runtimeEntityId = ReadUnsignedVarLong();
-			item = ReadItem();
-			x = ReadFloat();
-			y = ReadFloat();
-			z = ReadFloat();
-			speedX = ReadFloat();
-			speedY = ReadFloat();
-			speedZ = ReadFloat();
-			metadata = ReadMetadataDictionary();
-			isFromFishing = ReadBool();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entityIdSelf=default(long);
-			runtimeEntityId=default(long);
-			item=default(Item);
-			x=default(float);
-			y=default(float);
-			z=default(float);
-			speedX=default(float);
-			speedY=default(float);
-			speedZ=default(float);
-			metadata=default(MetadataDictionary);
-			isFromFishing=default(bool);
-		}
-
-	}
+        entityIdSelf = default;
+        runtimeEntityId = default;
+        item = default(Item);
+        x = default;
+        y = default;
+        z = default;
+        speedX = default;
+        speedY = default;
+        speedZ = default;
+        metadata = default(MetadataDictionary);
+        isFromFishing = default;
+    }
 }

@@ -1,62 +1,52 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeUpdateAbilities : Packet
 {
-public partial class McpeUpdateAbilities : Packet{
+    public byte commandPermissions; // = null;
 
-		public long entityUniqueId; // = null;
-		public byte playerPermissions; // = null;
-		public byte commandPermissions; // = null;
-		public AbilityLayers layers; // = null;
+    public long          entityUniqueId; // = null;
+    public AbilityLayers layers; // = null;
+    public byte          playerPermissions; // = null;
 
-		public McpeUpdateAbilities()
-		{
-			Id = 0xbb;
-			IsMcpe = true;
-		}
+    public McpeUpdateAbilities()
+    {
+        Id = 0xbb;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(entityUniqueId);
-			Write(playerPermissions);
-			Write(commandPermissions);
-			Write(layers);
+        Write(entityUniqueId);
+        Write(playerPermissions);
+        Write(commandPermissions);
+        Write(layers);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        entityUniqueId = ReadLong();
+        playerPermissions = ReadByte();
+        commandPermissions = ReadByte();
+        layers = ReadAbilityLayers();
+    }
 
-			entityUniqueId = ReadLong();
-			playerPermissions = ReadByte();
-			commandPermissions = ReadByte();
-			layers = ReadAbilityLayers();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entityUniqueId=default(long);
-			playerPermissions=default(byte);
-			commandPermissions=default(byte);
-			layers=default(AbilityLayers);
-		}
-
-	}
+        entityUniqueId = default;
+        playerPermissions = default;
+        commandPermissions = default;
+        layers = default(AbilityLayers);
+    }
 }

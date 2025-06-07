@@ -1,66 +1,54 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeVideoStreamConnect : Packet
 {
-public partial class McpeVideoStreamConnect : Packet{
+    public byte  action; // = null;
+    public float frameSendFrequency; // = null;
+    public int   resolutionX; // = null;
+    public int   resolutionY; // = null;
 
-		public string serverUri; // = null;
-		public float frameSendFrequency; // = null;
-		public byte action; // = null;
-		public int resolutionX; // = null;
-		public int resolutionY; // = null;
+    public string serverUri; // = null;
 
-		public McpeVideoStreamConnect()
-		{
-			Id = 0x7e;
-			IsMcpe = true;
-		}
+    public McpeVideoStreamConnect()
+    {
+        Id = 0x7e;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(serverUri);
-			Write(frameSendFrequency);
-			Write(action);
-			Write(resolutionX);
-			Write(resolutionY);
+        Write(serverUri);
+        Write(frameSendFrequency);
+        Write(action);
+        Write(resolutionX);
+        Write(resolutionY);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        serverUri = ReadString();
+        frameSendFrequency = ReadFloat();
+        action = ReadByte();
+        resolutionX = ReadInt();
+        resolutionY = ReadInt();
+    }
 
-			serverUri = ReadString();
-			frameSendFrequency = ReadFloat();
-			action = ReadByte();
-			resolutionX = ReadInt();
-			resolutionY = ReadInt();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			serverUri=default(string);
-			frameSendFrequency=default(float);
-			action=default(byte);
-			resolutionX=default(int);
-			resolutionY=default(int);
-		}
-
-	}
+        serverUri = default;
+        frameSendFrequency = default;
+        action = default;
+        resolutionX = default;
+        resolutionY = default;
+    }
 }

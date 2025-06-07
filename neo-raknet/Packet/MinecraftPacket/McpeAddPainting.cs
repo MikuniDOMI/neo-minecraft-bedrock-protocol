@@ -1,66 +1,56 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeAddPainting : Packet
 {
-public partial class McpeAddPainting : Packet{
+    public BlockCoordinates coordinates; // = null;
+    public int              direction; // = null;
 
-		public long entityIdSelf; // = null;
-		public long runtimeEntityId; // = null;
-		public BlockCoordinates coordinates; // = null;
-		public int direction; // = null;
-		public string title; // = null;
+    public long   entityIdSelf; // = null;
+    public long   runtimeEntityId; // = null;
+    public string title; // = null;
 
-		public McpeAddPainting()
-		{
-			Id = 0x16;
-			IsMcpe = true;
-		}
+    public McpeAddPainting()
+    {
+        Id = 0x16;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteSignedVarLong(entityIdSelf);
-			WriteUnsignedVarLong(runtimeEntityId);
-			WritePaintingCoordinates(coordinates);
-			WriteSignedVarInt(direction);
-			Write(title);
+        WriteSignedVarLong(entityIdSelf);
+        WriteUnsignedVarLong(runtimeEntityId);
+        WritePaintingCoordinates(coordinates);
+        WriteSignedVarInt(direction);
+        Write(title);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        entityIdSelf = ReadSignedVarLong();
+        runtimeEntityId = ReadUnsignedVarLong();
+        coordinates = ReadBlockCoordinates();
+        direction = ReadSignedVarInt();
+        title = ReadString();
+    }
 
-			entityIdSelf = ReadSignedVarLong();
-			runtimeEntityId = ReadUnsignedVarLong();
-			coordinates = ReadBlockCoordinates();
-			direction = ReadSignedVarInt();
-			title = ReadString();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entityIdSelf=default(long);
-			runtimeEntityId=default(long);
-			coordinates=default(BlockCoordinates);
-			direction=default(int);
-			title=default(string);
-		}
-
-	}
+        entityIdSelf = default;
+        runtimeEntityId = default;
+        coordinates = default(BlockCoordinates);
+        direction = default;
+        title = default;
+    }
 }

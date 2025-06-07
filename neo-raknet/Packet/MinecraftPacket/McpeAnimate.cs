@@ -1,60 +1,46 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeAnimate : Packet
 {
-public partial class McpeAnimate : Packet{
+    public int   actionId; // = null;
+    public long  runtimeEntityId; // = null;
+    public float unknownFloat;
 
-		public int   actionId; // = null;
-		public long  runtimeEntityId; // = null;
-		public float unknownFloat;
-		public McpeAnimate()
-		{
-			Id = 0x2c;
-			IsMcpe = true;
-		}
+    public McpeAnimate()
+    {
+        Id = 0x2c;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			WriteSignedVarInt(actionId);
-			WriteUnsignedVarLong(runtimeEntityId);
+        WriteSignedVarInt(actionId);
+        WriteUnsignedVarLong(runtimeEntityId);
 
-			if (actionId == 0x80 || actionId == 0x81)
-			{
-				Write(unknownFloat);
-			}
-		}
+        if (actionId == 0x80 || actionId == 0x81) Write(unknownFloat);
+    }
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			   
 
-			actionId = ReadSignedVarInt();
-			runtimeEntityId = ReadUnsignedVarLong();
+        actionId = ReadSignedVarInt();
+        runtimeEntityId = ReadUnsignedVarLong();
 
-			if (actionId == 0x80 || actionId == 0x81)
-			{
-				unknownFloat = ReadFloat();
-			}
-		}
+        if (actionId == 0x80 || actionId == 0x81) unknownFloat = ReadFloat();
+    }
 
-		  
-		   
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			actionId=default(int);
-			runtimeEntityId=default(long);
-		}
-
-	}
+        actionId = default;
+        runtimeEntityId = default;
+    }
 }

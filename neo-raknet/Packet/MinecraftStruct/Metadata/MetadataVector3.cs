@@ -23,7 +23,6 @@
 
 #endregion
 
-using System.IO;
 using System.Numerics;
 
 namespace neo_raknet.Packet.MinecraftStruct.Metadata

@@ -1,61 +1,52 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.Entity;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSetScore : Packet
 {
-public partial class McpeSetScore : Packet{
-		public enum Types
-		{
-			Change = 0,
-			Remove = 1,
-		}
-		public enum ChangeTypes
-		{
-			Player = 1,
-			Entity = 2,
-			FakePlayer = 3,
-		}
+    public ScoreEntries entries; // = null;
 
-		public ScoreEntries entries; // = null;
+    public enum ChangeTypes
+    {
+        Player     = 1,
+        Entity     = 2,
+        FakePlayer = 3
+    }
 
-		public McpeSetScore()
-		{
-			Id = 0x6c;
-			IsMcpe = true;
-		}
+    public enum Types
+    {
+        Change = 0,
+        Remove = 1
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    public McpeSetScore()
+    {
+        Id = 0x6c;
+        IsMcpe = true;
+    }
 
-			 
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			Write(entries);
 
-			 
-		}
+        Write(entries);
+    }
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			   
 
-			entries = ReadScoreEntries();
+        entries = ReadScoreEntries();
+    }
 
-			    
-		}
 
-		  
-		   
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entries=default(ScoreEntries);
-		}
-
-	}
+        entries = default(ScoreEntries);
+    }
 }

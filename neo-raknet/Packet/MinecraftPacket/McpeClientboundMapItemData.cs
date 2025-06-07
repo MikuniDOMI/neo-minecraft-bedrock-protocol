@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Utils;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeClientboundMapItemData : Packet
 {
-public partial class McpeClientboundMapItemData : Packet{
+    public MapInfo mapinfo; // = null;
 
-		public MapInfo mapinfo; // = null;
+    public McpeClientboundMapItemData()
+    {
+        Id = 0x43;
+        IsMcpe = true;
+    }
 
-		public McpeClientboundMapItemData()
-		{
-			Id = 0x43;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(mapinfo);
+    }
 
-			Write(mapinfo);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        mapinfo = ReadMapInfo();
+    }
 
-			   
 
-			mapinfo = ReadMapInfo();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			mapinfo=default(MapInfo);
-		}
-
-	}
+        mapinfo = default(MapInfo);
+    }
 }

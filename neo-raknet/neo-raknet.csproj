@@ -5,7 +5,12 @@
     <RootNamespace>neo_raknet</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <NoWarn>8765;8625;8618;8600;8601;8603;0168;8602</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Packet\MinecraftPacket\McpeAdventureSettings.cs~RFc12c3c95.TMP" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="5.1.1" />

@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeRemoveEntity : Packet
 {
-public partial class McpeRemoveEntity : Packet{
+    public long entityIdSelf; // = null;
 
-		public long entityIdSelf; // = null;
+    public McpeRemoveEntity()
+    {
+        Id = 0x0e;
+        IsMcpe = true;
+    }
 
-		public McpeRemoveEntity()
-		{
-			Id = 0x0e;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        WriteSignedVarLong(entityIdSelf);
+    }
 
-			WriteSignedVarLong(entityIdSelf);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        entityIdSelf = ReadSignedVarLong();
+    }
 
-			   
 
-			entityIdSelf = ReadSignedVarLong();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			entityIdSelf=default(long);
-		}
-
-	}
+        entityIdSelf = default;
+    }
 }

@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeSimpleEvent : Packet
 {
-public partial class McpeSimpleEvent : Packet{
+    public ushort eventType; // = null;
 
-		public ushort eventType; // = null;
+    public McpeSimpleEvent()
+    {
+        Id = 0x40;
+        IsMcpe = true;
+    }
 
-		public McpeSimpleEvent()
-		{
-			Id = 0x40;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(eventType);
+    }
 
-			Write(eventType);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        eventType = ReadUshort();
+    }
 
-			   
 
-			eventType = ReadUshort();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			eventType=default(ushort);
-		}
-
-	}
+        eventType = default;
+    }
 }

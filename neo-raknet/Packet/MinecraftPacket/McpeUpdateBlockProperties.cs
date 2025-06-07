@@ -1,50 +1,39 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using neo_raknet.Packet.MinecraftStruct.NBT;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeUpdateBlockProperties : Packet
 {
-public partial class McpeUpdateBlockProperties : Packet{
+    public Nbt namedtag; // = null;
 
-		public Nbt namedtag; // = null;
+    public McpeUpdateBlockProperties()
+    {
+        Id = 0x86;
+        IsMcpe = true;
+    }
 
-		public McpeUpdateBlockProperties()
-		{
-			Id = 0x86;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(namedtag);
+    }
 
-			Write(namedtag);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        namedtag = ReadNbt();
+    }
 
-			   
 
-			namedtag = ReadNbt();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			namedtag=default(Nbt);
-		}
-
-	}
+        namedtag = default(Nbt);
+    }
 }

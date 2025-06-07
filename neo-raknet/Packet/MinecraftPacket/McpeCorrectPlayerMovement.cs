@@ -1,66 +1,56 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+using System.Numerics;
+
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeCorrectPlayerMovement : Packet
 {
-public partial class McpeCorrectPlayerMovement : Packet{
+    public bool    OnGround; // = null;
+    public Vector3 Postition; // = null;
+    public long    Tick; // = null;
 
-		public byte Type; // = null;
-		public Vector3 Postition; // = null;
-		public Vector3 Velocity; // = null;
-		public bool OnGround; // = null;
-		public long Tick; // = null;
+    public byte    Type; // = null;
+    public Vector3 Velocity; // = null;
 
-		public McpeCorrectPlayerMovement()
-		{
-			Id = 0xA1;
-			IsMcpe = true;
-		}
+    public McpeCorrectPlayerMovement()
+    {
+        Id = 0xA1;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			 
 
-			Write(Type);
-			Write(Postition);
-			Write(Velocity);
-			Write(OnGround);
-			WriteUnsignedVarLong(Tick);
+        Write(Type);
+        Write(Postition);
+        Write(Velocity);
+        Write(OnGround);
+        WriteUnsignedVarLong(Tick);
+    }
 
-			 
-		}
 
-		 
-		 
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
 
-			   
+        Type = ReadByte();
+        Postition = ReadVector3();
+        Velocity = ReadVector3();
+        OnGround = ReadBool();
+        Tick = ReadUnsignedVarLong();
+    }
 
-			Type = ReadByte();
-			Postition = ReadVector3();
-			Velocity = ReadVector3();
-			OnGround = ReadBool();
-			Tick = ReadUnsignedVarLong();
 
-			    
-		}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			Type = default(byte);
-			Postition = default(Vector3);
-			Velocity = default(Vector3);
-			OnGround = default(bool);
-			Tick = default(long);
-
-		}
-	}
+        Type = default;
+        Postition = default(Vector3);
+        Velocity = default(Vector3);
+        OnGround = default;
+        Tick = default;
+    }
 }

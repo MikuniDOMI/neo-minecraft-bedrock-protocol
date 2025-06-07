@@ -1,50 +1,37 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeRemoveObjective : Packet
 {
-public partial class McpeRemoveObjective : Packet{
+    public string objectiveName; // = null;
 
-		public string objectiveName; // = null;
+    public McpeRemoveObjective()
+    {
+        Id = 0x6a;
+        IsMcpe = true;
+    }
 
-		public McpeRemoveObjective()
-		{
-			Id = 0x6a;
-			IsMcpe = true;
-		}
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
 
-			 
+        Write(objectiveName);
+    }
 
-			Write(objectiveName);
 
-			 
-		}
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-		 
-		 
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        objectiveName = ReadString();
+    }
 
-			   
 
-			objectiveName = ReadString();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			    
-		}
-
-		  
-		   
-
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
-
-			objectiveName=default(string);
-		}
-
-	}
+        objectiveName = default;
+    }
 }

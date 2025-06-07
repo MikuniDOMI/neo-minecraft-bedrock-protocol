@@ -1,145 +1,133 @@
-using neo_raknet.Packet; 
- namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public class McpeText : Packet
 {
-public partial class McpeText : Packet{
-	public bool     needsTranslation; // = null
-	public string   source; // = null;
-	public string   message; // = null;
-	public string   xuid; // = null
-	public string   platformChatId; // = null
-	public string[] parameters; // = null
-	public string   filteredMessage; // = null
-		public enum ChatTypes
-		{
-			Raw = 0,
-			Chat = 1,
-			Translation = 2,
-			Popup = 3,
-			Jukeboxpopup = 4,
-			Tip = 5,
-			System = 6,
-			Whisper = 7,
-			Announcement = 8,
-			Json = 9,
-			Jsonwhisper = 10,
-			Jsonannouncement = 11,
-		}
+    public string   filteredMessage; // = null
+    public string   message; // = null;
+    public bool     needsTranslation; // = null
+    public string[] parameters; // = null
+    public string   platformChatId; // = null
+    public string   source; // = null;
 
-		public byte type; // = null;
+    public byte   type; // = null;
+    public string xuid; // = null
 
-		public McpeText()
-		{
-			Id = 0x09;
-			IsMcpe = true;
-		}
+    public enum ChatTypes
+    {
+        Raw              = 0,
+        Chat             = 1,
+        Translation      = 2,
+        Popup            = 3,
+        Jukeboxpopup     = 4,
+        Tip              = 5,
+        System           = 6,
+        Whisper          = 7,
+        Announcement     = 8,
+        Json             = 9,
+        Jsonwhisper      = 10,
+        Jsonannouncement = 11
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    public McpeText()
+    {
+        Id = 0x09;
+        IsMcpe = true;
+    }
 
-			 
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			Write(type);
 
-			Write(needsTranslation);
-			ChatTypes chatType = (ChatTypes)type;
-			switch (chatType)
-			{
-				case ChatTypes.Chat:
-				case ChatTypes.Whisper:
-				case ChatTypes.Announcement:
-					Write(source);
-					goto case ChatTypes.Raw;
-				case ChatTypes.Raw:
-				case ChatTypes.Tip:
-				case ChatTypes.System:
-				case ChatTypes.Json:
-					Write(message);
-					break;
-				case ChatTypes.Popup:
-				case ChatTypes.Translation:
-				case ChatTypes.Jukeboxpopup:
-					Write(message);
-					if (parameters == null)
-					{
-						WriteUnsignedVarInt(0);
-					}
-					else
-					{
-						WriteUnsignedVarInt((uint)parameters.Length);
-						foreach (var parameter in parameters)
-						{
-							Write(parameter);
-						}
-					}
-					break;
-			}
+        Write(type);
 
-			Write(xuid);
-			Write(platformChatId);
-			Write(filteredMessage);
-		}
+        Write(needsTranslation);
+        var chatType = (ChatTypes)type;
+        switch (chatType)
+        {
+            case ChatTypes.Chat:
+            case ChatTypes.Whisper:
+            case ChatTypes.Announcement:
+                Write(source);
+                goto case ChatTypes.Raw;
+            case ChatTypes.Raw:
+            case ChatTypes.Tip:
+            case ChatTypes.System:
+            case ChatTypes.Json:
+                Write(message);
+                break;
+            case ChatTypes.Popup:
+            case ChatTypes.Translation:
+            case ChatTypes.Jukeboxpopup:
+                Write(message);
+                if (parameters == null)
+                {
+                    WriteUnsignedVarInt(0);
+                }
+                else
+                {
+                    WriteUnsignedVarInt((uint)parameters.Length);
+                    foreach (var parameter in parameters) Write(parameter);
+                }
 
-		 
-		 
+                break;
+        }
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+        Write(xuid);
+        Write(platformChatId);
+        Write(filteredMessage);
+    }
 
-			   
 
-			type = ReadByte();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			needsTranslation = ReadBool();
 
-			ChatTypes chatType = (ChatTypes)type;
-			switch (chatType)
-			{
-				case ChatTypes.Chat:
-				case ChatTypes.Whisper:
-				case ChatTypes.Announcement:
-					source = ReadString();
-					message = ReadString();
-					break;
-				case ChatTypes.Raw:
-				case ChatTypes.Tip:
-				case ChatTypes.System:
-				case ChatTypes.Json:
-				case ChatTypes.Jsonwhisper:
-				case ChatTypes.Jsonannouncement:
-					message = ReadString();
-					break;
+        type = ReadByte();
 
-				case ChatTypes.Popup:
-				case ChatTypes.Translation:
-				case ChatTypes.Jukeboxpopup:
-					message = ReadString();
-					parameters = new string[ReadUnsignedVarInt()];
-					for (var i = 0; i < parameters.Length; ++i)
-					{
-						parameters[i] = ReadString();
-					}
-					break;
-			}
+        needsTranslation = ReadBool();
 
-			xuid = ReadString();
-			platformChatId = ReadString();
-			filteredMessage = ReadString();
-		}
+        var chatType = (ChatTypes)type;
+        switch (chatType)
+        {
+            case ChatTypes.Chat:
+            case ChatTypes.Whisper:
+            case ChatTypes.Announcement:
+                source = ReadString();
+                message = ReadString();
+                break;
+            case ChatTypes.Raw:
+            case ChatTypes.Tip:
+            case ChatTypes.System:
+            case ChatTypes.Json:
+            case ChatTypes.Jsonwhisper:
+            case ChatTypes.Jsonannouncement:
+                message = ReadString();
+                break;
 
-		  
-		   
+            case ChatTypes.Popup:
+            case ChatTypes.Translation:
+            case ChatTypes.Jukeboxpopup:
+                message = ReadString();
+                parameters = new string[ReadUnsignedVarInt()];
+                for (var i = 0; i < parameters.Length; ++i) parameters[i] = ReadString();
+                break;
+        }
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+        xuid = ReadString();
+        platformChatId = ReadString();
+        filteredMessage = ReadString();
+    }
 
-			type = 0;
-			source = null;
-			message = null;
-			type =default(byte);
-		}
 
-	}
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
+
+        type = 0;
+        source = null;
+        message = null;
+        type = default;
+    }
 }
