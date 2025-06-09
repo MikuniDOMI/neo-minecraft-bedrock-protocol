@@ -8,8 +8,9 @@
 [![GitHub Forks](https://img.shields.io/github/forks/MikuniDOMI/neo-minecraft-bedrock-protocol.svg?style=social)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/network/members)
 [![GitHub Contributors](https://img.shields.io/github/contributors/MikuniDOMI/neo-minecraft-bedrock-protocol.svg)](https://github.com/MikuniDOMI/neo-minecraft-bedrock-protocol/graphs/contributors)
 
-解析和构建 Minecraft Bedrock 协议库，支持最新Minecraft Bedrock 版本协议。
-
+解析和构建 Minecraft Bedrock 协议库，支持最新Minecraft Bedrock 版本协议。\
+> [!WARNING]  
+> 请自行寻找合适的Raknet框架，自带的NetCoreServer仅作展示用，可自行删除，数据包解密以及加密请自行寻找方法
 
 ## 📦 使用
 
