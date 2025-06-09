@@ -1,4 +1,7 @@
-﻿using neo_raknet.Logger;
+﻿using System.Net;
+using neo_raknet.Logger;
+using neo_raknet;
+using neo_raknet.Server;
 
 namespace neoRaknet
 {
@@ -6,11 +9,10 @@ namespace neoRaknet
     {
         public static void Main()
         {
-
-	        Logger logger = new();
-	        logger.Info("1");
-
-
+	        var rakServer = new RakServer(new IPEndPoint(IPAddress.Parse("0.0.0.0"), 19132));
+	        var start = rakServer.Start();
+	        Console.WriteLine(start);
+	        Console.ReadLine();
         }
     }
     

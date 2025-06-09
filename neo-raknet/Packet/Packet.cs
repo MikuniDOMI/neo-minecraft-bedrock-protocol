@@ -36,8 +36,8 @@ namespace neo_raknet.Packet
 		[JsonIgnore] public bool ForceClear;
 		[JsonIgnore] public bool NoBatch { get; set; }
 
-		[JsonIgnore] public int Id;
-		[JsonIgnore] public bool IsMcpe;
+		[JsonIgnore] public  int Id;
+		[JsonIgnore] public  bool IsMcpe;
 
 		protected MemoryStreamReader _reader; // new construct for reading
 		protected private Stream _buffer;

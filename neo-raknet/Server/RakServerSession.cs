@@ -1,6 +1,6 @@
 ﻿namespace neo_raknet.Server
 {
-	internal class RakServerSession
+	public class RakServerSession
 	{
 	}
 }
