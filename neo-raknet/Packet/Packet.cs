@@ -253,7 +253,10 @@ namespace neo_raknet.Packet
 
 			return _reader.ReadInt32();
 		}
-
+ 		public void WriteBe(ushort value)
+ 		{
+  			   Write(value,true);
+ 		}
 		public void WriteBe(int value)
 		{
 			_writer.Write(BinaryPrimitives.ReverseEndianness(value));
