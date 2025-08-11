@@ -239,7 +239,7 @@ public class McpeStartGame : Packet
     public string        worldId; // = null;
     public string        worldName; // = null;
     public UUID          worldTemplateId;
-
+    public bool TickDeathSystems;
     public McpeStartGame()
     {
         Id = 0x0b;
@@ -265,6 +265,7 @@ public class McpeStartGame : Packet
         Write(levelId);
         Write(worldName);
         Write(premiumWorldTemplateId);
+        Write(TickDeathSystems);
         Write(isTrial);
 
         //Player movement settings

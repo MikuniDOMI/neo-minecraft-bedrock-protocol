@@ -6,7 +6,7 @@ public class McpeResourcePacksInfo : Packet
 {
     public bool hasAddons; // = null;
     public bool hasScripts; // = null;
-
+    public bool ForceDisableVibrantVisuals;
     public bool             mustAccept; // = null;
     public UUID             templateUUID; // = null;
     public string           templateVersion; // = null;
@@ -26,6 +26,7 @@ public class McpeResourcePacksInfo : Packet
         Write(mustAccept);
         Write(hasAddons);
         Write(hasScripts);
+        Write(ForceDisableVibrantVisuals);
         Write(templateUUID);
         Write(templateVersion);
         Write(texturepacks);
@@ -40,6 +41,7 @@ public class McpeResourcePacksInfo : Packet
         mustAccept = ReadBool();
         hasAddons = ReadBool();
         hasScripts = ReadBool();
+        ForceDisableVibrantVisuals = ReadBool();
         templateUUID = ReadUUID();
         templateVersion = ReadString();
         texturepacks = ReadTexturePackInfos();
@@ -53,6 +55,7 @@ public class McpeResourcePacksInfo : Packet
         mustAccept = default;
         hasAddons = default;
         hasScripts = default;
+        ForceDisableVibrantVisuals = default;
         templateUUID = default(UUID);
         templateVersion = default;
         texturepacks = default(TexturePackInfos);
