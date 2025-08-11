@@ -265,7 +265,7 @@ public class McpeStartGame : Packet
         Write(levelId);
         Write(worldName);
         Write(premiumWorldTemplateId);
-        Write(TickDeathSystems);
+       
         Write(isTrial);
 
         //Player movement settings
@@ -286,6 +286,7 @@ public class McpeStartGame : Packet
         Write(worldTemplateId);
         Write(clientSideGenerationEnabled);
         Write(blockNetworkIdsAreHashes);
+        Write(TickDeathSystems);
         Write(false);
     }
 
