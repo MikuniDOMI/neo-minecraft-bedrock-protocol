@@ -9,6 +9,6 @@ namespace neo_raknet
     public class protocol
     {
         public Version McVersion = Version.Parse("1.21.100");
-        public int     McProtocol = 575;
+        public int     McProtocol = 900;
     }
 }

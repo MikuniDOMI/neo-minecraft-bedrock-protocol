@@ -16,8 +16,6 @@ public class McpeModalFormResponse : Packet
     protected override void EncodePacket()
     {
         base.EncodePacket();
-
-
         WriteUnsignedVarInt(formId);
         Write(data);
     }
