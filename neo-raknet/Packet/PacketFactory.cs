@@ -339,8 +339,10 @@ namespace neo_raknet.Packet
                         return new McpeMultiPlayerSettings().Decode(buffer);
                         break; // MultiPlayerSettings
                     case 140:   // IDSettingsCommand
+                        return new McpeSettingsCommand().Decode(buffer);
                         break; // SettingsCommand
                     case 141:   // IDCompletedUsingItem
+                        return new McpeCompletedUsingItem().Decode(buffer);
                         break; // CompletedUsingItem
                     case 142:   // IDNetworkSettings
                         return new McpeNetworkSettings().Decode(buffer);
