@@ -1220,30 +1220,31 @@ namespace neo_raknet.Packet
 			//Log.Warn($"{containerName.ContainerId} | {slot} | {containerName.DynamicId} | {stackNetworkId}");
 			return new StackRequestSlotInfo()
 			{
-				ContainerId = containerName.ContainerId,
+				ContainerId = containerName.ContainerID,
 				Slot = slot,
 				StackNetworkId = stackNetworkId,
-				DynamicId = containerName.DynamicId
+				DynamicId = (int)containerName.DynamicContainerID.Value
 			};
 		}
 
 		public FullContainerName readFullContainerName()
 		{
 			var name = new FullContainerName();
-			name.ContainerId = ReadByte();
-			name.DynamicId = ReadByte();
+			name.ContainerID = ReadByte();
+            name.DynamicContainerID.HasValue = true;
+			name.DynamicContainerID.Value = ReadByte();
 			return name;
 		}
 
 		public void Write(FullContainerName name)
 		{
-			Write(name.ContainerId);
-			Write((byte)name.DynamicId);
+			Write(name.ContainerID);
+			Write((byte)name.DynamicContainerID.Value);
 		}
 
 		public void Write(StackRequestSlotInfo slotInfo)
 		{
-			Write(new FullContainerName() { ContainerId = slotInfo.ContainerId, DynamicId = slotInfo.DynamicId });
+			Write(new FullContainerName() { ContainerID = slotInfo.ContainerId,DynamicContainerID = new Optional<uint>((uint)slotInfo.DynamicId)});
 			Write(slotInfo.Slot);
 			WriteSignedVarInt(slotInfo.StackNetworkId);
 		}
@@ -1671,7 +1672,7 @@ namespace neo_raknet.Packet
 				WriteUnsignedVarInt((uint)stackResponse.ResponseContainerInfos.Count);
 				foreach (StackResponseContainerInfo containerInfo in stackResponse.ResponseContainerInfos)
 				{
-					Write(new FullContainerName() { ContainerId = containerInfo.ContainerId, DynamicId = containerInfo.DynamicId });
+					Write(new FullContainerName() {ContainerID = containerInfo.ContainerId,DynamicContainerID = new Optional<uint>((uint)containerInfo.DynamicId)});
 					WriteUnsignedVarInt((uint)containerInfo.Slots.Count);
 					foreach (StackResponseSlotInfo slot in containerInfo.Slots)
 					{
@@ -1708,8 +1709,8 @@ namespace neo_raknet.Packet
 				{
 					var containerInfo = new StackResponseContainerInfo();
 					var name = readFullContainerName();
-					containerInfo.ContainerId = name.ContainerId;
-					containerInfo.DynamicId = name.DynamicId;
+					containerInfo.ContainerId = name.ContainerID;
+					containerInfo.DynamicId = (int)name.DynamicContainerID.Value;
 					var slotCount = ReadUnsignedVarInt();
 					containerInfo.Slots = new List<StackResponseSlotInfo>();
 

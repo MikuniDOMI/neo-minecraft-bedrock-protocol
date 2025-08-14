@@ -474,16 +474,22 @@ namespace neo_raknet.Packet
                     case 312:   // IDServerBoundLoadingScreen
                         return new McpeServerboundLoadingScreen().Decode(buffer);
                     case 313:   // IDJigsawStructureData
+                        return new McpeJigsawStructureData().Decode(buffer);
                         break;
                     case 314:   // IDCurrentStructureFeature
+                        return new McpeCurrentStructureFeature().Decode(buffer);
                         break;
                     case 315:   // IDServerBoundDiagnostics
+                        return new McpeServerBoundDiagnostics().Decode(buffer);
                         break;
                     case 316:   // IDCameraAimAssist
+                        return new McpeCameraAimAssist().Decode(buffer);
                         break;
                     case 317:   // IDContainerRegistryCleanup
+                        return new McpeContainerRegistryCleanup().Decode(buffer);
                         break;
                     case 318:   // IDMovementEffect
+                        return new McpeMovementEffect().Decode(buffer);
                         break;
                     // case 319: // _ (skipped)
                     case 320:   // IDCameraAimAssistPresets
