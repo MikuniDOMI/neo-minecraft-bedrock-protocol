@@ -30,11 +30,13 @@ namespace neo_raknet.Packet.MinecraftPacket
 
         protected override void EncodePacket()
         {
+            base.EncodePacket();
             WriteSignedVarInt(ActionType);
         }
 
         protected override void DecodePacket()
         {
+            base.DecodePacket();
             ActionType = ReadSignedVarInt();
         }
     }

@@ -49,12 +49,14 @@ namespace neo_raknet.Packet.MinecraftPacket
 
         protected override void EncodePacket()
         {
+            base.EncodePacket();
             Write(UsedItemID);
             Write(UseMethod);
         }
 
         protected override void DecodePacket()
         {
+            base.DecodePacket();
             UsedItemID = ReadShort(); // 对应 Go 的 Int16
             UseMethod = ReadInt();    // 对应 Go 的 Int32
         }

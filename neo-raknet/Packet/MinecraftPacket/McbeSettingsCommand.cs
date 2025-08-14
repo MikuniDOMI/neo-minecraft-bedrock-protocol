@@ -27,12 +27,14 @@ namespace neo_raknet.Packet.MinecraftPacket
 
         protected override void EncodePacket()
         {
+            base.EncodePacket();
             Write(CommandLine);
             Write(SuppressOutput);
         }
 
         protected override void DecodePacket()
         {
+            base.DecodePacket();
             CommandLine = ReadString();
             SuppressOutput = ReadBool();
         }

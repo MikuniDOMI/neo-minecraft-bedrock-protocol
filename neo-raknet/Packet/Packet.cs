@@ -56,7 +56,90 @@ namespace neo_raknet.Packet
 			_writer.Write(value);
 		}
 
-		public sbyte ReadSByte()
+        /// <summary>
+        /// Writes a Bitset to the packet buffer using Varint encoding.
+        /// This mimics the behavior of the Go Writer.Bitset method.
+        /// </summary>
+        /// <param name="bitset">The Bitset to write.</param>
+        /// <param name="size">The expected size of the bitset (for potential validation).</param>
+        public void WriteBitset(Bitset bitset, int size)
+        {
+            // 1. 处理零值的特殊情况 (对应 Go 代码中的 len(u.Bits()) == 0)
+            if (BigInteger.Zero == bitset.IntValue)
+            {
+                // 对应 Go 代码中的 _ = w.w.WriteByte(0)
+                Write((byte)0x00); // 使用 methods.txt 中的 void Write(byte value)
+                return;
+            }
+
+            // 2. 处理负数：取绝对值进行编码
+            //    (根据 Go 代码逻辑和 Varint 通常处理无符号数的特点)
+            BigInteger valueToWrite = BigInteger.Abs(bitset.IntValue);
+
+            // 3. 循环编码，实现 Varint (类似于 Go 代码中的 for u.Cmp(varintMaxByteValue) >= 0)
+            //    varintMaxByteValue 在 Go 中是 0x80 (128)
+            while (valueToWrite >= 0x80)
+            {
+                // a. 取当前最低 7 位 (valueToWrite & 0x7F)
+                // b. 设置最高位为 1 (| 0x80)，表示还有后续字节
+                byte b = (byte)((valueToWrite & 0x7F) | 0x80);
+
+                // c. 写入当前字节 (对应 Go 代码中的 _ = w.w.WriteByte(...))
+                Write(b); // 使用 methods.txt 中的 void Write(byte value)
+
+                // d. 将值右移 7 位，准备处理下一个字节 (对应 Go 代码中的 u.Rsh(u, 7))
+                valueToWrite >>= 7;
+            }
+
+            // 4. 写入最后一个字节 (此时 valueToWrite < 0x80)
+            //    最高位保持 0，表示结束。
+            //    (byte) 转换会保留 valueToWrite 的低 8 位，由于它 < 128，最高位自然为 0。
+            Write((byte)(valueToWrite & 0x7F)); // 使用 methods.txt 中的 void Write(byte value)
+        }
+        /// <summary>
+        /// Reads a Bitset from the packet buffer using Varint decoding.
+        /// This mimics the behavior of the Go Reader.Bitset method.
+        /// </summary>
+        /// <param name="size">The expected size of the bitset (for validation/initialization).</param>
+        /// <returns>The Bitset that was read.</returns>
+        public Bitset ReadBitset(int size)
+        {
+            // 1. Initialize the result BigInteger to zero.
+            BigInteger value = BigInteger.Zero;
+
+            // 2. Initialize variables for Varint decoding.
+            int shift = 0;     // Number of bits to shift for the current byte
+            byte b;            // Current byte read from the stream
+
+            // 3. Loop to read Varint bytes.
+            //    The loop continues as long as the MSB of the read byte is 1.
+            do
+            {
+                // a. Read the next byte using the Packet's ReadByte method (from methods.txt).
+                b = ReadByte(); // byte ReadByte()
+
+                // b. Extract the 7 data bits from the byte.
+                // c. Shift these bits left by the current 'shift' amount.
+                // d. Use BigInteger.Add to combine this chunk with the 'value' accumulator.
+                //    (BigInteger.Or could also work for bit manipulation if shifts are handled carefully,
+                //     but Add is clearer for accumulating values).
+                BigInteger chunk = new BigInteger(b & 0x7F); // Mask lower 7 bits
+                value += (chunk << shift); // Add shifted chunk to the result
+
+                // e. Increment the shift amount by 7 for the next byte.
+                shift += 7;
+
+                // f. Check if the MSB (bit 7) is set (b & 0x80 != 0).
+                //    If set, the loop continues to read the next byte.
+                //    If not set, the loop terminates.
+            } while ((b & 0x80) != 0); // Check MSB
+
+            // 4. Create and return the Bitset object.
+            //    The IntValue is the decoded BigInteger.
+            //    The Size is passed in as a parameter.
+            return new Bitset(size, value);
+        }
+        public sbyte ReadSByte()
 		{
 			return (sbyte)_reader.ReadByte();
 		}

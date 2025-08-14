@@ -74,6 +74,7 @@ public class McpeEducationSettings : Packet
 
     protected override void EncodePacket()
     {
+        base.EncodePacket();
         Write(CodeBuilderDefaultURI);
         Write(CodeBuilderTitle);
         Write(CanResizeCodeBuilder);
@@ -108,6 +109,7 @@ public class McpeEducationSettings : Packet
 
     protected override void DecodePacket()
     {
+        base.DecodePacket();
         CodeBuilderDefaultURI = ReadString();
         CodeBuilderTitle = ReadString();
         CanResizeCodeBuilder = ReadBool();
