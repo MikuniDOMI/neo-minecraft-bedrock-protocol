@@ -12,10 +12,10 @@ namespace neo_raknet.Utils
 	public class ItemStackActionList : List<ItemStackAction>
 	{
 		public int RequestId { get; set; }
-		public List<string> filteredString { get; set; } = new List<string>();
-	}
-
-	public abstract class ItemStackAction
+        public List<string> filteredString { get; set; } = new List<string>();
+		public int FilterCause { get; set; }
+    }
+    public abstract class ItemStackAction
 	{
 	}
 

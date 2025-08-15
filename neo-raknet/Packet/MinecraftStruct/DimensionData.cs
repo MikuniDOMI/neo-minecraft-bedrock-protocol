@@ -2,7 +2,8 @@
 {
 	public class DimensionData
 	{
-		public int MaxHeight { get; set; }
+		public string Identifier { get; set; } = string.Empty; // Dimension identifier, e.g., "minecraft:overworld"
+        public int MaxHeight { get; set; }
 		public int MinHeight { get; set; }
 		public int Generator { get; set; }
 	}

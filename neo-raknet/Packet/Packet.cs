@@ -1432,6 +1432,7 @@ namespace neo_raknet.Packet
 				{
 					Write(request.filteredString[fi]);
 				}
+				Write(request.FilterCause);
 			}
 		}
 
@@ -3908,6 +3909,7 @@ namespace neo_raknet.Packet
 		public DimensionData ReadDimensionData()
 		{
 			DimensionData data = new DimensionData();
+            data.Identifier = ReadString();
 			data.MaxHeight = ReadVarInt();
 			data.MinHeight = ReadVarInt();
 			data.Generator = ReadVarInt();
@@ -3917,6 +3919,7 @@ namespace neo_raknet.Packet
 
 		public void Write(DimensionData data)
 		{
+			Write(data.Identifier);
 			WriteVarInt(data.MaxHeight);
 			WriteVarInt(data.MinHeight);
 			WriteVarInt(data.Generator);
@@ -4011,25 +4014,25 @@ namespace neo_raknet.Packet
 			}
 		}
 
-		public PlayerBlockActions ReadPlayerBlockActions()
-		{
-			PlayerBlockActions actions = new PlayerBlockActions();
-			var actionCount = ReadSignedVarInt();
-			for (int i = 0; i < actionCount; i++)
-			{
-				var actionType = (PlayerAction)ReadSignedVarInt();
-				if (actionType is PlayerAction.StartBreak or PlayerAction.AbortBreak or PlayerAction.StopBreak or PlayerAction.Breaking or PlayerAction.PredictDestroyBlock or PlayerAction.ContinueDestroyBlock)
-				{
-					actions.PlayerBlockAction.Add(new PlayerBlockActionData() { PlayerActionType = actionType, BlockCoordinates = new BlockCoordinates(ReadSignedVarInt(), ReadSignedVarInt(), ReadSignedVarInt()), Facing = ReadVarInt() });
-				}
-				else
-				{
-					actions.PlayerBlockAction.Add(new PlayerBlockActionData() { PlayerActionType = actionType });
+		//public PlayerBlockActions ReadPlayerBlockActions()
+		//{
+		//	PlayerBlockActions actions = new PlayerBlockActions();
+		//	var actionCount = ReadSignedVarInt();
+		//	for (int i = 0; i < actionCount; i++)
+		//	{
+		//		var actionType = (PlayerAction)ReadSignedVarInt();
+		//		if (actionType is PlayerAction.StartBreak or PlayerAction.AbortBreak or PlayerAction.StopBreak or PlayerAction.Breaking or PlayerAction.PredictDestroyBlock or PlayerAction.ContinueDestroyBlock)
+		//		{
+		//			actions.PlayerBlockAction.Add(new PlayerBlockActionData() { PlayerActionType = actionType, BlockCoordinates = new BlockCoordinates(ReadSignedVarInt(), ReadSignedVarInt(), ReadSignedVarInt()), Facing = ReadVarInt() });
+		//		}
+		//		else
+		//		{
+		//			actions.PlayerBlockAction.Add(new PlayerBlockActionData() { PlayerActionType = actionType });
 
-				}
-			}
-			return actions;
-		}
+		//		}
+		//	}
+		//	return actions;
+		//}
 
 		public fogStack Read()
 		{
