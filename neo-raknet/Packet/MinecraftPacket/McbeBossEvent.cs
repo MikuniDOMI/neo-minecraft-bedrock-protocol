@@ -2,27 +2,27 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeBossEvent : Packet
 {
-    public long   bossEntityId; // = null;
-    public uint   color = 0xff00ff00;
-    public uint   eventType; // = null;
-    public float  healthPercent;
-    public uint   overlay = 0xff00ff00;
-    public long   playerId;
-    public string title;
-    public ushort unknown6;
-
     public enum Type
     {
-        AddBoss        = 0,
-        AddPlayer      = 1,
-        RemoveBoss     = 2,
-        RemovePlayer   = 3,
+        AddBoss = 0,
+        AddPlayer = 1,
+        RemoveBoss = 2,
+        RemovePlayer = 3,
         UpdateProgress = 4,
-        UpdateName     = 5,
-        UpdateOptions  = 6,
-        UpdateStyle    = 7,
-        Query          = 8
+        UpdateName = 5,
+        UpdateOptions = 6,
+        UpdateStyle = 7,
+        Query = 8
     }
+
+    public long bossEntityId; // = null;
+    public uint color = 0xff00ff00;
+    public uint eventType; // = null;
+    public float healthPercent;
+    public uint overlay = 0xff00ff00;
+    public long playerId;
+    public string title;
+    public ushort unknown6;
 
     public McpeBossEvent()
     {

@@ -6,12 +6,12 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeResourcePackStack : Packet
 {
     public ResourcePackIdVersions behaviorpackidversions; // = null;
-    public Experiments            experiments; // = null;
-    public bool                   experimentsPreviouslyToggled; // = null;
-    public string                 gameVersion; // = null;
-    public bool                   hasEditorPacks; // = null;
+    public Experiments experiments; // = null;
+    public bool experimentsPreviouslyToggled; // = null;
+    public string gameVersion; // = null;
+    public bool hasEditorPacks; // = null;
 
-    public bool                   mustAccept; // = null;
+    public bool mustAccept; // = null;
     public ResourcePackIdVersions resourcepackidversions; // = null;
 
     public McpeResourcePackStack()
@@ -55,10 +55,10 @@ public class McpeResourcePackStack : Packet
         base.ResetPacket();
 
         mustAccept = default;
-        behaviorpackidversions = default(ResourcePackIdVersions);
-        resourcepackidversions = default(ResourcePackIdVersions);
+        behaviorpackidversions = default;
+        resourcepackidversions = default;
         gameVersion = default;
-        experiments = default(Experiments);
+        experiments = default;
         experimentsPreviouslyToggled = default;
         hasEditorPacks = default;
     }

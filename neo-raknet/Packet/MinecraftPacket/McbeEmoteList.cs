@@ -39,6 +39,6 @@ public class McpeEmoteList : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        emoteIds = default(EmoteIds);
+        emoteIds = default;
     }
 }

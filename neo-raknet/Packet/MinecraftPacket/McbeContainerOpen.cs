@@ -5,8 +5,8 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeContainerOpen : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public long             runtimeEntityId; // = null;
-    public byte             type; // = null;
+    public long runtimeEntityId; // = null;
+    public byte type; // = null;
 
     public byte windowId; // = null;
 
@@ -46,7 +46,7 @@ public class McpeContainerOpen : Packet
 
         windowId = default;
         type = default;
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         runtimeEntityId = default;
     }
 }

@@ -5,10 +5,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeNetworkChunkPublisherUpdate : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public uint             radius; // = null;
-    public int              savedChunks; // = null;
-    public uint             x; // = null;
-    public uint             z; // = null;
+    public uint radius; // = null;
+    public int savedChunks; // = null;
+    public uint x; // = null;
+    public uint z; // = null;
 
     public McpeNetworkChunkPublisherUpdate()
     {
@@ -48,7 +48,7 @@ public class McpeNetworkChunkPublisherUpdate : Packet
     {
         base.ResetPacket();
 
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         radius = default;
         savedChunks = default;
         x = default(int);

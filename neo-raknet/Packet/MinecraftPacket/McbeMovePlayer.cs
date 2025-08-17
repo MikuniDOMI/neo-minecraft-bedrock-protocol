@@ -2,36 +2,36 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeMovePlayer : Packet
 {
-    public float headYaw; // = null;
-    public byte  mode; // = null;
-    public bool  onGround; // = null;
-    public long  otherRuntimeEntityId; // = null;
-    public float pitch; // = null;
-
-    public long  runtimeEntityId; // = null;
-    public long  tick;
-    public float x; // = null;
-    public float y; // = null;
-    public float yaw; // = null;
-    public float z; // = null;
-
     public enum Mode
     {
-        Normal   = 0,
-        Reset    = 1,
+        Normal = 0,
+        Reset = 1,
         Teleport = 2,
         Rotation = 3
     }
 
     public enum Teleportcause
     {
-        Unknown     = 0,
-        Projectile  = 1,
+        Unknown = 0,
+        Projectile = 1,
         ChorusFruit = 2,
-        Command     = 3,
-        Behavior    = 4,
-        Count       = 5
+        Command = 3,
+        Behavior = 4,
+        Count = 5
     }
+
+    public float headYaw; // = null;
+    public byte mode; // = null;
+    public bool onGround; // = null;
+    public long otherRuntimeEntityId; // = null;
+    public float pitch; // = null;
+
+    public long runtimeEntityId; // = null;
+    public long tick;
+    public float x; // = null;
+    public float y; // = null;
+    public float yaw; // = null;
+    public float z; // = null;
 
     public McpeMovePlayer()
     {

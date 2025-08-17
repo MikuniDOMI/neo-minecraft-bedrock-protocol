@@ -42,7 +42,7 @@ public class McpeUpdateAttributes : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        attributes = default(PlayerAttributes);
+        attributes = default;
         tick = default;
     }
 }

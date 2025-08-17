@@ -4,11 +4,11 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeLevelSoundEvent : Packet
 {
-    public int     blockId; // = null;
-    public long    entityId = -1;
-    public string  entityType; // = null;
-    public bool    isBabyMob; // = null;
-    public bool    isGlobal; // = null;
+    public int blockId; // = null;
+    public long entityId = -1;
+    public string entityType; // = null;
+    public bool isBabyMob; // = null;
+    public bool isGlobal; // = null;
     public Vector3 position; // = null;
 
     public uint soundId; // = null;
@@ -54,7 +54,7 @@ public class McpeLevelSoundEvent : Packet
         base.ResetPacket();
 
         soundId = default;
-        position = default(Vector3);
+        position = default;
         blockId = default;
         entityType = default;
         isBabyMob = default;

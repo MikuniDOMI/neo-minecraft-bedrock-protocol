@@ -2,31 +2,31 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeText : Packet
 {
-    public string   filteredMessage; // = null
-    public string   message; // = null;
-    public bool     needsTranslation; // = null
-    public string[] parameters; // = null
-    public string   platformChatId; // = null
-    public string   source; // = null;
-
-    public byte   type; // = null;
-    public string xuid; // = null
-
     public enum ChatTypes
     {
-        Raw              = 0,
-        Chat             = 1,
-        Translation      = 2,
-        Popup            = 3,
-        Jukeboxpopup     = 4,
-        Tip              = 5,
-        System           = 6,
-        Whisper          = 7,
-        Announcement     = 8,
-        Json             = 9,
-        Jsonwhisper      = 10,
+        Raw = 0,
+        Chat = 1,
+        Translation = 2,
+        Popup = 3,
+        Jukeboxpopup = 4,
+        Tip = 5,
+        System = 6,
+        Whisper = 7,
+        Announcement = 8,
+        Json = 9,
+        Jsonwhisper = 10,
         Jsonannouncement = 11
     }
+
+    public string filteredMessage; // = null
+    public string message; // = null;
+    public bool needsTranslation; // = null
+    public string[] parameters; // = null
+    public string platformChatId; // = null
+    public string source; // = null;
+
+    public byte type; // = null;
+    public string xuid; // = null
 
     public McpeText()
     {

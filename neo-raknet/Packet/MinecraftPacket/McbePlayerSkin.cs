@@ -4,9 +4,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpePlayerSkin : Packet
 {
-    public bool   isVerified; // = null;
+    public bool isVerified; // = null;
     public string oldSkinName; // = null;
-    public Skin   skin; // = null;
+    public Skin skin; // = null;
     public string skinName; // = null;
 
     public UUID uuid; // = null;
@@ -47,8 +47,8 @@ public class McpePlayerSkin : Packet
     {
         base.ResetPacket();
 
-        uuid = default(UUID);
-        skin = default(Skin);
+        uuid = default;
+        skin = default;
         skinName = default;
         oldSkinName = default;
         isVerified = default;

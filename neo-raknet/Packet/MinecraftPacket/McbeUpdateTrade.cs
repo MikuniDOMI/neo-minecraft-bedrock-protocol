@@ -5,13 +5,13 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeUpdateTrade : Packet
 {
     public string displayName; // = null;
-    public bool   isWilling; // = null;
-    public Nbt    namedtag; // = null;
-    public long   playerEntityId; // = null;
-    public long   traderEntityId; // = null;
-    public int    unknown0; // = null;
-    public int    unknown1; // = null;
-    public int    unknown2; // = null;
+    public bool isWilling; // = null;
+    public Nbt namedtag; // = null;
+    public long playerEntityId; // = null;
+    public long traderEntityId; // = null;
+    public int unknown0; // = null;
+    public int unknown1; // = null;
+    public int unknown2; // = null;
 
     public byte windowId; // = null;
     public byte windowType; // = null;
@@ -71,6 +71,6 @@ public class McpeUpdateTrade : Packet
         traderEntityId = default;
         playerEntityId = default;
         displayName = default;
-        namedtag = default(Nbt);
+        namedtag = default;
     }
 }

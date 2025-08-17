@@ -4,10 +4,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSpawnParticleEffect : Packet
 {
-    public byte    dimensionId; // = null;
-    public long    entityId; // = null;
-    public string  molangVariablesJson; // = null;
-    public string  particleName; // = null;
+    public byte dimensionId; // = null;
+    public long entityId; // = null;
+    public string molangVariablesJson; // = null;
+    public string particleName; // = null;
     public Vector3 position; // = null;
 
     public McpeSpawnParticleEffect()
@@ -48,7 +48,7 @@ public class McpeSpawnParticleEffect : Packet
 
         dimensionId = default;
         entityId = default;
-        position = default(Vector3);
+        position = default;
         particleName = default;
         molangVariablesJson = default;
     }

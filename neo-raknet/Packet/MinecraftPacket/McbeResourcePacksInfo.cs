@@ -4,12 +4,12 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeResourcePacksInfo : Packet
 {
+    public bool ForceDisableVibrantVisuals;
     public bool hasAddons; // = null;
     public bool hasScripts; // = null;
-    public bool ForceDisableVibrantVisuals;
-    public bool             mustAccept; // = null;
-    public UUID             templateUUID; // = null;
-    public string           templateVersion; // = null;
+    public bool mustAccept; // = null;
+    public UUID templateUUID; // = null;
+    public string templateVersion; // = null;
     public TexturePackInfos texturepacks; // = null;
 
     public McpeResourcePacksInfo()
@@ -56,8 +56,8 @@ public class McpeResourcePacksInfo : Packet
         hasAddons = default;
         hasScripts = default;
         ForceDisableVibrantVisuals = default;
-        templateUUID = default(UUID);
+        templateUUID = default;
         templateVersion = default;
-        texturepacks = default(TexturePackInfos);
+        texturepacks = default;
     }
 }

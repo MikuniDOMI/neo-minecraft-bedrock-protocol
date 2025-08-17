@@ -34,6 +34,6 @@ public class McpeSyncEntityProperty : Packet
     {
         base.ResetPacket();
 
-        propertyData = default(Nbt);
+        propertyData = default;
     }
 }

@@ -1,60 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace neo_raknet.Packet.MinecraftPacket;
 
-namespace neo_raknet.Packet.MinecraftPacket
+public partial class McpeFilterTextPacket : Packet //TODO DEPRECATED
 {
-	public partial class McpeFilterTextPacket : Packet  //TODO DEPRECATED
-	{
+    public bool fromServer; // = null;
 
-		public string text; // = null;
-		public bool   fromServer; // = null;
+    public string text; // = null;
 
-		public McpeFilterTextPacket()
-		{
-			Id = 0xa3;
-			IsMcpe = true;
-		}
+    public McpeFilterTextPacket()
+    {
+        Id = 0xa3;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			BeforeEncode();
+        BeforeEncode();
 
-			Write(text);
-			Write(fromServer);
+        Write(text);
+        Write(fromServer);
 
-			AfterEncode();
-		}
+        AfterEncode();
+    }
 
-		partial void BeforeEncode();
-		partial void AfterEncode();
+    partial void BeforeEncode();
+    partial void AfterEncode();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			BeforeDecode();
+        BeforeDecode();
 
-			text = ReadString();
-			fromServer = ReadBool();
+        text = ReadString();
+        fromServer = ReadBool();
 
-			AfterDecode();
-		}
+        AfterDecode();
+    }
 
-		partial void BeforeDecode();
-		partial void AfterDecode();
+    partial void BeforeDecode();
+    partial void AfterDecode();
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			text = default(string);
-			fromServer = default(bool);
-		}
-
-	}
+        text = default;
+        fromServer = default;
+    }
 }

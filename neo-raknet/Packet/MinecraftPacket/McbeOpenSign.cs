@@ -5,7 +5,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeOpenSign : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public bool             front; // = null;
+    public bool front; // = null;
 
     public McpeOpenSign()
     {
@@ -37,7 +37,7 @@ public class McpeOpenSign : Packet
     {
         base.ResetPacket();
 
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         front = default;
     }
 }

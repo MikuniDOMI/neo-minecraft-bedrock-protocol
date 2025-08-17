@@ -2,18 +2,18 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeNetworkSettings : Packet
 {
-    public bool  clientThrottleEnabled; // = null;
+    public enum Compression
+    {
+        Nothing = 0,
+        Everything = 1
+    }
+
+    public bool clientThrottleEnabled; // = null;
     public float clientThrottleScalar; // = null;
-    public byte  clientThrottleThreshold; // = null;
+    public byte clientThrottleThreshold; // = null;
     public short compressionAlgorithm; // = null;
 
     public short compressionThreshold; // = null;
-
-    public enum Compression
-    {
-        Nothing    = 0,
-        Everything = 1
-    }
 
     public McpeNetworkSettings()
     {

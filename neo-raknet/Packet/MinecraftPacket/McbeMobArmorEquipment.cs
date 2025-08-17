@@ -51,10 +51,10 @@ public class McpeMobArmorEquipment : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        helmet = default(Item);
-        chestplate = default(Item);
-        leggings = default(Item);
-        boots = default(Item);
-        body = default(Item);
+        helmet = default;
+        chestplate = default;
+        leggings = default;
+        boots = default;
+        body = default;
     }
 }

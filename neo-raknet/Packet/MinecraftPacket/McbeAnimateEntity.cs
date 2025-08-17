@@ -3,10 +3,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeAnimateEntity : Packet
 {
     public string animationName; // = null;
-    public float  blendOutTime; // = null;
+    public float blendOutTime; // = null;
     public string controllerName; // = null;
     public long[] entities; // = null;
-    public int    molangVersion; // = null;
+    public int molangVersion; // = null;
     public string nextState; // = null;
     public string stopExpression; // = null;
 

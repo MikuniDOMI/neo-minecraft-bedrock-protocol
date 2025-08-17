@@ -2,10 +2,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeDisconnect : Packet
 {
-    public uint   failReason; // = null;
+    public uint failReason; // = null;
     public string filteredMessage; // = null
 
-    public bool   hideDisconnectReason; // = null;
+    public bool hideDisconnectReason; // = null;
     public string message; // = null;
 
     public McpeDisconnect()

@@ -7,8 +7,8 @@ public class McpePlaySound : Packet
     public BlockCoordinates coordinates; // = null;
 
     public string name; // = null;
-    public float  pitch; // = null;
-    public float  volume; // = null;
+    public float pitch; // = null;
+    public float volume; // = null;
 
     public McpePlaySound()
     {
@@ -45,7 +45,7 @@ public class McpePlaySound : Packet
         base.ResetPacket();
 
         name = default;
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         volume = default;
         pitch = default;
     }

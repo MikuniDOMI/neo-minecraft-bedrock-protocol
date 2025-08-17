@@ -4,9 +4,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeChangeDimension : Packet
 {
-    public int     dimension; // = null;
+    public int dimension; // = null;
     public Vector3 position; // = null;
-    public bool    respawn; // = null;
+    public bool respawn; // = null;
 
     public McpeChangeDimension()
     {
@@ -42,7 +42,7 @@ public class McpeChangeDimension : Packet
         base.ResetPacket();
 
         dimension = default;
-        position = default(Vector3);
+        position = default;
         respawn = default;
     }
 }

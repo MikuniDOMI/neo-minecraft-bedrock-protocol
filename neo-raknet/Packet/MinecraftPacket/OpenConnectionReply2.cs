@@ -10,9 +10,9 @@ public class OpenConnectionReply2 : Packet
     }; // = { 0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78 };
 
     public IPEndPoint clientEndpoint; // = null;
-    public byte[]     doSecurityAndHandshake; // = null;
-    public short      mtuSize; // = null;
-    public long       serverGuid; // = null;
+    public byte[] doSecurityAndHandshake; // = null;
+    public short mtuSize; // = null;
+    public long serverGuid; // = null;
 
     public OpenConnectionReply2()
     {

@@ -34,6 +34,6 @@ public class McpeClientboundMapItemData : Packet
     {
         base.ResetPacket();
 
-        mapinfo = default(MapInfo);
+        mapinfo = default;
     }
 }

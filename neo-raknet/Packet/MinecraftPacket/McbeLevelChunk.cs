@@ -10,17 +10,17 @@ public enum SubChunkRequestMode
 public class McpeLevelChunk : Packet
 {
     public ulong[] blobHashes = null;
-    public bool    cacheEnabled;
-    public byte[]  chunkData;
+    public bool cacheEnabled;
+    public byte[] chunkData;
 
-    public int  chunkX; // = null;
-    public int  chunkZ; // = null;
+    public int chunkX; // = null;
+    public int chunkZ; // = null;
     public uint count;
 
     public int dimension; // = null;
 
     //public bool subChunkRequestsEnabled;
-    public uint                subChunkCount;
+    public uint subChunkCount;
     public SubChunkRequestMode subChunkRequestMode = SubChunkRequestMode.SubChunkRequestModeLegacy;
 
     public McpeLevelChunk()

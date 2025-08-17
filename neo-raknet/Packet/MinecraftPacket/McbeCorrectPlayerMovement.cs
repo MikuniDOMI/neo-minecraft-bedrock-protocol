@@ -4,11 +4,11 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeCorrectPlayerMovement : Packet
 {
-    public bool    OnGround; // = null;
+    public bool OnGround; // = null;
     public Vector3 Postition; // = null;
-    public long    Tick; // = null;
+    public long Tick; // = null;
 
-    public byte    Type; // = null;
+    public byte Type; // = null;
     public Vector3 Velocity; // = null;
 
     public McpeCorrectPlayerMovement()
@@ -48,8 +48,8 @@ public class McpeCorrectPlayerMovement : Packet
         base.ResetPacket();
 
         Type = default;
-        Postition = default(Vector3);
-        Velocity = default(Vector3);
+        Postition = default;
+        Velocity = default;
         OnGround = default;
         Tick = default;
     }

@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeStopSound : Packet
 {
     public string name; // = null;
-    public bool   stopAll; // = null;
+    public bool stopAll; // = null;
 
     public McpeStopSound()
     {

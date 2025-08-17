@@ -4,19 +4,19 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeInteract : Packet
 {
-    public byte    actionId; // = null;
-    public Vector3 Position;
-    public long    targetRuntimeEntityId; // = null;
-
     public enum Actions
     {
-        RightClick    = 1,
-        LeftClick     = 2,
-        LeaveVehicle  = 3,
-        MouseOver     = 4,
-        OpenNpc       = 5,
+        RightClick = 1,
+        LeftClick = 2,
+        LeaveVehicle = 3,
+        MouseOver = 4,
+        OpenNpc = 5,
         OpenInventory = 6
     }
+
+    public byte actionId; // = null;
+    public Vector3 Position;
+    public long targetRuntimeEntityId; // = null;
 
 
     public McpeInteract()

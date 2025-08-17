@@ -30,57 +30,57 @@ public class SpawnSettings
 
 public class LevelSettings
 {
-    public bool                 bonusChest; // = null;
-    public bool                 broadcastToLan; // = null;
-    public byte                 chatRestrictionLevel; // = null;
-    public bool                 createdInEditorMode; // = null;
-    public int                  difficulty; // = null;
-    public bool                 editorWorld;
-    public int                  eduOffer; // = null;
-    public string               eduProductUuid; // = null;
+    public bool bonusChest; // = null;
+    public bool broadcastToLan; // = null;
+    public byte chatRestrictionLevel; // = null;
+    public bool createdInEditorMode; // = null;
+    public int difficulty; // = null;
+    public bool editorWorld;
+    public int eduOffer; // = null;
+    public string eduProductUuid; // = null;
     public EducationUriResource eduSharedUriResource;
-    public bool                 emoteChatMuted; // = null;
-    public bool                 enableCommands; // = null;
-    public bool                 experimentalGameplayOverride; // = null;
-    public Experiments          experiments;
-    public bool                 exportedFromEditorMode; // = null;
-    public int                  gamemode; // = null;
-    public GameRules            gamerules; // = null;
-    public string               gameVersion; // = null;
+    public bool emoteChatMuted; // = null;
+    public bool enableCommands; // = null;
+    public bool experimentalGameplayOverride; // = null;
+    public Experiments experiments;
+    public bool exportedFromEditorMode; // = null;
+    public int gamemode; // = null;
+    public GameRules gamerules; // = null;
+    public string gameVersion; // = null;
 
-    public int           generator; // = null;
-    public bool          hardcoreEnabled; // = null;
-    public bool          hasAchievementsDisabled; // = null;
-    public bool          hasConfirmedPlatformLockedContent; // = null;
-    public bool          hasEduFeaturesEnabled; // = null;
-    public bool          hasLockedBehaviorPack; // = null;
-    public bool          hasLockedResourcePack; // = null;
-    public bool          isDisablePlayerInteractions; // = null;
-    public bool          isDisablingCustomSkins; // = null;
-    public bool          isDisablingPersonas; // = null;
-    public bool          isFromLockedWorldTemplate; // = null;
-    public bool          isFromWorldTemplate; // = null;
-    public bool          isMultiplayer; // = null;
-    public bool          isNewNether; // = null;
-    public bool          isTexturepacksRequired; // = null;
-    public bool          isWorldTemplateOptionLocked; // = null;
-    public float         lightningLevel; // = null;
-    public int           limitedWorldLength; // = null;
-    public int           limitedWorldWidth; // = null;
-    public bool          mapEnabled; // = null;
-    public bool          onlySpawnV1Villagers; // = null;
-    public byte          permissionLevel; // = null;
-    public int           platformBroadcastMode; // = null;
-    public float         rainLevel; // = null;
-    public long          seed; // = null;
-    public int           serverChunkTickRange; // = null;
+    public int generator; // = null;
+    public bool hardcoreEnabled; // = null;
+    public bool hasAchievementsDisabled; // = null;
+    public bool hasConfirmedPlatformLockedContent; // = null;
+    public bool hasEduFeaturesEnabled; // = null;
+    public bool hasLockedBehaviorPack; // = null;
+    public bool hasLockedResourcePack; // = null;
+    public bool isDisablePlayerInteractions; // = null;
+    public bool isDisablingCustomSkins; // = null;
+    public bool isDisablingPersonas; // = null;
+    public bool isFromLockedWorldTemplate; // = null;
+    public bool isFromWorldTemplate; // = null;
+    public bool isMultiplayer; // = null;
+    public bool isNewNether; // = null;
+    public bool isTexturepacksRequired; // = null;
+    public bool isWorldTemplateOptionLocked; // = null;
+    public float lightningLevel; // = null;
+    public int limitedWorldLength; // = null;
+    public int limitedWorldWidth; // = null;
+    public bool mapEnabled; // = null;
+    public bool onlySpawnV1Villagers; // = null;
+    public byte permissionLevel; // = null;
+    public int platformBroadcastMode; // = null;
+    public float rainLevel; // = null;
+    public long seed; // = null;
+    public int serverChunkTickRange; // = null;
     public SpawnSettings spawnSettings;
-    public int           time; // = null;
-    public bool          useMsaGamertagsOnly; // = null;
-    public int           x; // = null;
-    public int           xboxLiveBroadcastMode; // = null;
-    public int           y; // = null;
-    public int           z; // = null;
+    public int time; // = null;
+    public bool useMsaGamertagsOnly; // = null;
+    public int x; // = null;
+    public int xboxLiveBroadcastMode; // = null;
+    public int y; // = null;
+    public int z; // = null;
 
 
     public void Write(Packet packet)
@@ -211,35 +211,36 @@ public class LevelSettings
 
 public class McpeStartGame : Packet
 {
-    public bool         blockNetworkIdsAreHashes;
+    public bool blockNetworkIdsAreHashes;
     public BlockPalette blockPalette; // = null;
-    public ulong        blockPaletteChecksum;
-    public bool         clientSideGenerationEnabled;
-    public long         currentTick; // = null;
-    public bool         enableNewBlockBreakSystem; // = null;
-    public bool         enableNewInventorySystem; // = null;
-    public int          enchantmentSeed; // = null;
-    public long         entityIdSelf; // = null;
-    public bool         isTrial; // = null;
-    public string       levelId; // = null;
+    public ulong blockPaletteChecksum;
+    public bool clientSideGenerationEnabled;
+    public long currentTick; // = null;
+    public bool enableNewBlockBreakSystem; // = null;
+    public bool enableNewInventorySystem; // = null;
+    public int enchantmentSeed; // = null;
+    public long entityIdSelf; // = null;
+    public bool isTrial; // = null;
+    public string levelId; // = null;
 
     public LevelSettings levelSettings = new();
-    public int           movementRewindHistorySize; // = null;
-    public int           movementType; // = null;
-    public string        multiplayerCorrelationId; // = null;
-    public int           playerGamemode; // = null;
-    public string        premiumWorldTemplateId; // = null;
-    public Nbt           propertyData;
-    public Vector2       rotation; // = null;
-    public long          runtimeEntityId; // = null;
-    public string        scenarioId; // = null;
-    public string        serverId; // = null;
-    public string        serverVersion; // = null;
-    public Vector3       spawn; // = null;
-    public string        worldId; // = null;
-    public string        worldName; // = null;
-    public UUID          worldTemplateId;
+    public int movementRewindHistorySize; // = null;
+    public int movementType; // = null;
+    public string multiplayerCorrelationId; // = null;
+    public int playerGamemode; // = null;
+    public string premiumWorldTemplateId; // = null;
+    public Nbt propertyData;
+    public Vector2 rotation; // = null;
+    public long runtimeEntityId; // = null;
+    public string scenarioId; // = null;
+    public string serverId; // = null;
+    public string serverVersion; // = null;
+    public Vector3 spawn; // = null;
     public bool TickDeathSystems;
+    public string worldId; // = null;
+    public string worldName; // = null;
+    public UUID worldTemplateId;
+
     public McpeStartGame()
     {
         Id = 0x0b;
@@ -265,7 +266,7 @@ public class McpeStartGame : Packet
         Write(levelId);
         Write(worldName);
         Write(premiumWorldTemplateId);
-       
+
         Write(isTrial);
 
         //Player movement settings

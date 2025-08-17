@@ -5,7 +5,7 @@ public class McpeEntityPickRequest : Packet
     public bool addUserData; // = null;
 
     public ulong runtimeEntityId; // = null;
-    public byte  selectedSlot; // = null;
+    public byte selectedSlot; // = null;
 
     public McpeEntityPickRequest()
     {

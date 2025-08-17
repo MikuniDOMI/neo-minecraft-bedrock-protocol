@@ -1,10 +1,11 @@
-using neo_raknet.Utils;
+using neo_raknet.Protocol.Biomes;
 
 namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeBiomeDefinitionList : Packet
 {
-    public Biome[] biomes; // = null;
+    public string[] biomeNames = new string[0];
+    public BiomeDefinition[] biomes; // = null;
 
     public McpeBiomeDefinitionList()
     {
@@ -15,9 +16,10 @@ public class McpeBiomeDefinitionList : Packet
     protected override void EncodePacket()
     {
         base.EncodePacket();
-
-
-        Write(biomes);
+        WriteVarInt(biomes.Length);
+        foreach (var biome in biomes) WriteBiomeDefinition(biome);
+        WriteUnsignedVarInt((uint)biomeNames.Length);
+        foreach (var biomeName in biomeNames) Write(biomeName);
     }
 
 
@@ -25,8 +27,12 @@ public class McpeBiomeDefinitionList : Packet
     {
         base.DecodePacket();
 
-
-        biomes = ReadBiomes();
+        var biomeCount = ReadVarInt();
+        biomes = new BiomeDefinition[biomeCount];
+        for (var i = 0; i < biomeCount; i++) biomes[i] = ReadBiomeDefinition();
+        var biomeNameCount = ReadUnsignedVarInt();
+        biomeNames = new string[biomeNameCount];
+        for (var i = 0; i < biomeNameCount; i++) biomeNames[i] = ReadString();
     }
 
 

@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeNetworkStackLatency : Packet
 {
     public ulong timestamp; // = null;
-    public byte  unknownFlag; // = null;
+    public byte unknownFlag; // = null;
 
     public McpeNetworkStackLatency()
     {

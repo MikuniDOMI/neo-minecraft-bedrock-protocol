@@ -8,27 +8,27 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeAddPlayer : Packet
 {
-    public byte               commandPermissions; // = null;
-    public string             deviceId; // = null;
-    public int                deviceOs; // = null;
-    public long               entityIdSelf; // = null;
-    public uint               gameType; // = null;
-    public float              headYaw; // = null;
-    public Item               item; // = null;
-    public AbilityLayers      layers; // = null;
-    public EntityLinks        links; // = null;
+    public byte commandPermissions; // = null;
+    public string deviceId; // = null;
+    public int deviceOs; // = null;
+    public long entityIdSelf; // = null;
+    public uint gameType; // = null;
+    public float headYaw; // = null;
+    public Item item; // = null;
+    public AbilityLayers layers; // = null;
+    public EntityLinks links; // = null;
     public MetadataDictionary metadata; // = null;
-    public float              pitch; // = null;
-    public string             platformChatId; // = null;
-    public byte               playerPermissions; // = null;
-    public long               runtimeEntityId; // = null;
-    public float              speedX; // = null;
-    public float              speedY; // = null;
-    public float              speedZ; // = null;
-    public PropertySyncData   syncdata; // = null;
-    public string             username; // = null;
+    public float pitch; // = null;
+    public string platformChatId; // = null;
+    public byte playerPermissions; // = null;
+    public long runtimeEntityId; // = null;
+    public float speedX; // = null;
+    public float speedY; // = null;
+    public float speedZ; // = null;
+    public PropertySyncData syncdata; // = null;
+    public string username; // = null;
 
-    public UUID  uuid; // = null;
+    public UUID uuid; // = null;
     public float x; // = null;
     public float y; // = null;
     public float yaw; // = null;
@@ -108,7 +108,7 @@ public class McpeAddPlayer : Packet
     {
         base.ResetPacket();
 
-        uuid = default(UUID);
+        uuid = default;
         username = default;
         runtimeEntityId = default;
         platformChatId = default;
@@ -121,15 +121,15 @@ public class McpeAddPlayer : Packet
         pitch = default;
         yaw = default;
         headYaw = default;
-        item = default(Item);
+        item = default;
         gameType = default;
-        metadata = default(MetadataDictionary);
-        syncdata = default(PropertySyncData);
+        metadata = default;
+        syncdata = default;
         entityIdSelf = default;
         playerPermissions = default;
         commandPermissions = default;
-        layers = default(AbilityLayers);
-        links = default(EntityLinks);
+        layers = default;
+        links = default;
         deviceId = default;
         deviceOs = default;
     }

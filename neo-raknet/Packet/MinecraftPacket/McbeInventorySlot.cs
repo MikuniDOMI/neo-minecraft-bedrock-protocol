@@ -5,7 +5,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeInventorySlot : Packet
 {
-    public FullContainerName ContainerName = new FullContainerName();
+    public FullContainerName ContainerName = new();
 
     public uint inventoryId; // = null;
     public Item item; // = null;
@@ -50,8 +50,8 @@ public class McpeInventorySlot : Packet
 
         inventoryId = default;
         slot = default;
-        ContainerName = default(FullContainerName);
-        storageItem = default(Item);
-        item = default(Item);
+        ContainerName = default;
+        storageItem = default;
+        item = default;
     }
 }

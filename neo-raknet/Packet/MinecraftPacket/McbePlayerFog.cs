@@ -34,6 +34,6 @@ public class McpePlayerFog : Packet
     {
         base.ResetPacket();
 
-        fogstack = default(fogStack);
+        fogstack = default;
     }
 }

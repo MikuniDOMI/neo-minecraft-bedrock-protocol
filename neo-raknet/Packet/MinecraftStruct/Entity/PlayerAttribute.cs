@@ -1,121 +1,123 @@
-﻿namespace neo_raknet.Packet.MinecraftStruct.Entity
+﻿namespace neo_raknet.Packet.MinecraftStruct.Entity;
+
+public class AttributeModifier
 {
-	public class AttributeModifier
-	{
-		public string Id { get; set; }
-		public string Name { get; set; }
-		public float Amount { get; set; }
-		public int Operations { get; set; }
-		public int Operand { get; set; }
-		public bool Serializable { get; set; }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public float Amount { get; set; }
+    public int Operations { get; set; }
+    public int Operand { get; set; }
+    public bool Serializable { get; set; }
 
-		public override string ToString()
-		{
-			return $"{{Id: {Id}, Name: {Name}, Amount: {Amount}, Operations: {Operations}, Operand: {Operand}, Serializable: {Serializable}}}";
-		}
-	}
+    public override string ToString()
+    {
+        return
+            $"{{Id: {Id}, Name: {Name}, Amount: {Amount}, Operations: {Operations}, Operand: {Operand}, Serializable: {Serializable}}}";
+    }
+}
 
-	public class PlayerAttribute
-	{
-		public string Name { get; set; }
-		public float MinValue { get; set; }
-		public float MaxValue { get; set; }
-		public float Value { get; set; }
-		public float DefaultMinValue { get; set; }
-		public float DefaultMaxValue { get; set; }
-		public float Default { get; set; }
-		public AttributeModifiers Modifiers { get; set; }
+public class PlayerAttribute
+{
+    public string Name { get; set; }
+    public float MinValue { get; set; }
+    public float MaxValue { get; set; }
+    public float Value { get; set; }
+    public float DefaultMinValue { get; set; }
+    public float DefaultMaxValue { get; set; }
+    public float Default { get; set; }
+    public AttributeModifiers Modifiers { get; set; }
 
-		public override string ToString()
-		{
-			return $"{{Name: {Name}, MinValue: {MinValue}, MaxValue: {MaxValue}, Value: {Value}, Default: {Default}}}";
-		}
-	}
+    public override string ToString()
+    {
+        return $"{{Name: {Name}, MinValue: {MinValue}, MaxValue: {MaxValue}, Value: {Value}, Default: {Default}}}";
+    }
+}
 
-	public class EntityAttribute
-	{
-		public string Name { get; set; }
-		public float MinValue { get; set; }
-		public float MaxValue { get; set; }
-		public float Value { get; set; }
+public class EntityAttribute
+{
+    public string Name { get; set; }
+    public float MinValue { get; set; }
+    public float MaxValue { get; set; }
+    public float Value { get; set; }
 
-		public override string ToString()
-		{
-			return $"{{Name: {Name}, MinValue: {MinValue}, MaxValue: {MaxValue}, Value: {Value}}}";
-		}
-	}
+    public override string ToString()
+    {
+        return $"{{Name: {Name}, MinValue: {MinValue}, MaxValue: {MaxValue}, Value: {Value}}}";
+    }
+}
 
+public enum GameRulesEnum
+{
+    CommandblockOutput,
+    DoDaylightcycle,
+    DoEntitydrops,
+    DoFiretick,
+    DoMobloot,
+    DoMobspawning,
+    DoTiledrops,
+    DoWeathercycle,
+    DrowningDamage,
+    Falldamage,
+    Firedamage,
+    KeepInventory,
+    Mobgriefing,
+    Pvp,
+    ShowCoordinates,
+    NaturalRegeneration,
+    TntExplodes,
+    SendCommandfeedback,
+    ExperimentalGameplay,
 
-	public enum GameRulesEnum
-	{
-		CommandblockOutput,
-		DoDaylightcycle,
-		DoEntitydrops,
-		DoFiretick,
-		DoMobloot,
-		DoMobspawning,
-		DoTiledrops,
-		DoWeathercycle,
-		DrowningDamage,
-		Falldamage,
-		Firedamage,
-		KeepInventory,
-		Mobgriefing,
-		Pvp,
-		ShowCoordinates,
-		NaturalRegeneration,
-		TntExplodes,
-		SendCommandfeedback,
-		ExperimentalGameplay,
-		// int,
-		DoInsomnia,
-		CommandblocksEnabled,
-		// int,
-		DoImmediateRespawn,
-		ShowDeathmessages,
-		// int,
-	}
+    // int,
+    DoInsomnia,
+    CommandblocksEnabled,
 
-	public abstract class GameRule
-	{
-		public string Name { get; }
-		public bool IsPlayerModifiable { get; set; } = true;
+    // int,
+    DoImmediateRespawn,
 
-		protected GameRule(string name)
-		{
-			Name = name;
-		}
+    ShowDeathmessages
+    // int,
+}
 
-		protected bool Equals(GameRule other)
-		{
-			return string.Equals(Name, other.Name);
-		}
+public abstract class GameRule
+{
+    protected GameRule(string name)
+    {
+        Name = name;
+    }
 
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
-			return Equals((GameRule)obj);
-		}
+    public string Name { get; }
+    public bool IsPlayerModifiable { get; set; } = true;
 
-		public override int GetHashCode()
-		{
-			return (Name != null ? Name.GetHashCode() : 0);
-		}
-	}
+    protected bool Equals(GameRule other)
+    {
+        return string.Equals(Name, other.Name);
+    }
 
-	public class GameRule<T> : GameRule
-	{
-		public T Value { get; set; }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((GameRule)obj);
+    }
 
-		public GameRule(GameRulesEnum rule, T value) : this(rule.ToString(), value)
-		{
-		}
+    public override int GetHashCode()
+    {
+        return Name != null ? Name.GetHashCode() : 0;
+    }
+}
 
-		public GameRule(string name, T value) : base(name)
-		{
-			Value = value;
-		}
-	}
+public class GameRule<T> : GameRule
+{
+    public GameRule(GameRulesEnum rule, T value) : this(rule.ToString(), value)
+    {
+    }
+
+    public GameRule(string name, T value) : base(name)
+    {
+        Value = value;
+    }
+
+    public T Value { get; set; }
 }

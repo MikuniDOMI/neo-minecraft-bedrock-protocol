@@ -4,12 +4,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetScore : Packet
 {
-    public ScoreEntries entries; // = null;
-
     public enum ChangeTypes
     {
-        Player     = 1,
-        Entity     = 2,
+        Player = 1,
+        Entity = 2,
         FakePlayer = 3
     }
 
@@ -18,6 +16,8 @@ public class McpeSetScore : Packet
         Change = 0,
         Remove = 1
     }
+
+    public ScoreEntries entries; // = null;
 
     public McpeSetScore()
     {
@@ -47,6 +47,6 @@ public class McpeSetScore : Packet
     {
         base.ResetPacket();
 
-        entries = default(ScoreEntries);
+        entries = default;
     }
 }

@@ -5,11 +5,11 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeCommandRequest : Packet
 {
     public string command; // = null;
-    public uint   commandType; // = null;
-    public bool   isinternal; // = null;
+    public uint commandType; // = null;
+    public bool isinternal; // = null;
     public string requestId; // = null;
-    public UUID   unknownUuid; // = null;
-    public int    version; // = null;
+    public UUID unknownUuid; // = null;
+    public int version; // = null;
 
     public McpeCommandRequest()
     {
@@ -51,7 +51,7 @@ public class McpeCommandRequest : Packet
 
         command = default;
         commandType = default;
-        unknownUuid = default(UUID);
+        unknownUuid = default;
         requestId = default;
         isinternal = default;
         version = default;

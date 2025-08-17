@@ -4,10 +4,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class FtlCreatePlayer : Packet
 {
-    public long   clientId; // = null;
-    public UUID   clientuuid; // = null;
+    public long clientId; // = null;
+    public UUID clientuuid; // = null;
     public string serverAddress; // = null;
-    public Skin   skin; // = null;
+    public Skin skin; // = null;
 
     public string username; // = null;
 
@@ -48,9 +48,9 @@ public class FtlCreatePlayer : Packet
         base.ResetPacket();
 
         username = default;
-        clientuuid = default(UUID);
+        clientuuid = default;
         serverAddress = default;
         clientId = default;
-        skin = default(Skin);
+        skin = default;
     }
 }

@@ -4,17 +4,17 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeResourcePackClientResponse : Packet
 {
+    public enum ResponseStatus
+    {
+        Refused = 1,
+        SendPacks = 2,
+        HaveAllPacks = 3,
+        Completed = 4
+    }
+
     public ResourcePackIds resourcepackids; // = null;
 
     public byte responseStatus; // = null;
-
-    public enum ResponseStatus
-    {
-        Refused      = 1,
-        SendPacks    = 2,
-        HaveAllPacks = 3,
-        Completed    = 4
-    }
 
     public McpeResourcePackClientResponse()
     {
@@ -47,6 +47,6 @@ public class McpeResourcePackClientResponse : Packet
         base.ResetPacket();
 
         responseStatus = default;
-        resourcepackids = default(ResourcePackIds);
+        resourcepackids = default;
     }
 }

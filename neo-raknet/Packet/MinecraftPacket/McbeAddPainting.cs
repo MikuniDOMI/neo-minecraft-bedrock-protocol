@@ -5,10 +5,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeAddPainting : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public int              direction; // = null;
+    public int direction; // = null;
 
-    public long   entityIdSelf; // = null;
-    public long   runtimeEntityId; // = null;
+    public long entityIdSelf; // = null;
+    public long runtimeEntityId; // = null;
     public string title; // = null;
 
     public McpeAddPainting()
@@ -49,7 +49,7 @@ public class McpeAddPainting : Packet
 
         entityIdSelf = default;
         runtimeEntityId = default;
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         direction = default;
         title = default;
     }

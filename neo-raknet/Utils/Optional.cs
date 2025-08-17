@@ -3,7 +3,9 @@
     public bool HasValue;
     public T Value;
 
-    public Optional() { }
+    public Optional()
+    {
+    }
 
     public Optional(T value)
     {

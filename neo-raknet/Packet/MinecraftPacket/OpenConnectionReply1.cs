@@ -8,8 +8,8 @@ public class OpenConnectionReply1 : Packet
     }; // = { 0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78 };
 
     public ushort mtuSize; // = null;
-    public long  serverGuid; // = null;
-    public byte  serverHasSecurity; // = null;
+    public long serverGuid; // = null;
+    public byte serverHasSecurity; // = null;
 
     public OpenConnectionReply1()
     {

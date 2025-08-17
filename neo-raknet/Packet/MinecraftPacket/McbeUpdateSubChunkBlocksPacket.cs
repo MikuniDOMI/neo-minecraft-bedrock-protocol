@@ -41,7 +41,7 @@ public class McpeUpdateSubChunkBlocksPacket : Packet
     {
         base.ResetPacket();
 
-        subchunkCoordinates = default(BlockCoordinates);
+        subchunkCoordinates = default;
         layerZeroUpdates = default;
         layerOneUpdates = default;
     }

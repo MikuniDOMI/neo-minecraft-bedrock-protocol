@@ -4,26 +4,26 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeCraftingEvent : Packet
 {
+    public enum RecipeTypes
+    {
+        Shapeless = 0,
+        Shaped = 1,
+        Furnace = 2,
+        FurnaceData = 3,
+        Multi = 4,
+        ShulkerBox = 5,
+        ChemistryShapeless = 6,
+        ChemistryShaped = 7,
+        SmithingTransform = 8,
+        SmithingTrim = 9
+    }
+
     public ItemStacks input; // = null;
-    public UUID       recipeId; // = null;
-    public int        recipeType; // = null;
+    public UUID recipeId; // = null;
+    public int recipeType; // = null;
     public ItemStacks result; // = null;
 
     public byte windowId; // = null;
-
-    public enum RecipeTypes
-    {
-        Shapeless          = 0,
-        Shaped             = 1,
-        Furnace            = 2,
-        FurnaceData        = 3,
-        Multi              = 4,
-        ShulkerBox         = 5,
-        ChemistryShapeless = 6,
-        ChemistryShaped    = 7,
-        SmithingTransform  = 8,
-        SmithingTrim       = 9
-    }
 
     public McpeCraftingEvent()
     {
@@ -63,8 +63,8 @@ public class McpeCraftingEvent : Packet
 
         windowId = default;
         recipeType = default;
-        recipeId = default(UUID);
-        input = default(ItemStacks);
-        result = default(ItemStacks);
+        recipeId = default;
+        input = default;
+        result = default;
     }
 }

@@ -2,8 +2,8 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeAnimate : Packet
 {
-    public int   actionId; // = null;
-    public long  runtimeEntityId; // = null;
+    public int actionId; // = null;
+    public long runtimeEntityId; // = null;
     public float unknownFloat;
 
     public McpeAnimate()

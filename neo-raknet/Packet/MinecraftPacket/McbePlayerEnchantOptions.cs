@@ -34,6 +34,6 @@ public class McpePlayerEnchantOptions : Packet
     {
         base.ResetPacket();
 
-        enchantOptions = default(EnchantOptions);
+        enchantOptions = default;
     }
 }

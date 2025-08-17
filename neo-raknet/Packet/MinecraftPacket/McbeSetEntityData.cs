@@ -7,9 +7,9 @@ public class McpeSetEntityData : Packet
 {
     public MetadataDictionary metadata; // = null;
 
-    public long             runtimeEntityId; // = null;
+    public long runtimeEntityId; // = null;
     public PropertySyncData syncdata; // = null;
-    public long             tick; // = null;
+    public long tick; // = null;
 
     public McpeSetEntityData()
     {
@@ -46,8 +46,8 @@ public class McpeSetEntityData : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        metadata = default(MetadataDictionary);
-        syncdata = default(PropertySyncData);
+        metadata = default;
+        syncdata = default;
         tick = default;
     }
 }

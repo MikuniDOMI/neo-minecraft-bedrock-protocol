@@ -2,7 +2,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeRequestAbility : Packet
 {
-    public int    ability; // = null;
+    public int ability; // = null;
     public object Value = false;
 
     public McpeRequestAbility()

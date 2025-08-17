@@ -5,7 +5,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeUpdateEquipment : Packet
 {
     public long entityId; // = null;
-    public Nbt  namedtag; // = null;
+    public Nbt namedtag; // = null;
     public byte unknown; // = null;
 
     public byte windowId; // = null;
@@ -51,6 +51,6 @@ public class McpeUpdateEquipment : Packet
         windowType = default;
         unknown = default;
         entityId = default;
-        namedtag = default(Nbt);
+        namedtag = default;
     }
 }

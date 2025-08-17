@@ -2,7 +2,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeModalFormResponse : Packet
 {
-    public byte   cancelReason; // = null;
+    public byte cancelReason; // = null;
     public string data = "";
 
     public uint formId; // = null;

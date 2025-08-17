@@ -4,7 +4,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeCreativeContent : Packet
 {
-    public List<creativeGroup>     groups; // = null;
+    public List<creativeGroup> groups; // = null;
     public List<CreativeItemEntry> input; // = null;
 
     public McpeCreativeContent()

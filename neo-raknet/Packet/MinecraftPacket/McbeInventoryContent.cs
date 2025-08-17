@@ -5,8 +5,8 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeInventoryContent : Packet
 {
-    public FullContainerName ContainerName = new FullContainerName();
-    public ItemStacks        input; // = null;
+    public FullContainerName ContainerName = new();
+    public ItemStacks input; // = null;
 
     public uint inventoryId; // = null;
     public Item storageItem; // = null;
@@ -46,8 +46,8 @@ public class McpeInventoryContent : Packet
         base.ResetPacket();
 
         inventoryId = default;
-        input = default(ItemStacks);
-        storageItem = default(Item);
-        ContainerName = default(FullContainerName);
+        input = default;
+        storageItem = default;
+        ContainerName = default;
     }
 }

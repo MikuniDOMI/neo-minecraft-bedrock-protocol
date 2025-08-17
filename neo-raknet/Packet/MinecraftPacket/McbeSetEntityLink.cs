@@ -2,19 +2,19 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetEntityLink : Packet
 {
-    public byte linkType; // = null;
-
-    public long  riddenId; // = null;
-    public long  riderId; // = null;
-    public byte  unknown; // = null;
-    public float vehicleAngularVelocity; // = null;
-
     public enum LinkActions
     {
-        Remove    = 0,
-        Ride      = 1,
+        Remove = 0,
+        Ride = 1,
         Passenger = 2
     }
+
+    public byte linkType; // = null;
+
+    public long riddenId; // = null;
+    public long riderId; // = null;
+    public byte unknown; // = null;
+    public float vehicleAngularVelocity; // = null;
 
     public McpeSetEntityLink()
     {

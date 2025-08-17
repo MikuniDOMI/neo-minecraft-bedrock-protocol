@@ -4,17 +4,17 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeCommandBlockUpdate : Packet
 {
-    public string           command; // = null;
-    public uint             commandBlockMode; // = null;
+    public string command; // = null;
+    public uint commandBlockMode; // = null;
     public BlockCoordinates coordinates; // = null;
 
-    public bool   isBlock; // = null;
-    public bool   isConditional; // = null;
-    public bool   isRedstoneMode; // = null;
+    public bool isBlock; // = null;
+    public bool isConditional; // = null;
+    public bool isRedstoneMode; // = null;
     public string lastOutput; // = null;
-    public long   minecartEntityId; // = null;
+    public long minecartEntityId; // = null;
     public string name; // = null;
-    public bool   shouldTrackOutput; // = null;
+    public bool shouldTrackOutput; // = null;
 
     public McpeCommandBlockUpdate()
     {

@@ -23,9 +23,9 @@ public class CommandOutputMessage
 
 public enum CommandOutputType
 {
-    Last    = 1,
-    Silent  = 2,
-    All     = 3,
+    Last = 1,
+    Silent = 2,
+    All = 3,
     DataSet = 4
 }
 

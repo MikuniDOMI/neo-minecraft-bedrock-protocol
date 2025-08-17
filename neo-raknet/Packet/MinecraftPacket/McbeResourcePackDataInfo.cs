@@ -2,14 +2,14 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeResourcePackDataInfo : Packet
 {
-    public uint   chunkCount; // = null;
-    public ulong  compressedPackageSize; // = null;
+    public uint chunkCount; // = null;
+    public ulong compressedPackageSize; // = null;
     public byte[] hash; // = null;
-    public bool   isPremium; // = null;
-    public uint   maxChunkSize; // = null;
+    public bool isPremium; // = null;
+    public uint maxChunkSize; // = null;
 
     public string packageId; // = null;
-    public byte   packType; // = null;
+    public byte packType; // = null;
 
     public McpeResourcePackDataInfo()
     {

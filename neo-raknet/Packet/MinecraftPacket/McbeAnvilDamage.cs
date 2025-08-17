@@ -39,6 +39,6 @@ public class McpeAnvilDamage : Packet
         base.ResetPacket();
 
         damageAmount = default;
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
     }
 }

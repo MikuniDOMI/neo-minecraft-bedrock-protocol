@@ -371,28 +371,28 @@ public class McpeAvailableCommands : Packet
     {
         return type switch
         {
-            "enum"            => -1,
-            "unknown"         => 0,
-            "int"             => 0x01,
-            "float"           => 0x03,
-            "mixed"           => 0x04,
-            "wildcardint"     => 0x05,
-            "operator"        => 0x06,
+            "enum" => -1,
+            "unknown" => 0,
+            "int" => 0x01,
+            "float" => 0x03,
+            "mixed" => 0x04,
+            "wildcardint" => 0x05,
+            "operator" => 0x06,
             "operatorcompare" => 0x06,
-            "target"          => 0x08,
-            "wildcardtarget"  => 0x0A,
-            "filename"        => 0x11,
-            "fullintrange"    => 0x17,
-            "equipmentslot"   => 0x2B,
-            "string"          => 0x2C,
-            "blockpositon"    => 0x34,
-            "pos"             => 0x35,
-            "message"         => 0x37,
-            "rawtext"         => 0x3A,
-            "json"            => 0x3E,
-            "blockstates"     => 0x47,
-            "command"         => 0x4A,
-            _                 => 0
+            "target" => 0x08,
+            "wildcardtarget" => 0x0A,
+            "filename" => 0x11,
+            "fullintrange" => 0x17,
+            "equipmentslot" => 0x2B,
+            "string" => 0x2C,
+            "blockpositon" => 0x34,
+            "pos" => 0x35,
+            "message" => 0x37,
+            "rawtext" => 0x3A,
+            "json" => 0x3E,
+            "blockstates" => 0x47,
+            "command" => 0x4A,
+            _ => 0
         };
     }
 
@@ -400,8 +400,8 @@ public class McpeAvailableCommands : Packet
     {
         return type switch
         {
-            -1   => "enum",
-            0    => "unknown",
+            -1 => "enum",
+            0 => "unknown",
             0x01 => "int",
             0x03 => "float",
             0x04 => "mixed",
@@ -421,7 +421,7 @@ public class McpeAvailableCommands : Packet
             0x3E => "json", // give, replace
             0x47 => "blockstates",
             0x4A => "command",
-            _    => $"undefined({type})"
+            _ => $"undefined({type})"
         };
     }
 }

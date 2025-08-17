@@ -6,7 +6,7 @@ public class McpeResourcePackChunkData : Packet
 
     public string packageId; // = null;
     public byte[] payload; // = null;
-    public ulong  progress; // = null;
+    public ulong progress; // = null;
 
     public McpeResourcePackChunkData()
     {

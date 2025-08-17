@@ -4,10 +4,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSubChunkPacket : Packet
 {
-    public bool                  cacheEnabled; // = null;
-    public int                   dimension; // = null;
+    public bool cacheEnabled; // = null;
+    public int dimension; // = null;
     public SubChunkEntryCommon[] entries;
-    public BlockCoordinates      subchunkCoordinates; // = null;
+    public BlockCoordinates subchunkCoordinates; // = null;
 
     public McpeSubChunkPacket()
     {

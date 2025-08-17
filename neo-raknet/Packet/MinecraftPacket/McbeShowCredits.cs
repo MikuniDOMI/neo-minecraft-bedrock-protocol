@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeShowCredits : Packet
 {
     public long runtimeEntityId; // = null;
-    public int  status; // = null;
+    public int status; // = null;
 
     public McpeShowCredits()
     {

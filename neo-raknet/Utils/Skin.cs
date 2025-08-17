@@ -4,217 +4,211 @@ using Newtonsoft.Json.Serialization;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace neo_raknet.Utils
+namespace neo_raknet.Utils;
+
+public class PersonaPiece
 {
-	public class PersonaPiece
-	{
-		public string PieceId { get; set; }
-		public string PieceType { get; set; }
-		public string PackId { get; set; }
-		public bool IsDefaultPiece { get; set; }
-		public string ProductId { get; set; }
-	}
-	public class SkinPiece
-	{
-		public string PieceType { get; set; }
-		public List<string> Colors { get; set; } = new List<string>();
-	}
-	public class SkinResourcePatch : ICloneable
-	{
-		public GeometryIdentifier Geometry { get; set; }
+    public string PieceId { get; set; }
+    public string PieceType { get; set; }
+    public string PackId { get; set; }
+    public bool IsDefaultPiece { get; set; }
+    public string ProductId { get; set; }
+}
 
-		[JsonProperty(PropertyName = "persona_reset_resource_definitions")]
-		public bool PersonaResetResourceDefinitions { get; set; }
+public class SkinPiece
+{
+    public string PieceType { get; set; }
+    public List<string> Colors { get; set; } = new();
+}
 
-		public object Clone()
-		{
-			var cloned = (SkinResourcePatch)MemberwiseClone();
-			cloned.Geometry = (GeometryIdentifier)Geometry?.Clone();
+public class SkinResourcePatch : ICloneable
+{
+    public GeometryIdentifier Geometry { get; set; }
 
-			return cloned;
-		}
-	}
+    [JsonProperty(PropertyName = "persona_reset_resource_definitions")]
+    public bool PersonaResetResourceDefinitions { get; set; }
 
-	public class GeometryIdentifier : ICloneable
-	{
-		public string Default { get; set; }
+    public object Clone()
+    {
+        var cloned = (SkinResourcePatch)MemberwiseClone();
+        cloned.Geometry = (GeometryIdentifier)Geometry?.Clone();
 
-		[JsonProperty(PropertyName = "animated_face")]
-		public string AnimatedFace { get; set; }
+        return cloned;
+    }
+}
 
-		public object Clone()
-		{
-			return MemberwiseClone();
-		}
-	}
+public class GeometryIdentifier : ICloneable
+{
+    public string Default { get; set; }
 
-	public class Skin : ICloneable
-	{
-		public bool Slim { get; set; }
-		public bool IsPersonaSkin { get; set; }
-		public bool IsPremiumSkin { get; set; }
+    [JsonProperty(PropertyName = "animated_face")]
+    public string AnimatedFace { get; set; }
 
-		public Cape Cape { get; set; } = new Cape();
-		public string SkinId { get; set; }
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
+}
 
-		public string PlayFabId { get; set; }
+public class Skin : ICloneable
+{
+    public bool Slim { get; set; }
+    public bool IsPersonaSkin { get; set; }
+    public bool IsPremiumSkin { get; set; }
 
-		public string ResourcePatch { get; set; } // contains GeometryName
+    public Cape Cape { get; set; } = new();
+    public string SkinId { get; set; }
 
-		public SkinResourcePatch SkinResourcePatch
-		{
-			get => ToJSkinResourcePatch(ResourcePatch);
-			set => ResourcePatch = ToJson(value);
-		} // contains GeometryName
+    public string PlayFabId { get; set; }
 
-		public int Height { get; set; }
-		public int Width { get; set; }
-		public byte[] Data { get; set; }
-		public string GeometryName { get; set; }
-		public string GeometryData { get; set; }
-		public string GeometryDataVersion { get; set; } = "0.0.0";
+    public string ResourcePatch { get; set; } // contains GeometryName
 
-		public string ArmSize { get; set; }
+    public SkinResourcePatch SkinResourcePatch
+    {
+        get => ToJSkinResourcePatch(ResourcePatch);
+        set => ResourcePatch = ToJson(value);
+    } // contains GeometryName
 
-		public string SkinColor { get; set; }
+    public int Height { get; set; }
+    public int Width { get; set; }
+    public byte[] Data { get; set; }
+    public string GeometryName { get; set; }
+    public string GeometryData { get; set; }
+    public string GeometryDataVersion { get; set; } = "0.0.0";
 
-		public string AnimationData { get; set; }
-		public List<Animation> Animations { get; set; } = new List<Animation>();
+    public string ArmSize { get; set; }
 
-		public List<PersonaPiece> PersonaPieces { get; set; } = new List<PersonaPiece>();
-		public List<SkinPiece> SkinPieces { get; set; } = new List<SkinPiece>();
-		public bool IsVerified { get; set; }
-		public bool IsPrimaryUser { get; set; }
-		public bool isOverride { get; set; } = true;
+    public string SkinColor { get; set; }
 
-		public static byte[] GetTextureFromFile(string filename)
-		{
-			var bitmap = Image.Load<Rgba32>(filename);// new Image<Rgba32>(filename);
+    public string AnimationData { get; set; }
+    public List<Animation> Animations { get; set; } = new();
 
-			var size = bitmap.Height * bitmap.Width * 4;
+    public List<PersonaPiece> PersonaPieces { get; set; } = new();
+    public List<SkinPiece> SkinPieces { get; set; } = new();
+    public bool IsVerified { get; set; }
+    public bool IsPrimaryUser { get; set; }
+    public bool isOverride { get; set; } = true;
 
-			if (size != 0x2000 && size != 0x4000 && size != 0x10000)
-				return null;
+    public object Clone()
+    {
+        var clonedSkin = (Skin)MemberwiseClone();
+        clonedSkin.Data = Data?.Clone() as byte[];
+        clonedSkin.Cape = Cape?.Clone() as Cape;
+        clonedSkin.SkinResourcePatch = SkinResourcePatch?.Clone() as SkinResourcePatch;
 
-			byte[] bytes = new byte[size];
+        foreach (var animation in Animations) clonedSkin.Animations.Add((Animation)animation.Clone());
 
-			int i = 0;
-			for (int y = 0; y < bitmap.Height; y++)
-			{
-				for (int x = 0; x < bitmap.Width; x++)
-				{
-					var color = bitmap[x, y];
-					bytes[i++] = color.R;
-					bytes[i++] = color.G;
-					bytes[i++] = color.B;
-					bytes[i++] = color.A;
-				}
-			}
+        return clonedSkin;
+    }
 
-			return bytes;
-		}
+    public static byte[] GetTextureFromFile(string filename)
+    {
+        var bitmap = Image.Load<Rgba32>(filename); // new Image<Rgba32>(filename);
 
-		public static void SaveTextureToFile(string filename, byte[] bytes)
-		{
-			var size = bytes.Length;
+        var size = bitmap.Height * bitmap.Width * 4;
 
-			int width = size == 0x10000 ? 128 : 64;
-			var height = size == 0x2000 ? 32 : (size == 0x4000 ? 64 : 128);
+        if (size != 0x2000 && size != 0x4000 && size != 0x10000)
+            return null;
 
-			var bitmap = new Image<Rgba32>(width, height);
+        var bytes = new byte[size];
 
-			int i = 0;
-			for (int y = 0; y < bitmap.Height; y++)
-			{
-				for (int x = 0; x < bitmap.Width; x++)
-				{
-					byte r = bytes[i++];
-					byte g = bytes[i++];
-					byte b = bytes[i++];
-					byte a = bytes[i++];
+        var i = 0;
+        for (var y = 0; y < bitmap.Height; y++)
+        for (var x = 0; x < bitmap.Width; x++)
+        {
+            var color = bitmap[x, y];
+            bytes[i++] = color.R;
+            bytes[i++] = color.G;
+            bytes[i++] = color.B;
+            bytes[i++] = color.A;
+        }
 
-					bitmap[x, y] = new Rgba32(r, g, b, a);
-				}
-			}
+        return bytes;
+    }
 
-			bitmap.Save(filename);
-		}
+    public static void SaveTextureToFile(string filename, byte[] bytes)
+    {
+        var size = bytes.Length;
 
-		public static GeometryModel Parse(string json)
-		{
-			var settings = new JsonSerializerSettings();
-			settings.NullValueHandling = NullValueHandling.Ignore;
-			settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-			settings.MissingMemberHandling = MissingMemberHandling.Error;
-			settings.Formatting = Formatting.Indented;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        var width = size == 0x10000 ? 128 : 64;
+        var height = size == 0x2000 ? 32 : size == 0x4000 ? 64 : 128;
 
-			return JsonConvert.DeserializeObject<GeometryModel>(json, settings);
-		}
+        var bitmap = new Image<Rgba32>(width, height);
 
-		public static string ToJson(GeometryModel geometryModel)
-		{
-			var settings = new JsonSerializerSettings();
-			settings.NullValueHandling = NullValueHandling.Ignore;
-			settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-			settings.MissingMemberHandling = MissingMemberHandling.Error;
-			//settings.Formatting = Formatting.Indented;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-			settings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
+        var i = 0;
+        for (var y = 0; y < bitmap.Height; y++)
+        for (var x = 0; x < bitmap.Width; x++)
+        {
+            var r = bytes[i++];
+            var g = bytes[i++];
+            var b = bytes[i++];
+            var a = bytes[i++];
 
-			return JsonConvert.SerializeObject(geometryModel, settings);
-		}
+            bitmap[x, y] = new Rgba32(r, g, b, a);
+        }
+
+        bitmap.Save(filename);
+    }
+
+    public static GeometryModel Parse(string json)
+    {
+        var settings = new JsonSerializerSettings();
+        settings.NullValueHandling = NullValueHandling.Ignore;
+        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+        settings.MissingMemberHandling = MissingMemberHandling.Error;
+        settings.Formatting = Formatting.Indented;
+        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+        return JsonConvert.DeserializeObject<GeometryModel>(json, settings);
+    }
+
+    public static string ToJson(GeometryModel geometryModel)
+    {
+        var settings = new JsonSerializerSettings();
+        settings.NullValueHandling = NullValueHandling.Ignore;
+        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+        settings.MissingMemberHandling = MissingMemberHandling.Error;
+        //settings.Formatting = Formatting.Indented;
+        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        settings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
+
+        return JsonConvert.SerializeObject(geometryModel, settings);
+    }
 
 
-		public static string ToJson(SkinResourcePatch model)
-		{
-			var settings = new JsonSerializerSettings();
-			settings.NullValueHandling = NullValueHandling.Ignore;
-			settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-			settings.MissingMemberHandling = MissingMemberHandling.Error;
-			//settings.Formatting = Formatting.Indented;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-			settings.Converters.Add(new StringEnumConverter
-			{
-				NamingStrategy = new CamelCaseNamingStrategy()
-			});
+    public static string ToJson(SkinResourcePatch model)
+    {
+        var settings = new JsonSerializerSettings();
+        settings.NullValueHandling = NullValueHandling.Ignore;
+        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+        settings.MissingMemberHandling = MissingMemberHandling.Error;
+        //settings.Formatting = Formatting.Indented;
+        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        settings.Converters.Add(new StringEnumConverter
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        });
 
-			string json = JsonConvert.SerializeObject(model, settings);
+        var json = JsonConvert.SerializeObject(model, settings);
 
-			return json;
-		}
+        return json;
+    }
 
-		public static SkinResourcePatch ToJSkinResourcePatch(string json)
-		{
-			var settings = new JsonSerializerSettings();
-			settings.NullValueHandling = NullValueHandling.Ignore;
-			settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-			settings.MissingMemberHandling = MissingMemberHandling.Error;
-			//settings.Formatting = Formatting.Indented;
-			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-			settings.Converters.Add(new StringEnumConverter
-			{
-				NamingStrategy = new CamelCaseNamingStrategy()
-			});
+    public static SkinResourcePatch ToJSkinResourcePatch(string json)
+    {
+        var settings = new JsonSerializerSettings();
+        settings.NullValueHandling = NullValueHandling.Ignore;
+        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+        settings.MissingMemberHandling = MissingMemberHandling.Error;
+        //settings.Formatting = Formatting.Indented;
+        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        settings.Converters.Add(new StringEnumConverter
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        });
 
-			var obj = JsonConvert.DeserializeObject<SkinResourcePatch>(json, settings);
+        var obj = JsonConvert.DeserializeObject<SkinResourcePatch>(json, settings);
 
-			return obj;
-		}
-
-		public object Clone()
-		{
-			var clonedSkin = (Skin)MemberwiseClone();
-			clonedSkin.Data = Data?.Clone() as byte[];
-			clonedSkin.Cape = Cape?.Clone() as Cape;
-			clonedSkin.SkinResourcePatch = SkinResourcePatch?.Clone() as SkinResourcePatch;
-
-			foreach (Animation animation in Animations)
-			{
-				clonedSkin.Animations.Add((Animation)animation.Clone());
-			}
-
-			return clonedSkin;
-		}
-	}
+        return obj;
+    }
 }

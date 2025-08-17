@@ -2,9 +2,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpePacketViolationWarning : Packet
 {
-    public int    packetId; // = null;
+    public int packetId; // = null;
     public string reason; // = null;
-    public int    severity; // = null;
+    public int severity; // = null;
 
     public int violationType; // = null;
 

@@ -8,9 +8,9 @@ public class McpeUpdateBlockSynced : Packet
     public uint blockRuntimeId; // = null;
 
     public BlockCoordinates coordinates; // = null;
-    public uint             dataLayerId; // = null;
-    public long             unknown0; // = null;
-    public long             unknown1; // = null;
+    public uint dataLayerId; // = null;
+    public long unknown0; // = null;
+    public long unknown1; // = null;
 
     public McpeUpdateBlockSynced()
     {
@@ -50,7 +50,7 @@ public class McpeUpdateBlockSynced : Packet
     {
         base.ResetPacket();
 
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         blockRuntimeId = default;
         blockPriority = default;
         dataLayerId = default;

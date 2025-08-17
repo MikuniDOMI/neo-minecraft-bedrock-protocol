@@ -2,9 +2,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetInventoryOptions : Packet
 {
-    public int  craftingLayout; // = null;
+    public int craftingLayout; // = null;
     public bool filtering; // = null;
-    public int  inventoryLayout; // = null;
+    public int inventoryLayout; // = null;
 
     public int leftTab; // = null;
     public int rightTab; // = null;

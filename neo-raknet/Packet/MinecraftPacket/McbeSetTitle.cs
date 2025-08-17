@@ -2,14 +2,14 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetTitle : Packet
 {
-    public int    fadeInTime; // = null;
-    public int    fadeOutTime; // = null;
+    public int fadeInTime; // = null;
+    public int fadeOutTime; // = null;
     public string filteredString; // = null;
     public string platformOnlineId; // = null;
-    public int    stayTime; // = null;
+    public int stayTime; // = null;
     public string text; // = null;
 
-    public int    type; // = null;
+    public int type; // = null;
     public string xuid; // = null;
 
     public McpeSetTitle()

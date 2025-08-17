@@ -4,7 +4,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeMapInfoRequest : Packet
 {
-    public long      mapId; // = null;
+    public long mapId; // = null;
     public pixelList pixellist; // = null;
 
     public McpeMapInfoRequest()
@@ -38,6 +38,6 @@ public class McpeMapInfoRequest : Packet
         base.ResetPacket();
 
         mapId = default;
-        pixellist = default(pixelList);
+        pixellist = default;
     }
 }

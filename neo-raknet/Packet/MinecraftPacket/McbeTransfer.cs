@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeTransfer : Packet
 {
     public ushort port; // = null;
-    public bool   reload; // = null;
+    public bool reload; // = null;
 
     public string serverAddress; // = null;
 

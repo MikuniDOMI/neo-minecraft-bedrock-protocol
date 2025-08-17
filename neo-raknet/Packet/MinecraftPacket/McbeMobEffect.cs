@@ -2,9 +2,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeMobEffect : Packet
 {
-    public int  amplifier; // = null;
-    public int  duration; // = null;
-    public int  effectId; // = null;
+    public int amplifier; // = null;
+    public int duration; // = null;
+    public int effectId; // = null;
     public byte eventId; // = null;
     public bool particles; // = null;
 

@@ -4,13 +4,13 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetScoreboardIdentity : Packet
 {
-    public ScoreboardIdentityEntries entries; // = null;
-
     public enum Operations
     {
         RegisterIdentity = 0,
-        ClearIdentity    = 1
+        ClearIdentity = 1
     }
+
+    public ScoreboardIdentityEntries entries; // = null;
 
     public McpeSetScoreboardIdentity()
     {
@@ -40,6 +40,6 @@ public class McpeSetScoreboardIdentity : Packet
     {
         base.ResetPacket();
 
-        entries = default(ScoreboardIdentityEntries);
+        entries = default;
     }
 }

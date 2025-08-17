@@ -2,19 +2,19 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeRespawn : Packet
 {
+    public enum RespawnState
+    {
+        Search = 0,
+        Ready = 1,
+        ClientReady = 2
+    }
+
     public long runtimeEntityId; // = null;
     public byte state; // = null;
 
     public float x; // = null;
     public float y; // = null;
     public float z; // = null;
-
-    public enum RespawnState
-    {
-        Search      = 0,
-        Ready       = 1,
-        ClientReady = 2
-    }
 
     public McpeRespawn()
     {

@@ -34,6 +34,6 @@ public class McpeUpdateBlockProperties : Packet
     {
         base.ResetPacket();
 
-        namedtag = default(Nbt);
+        namedtag = default;
     }
 }

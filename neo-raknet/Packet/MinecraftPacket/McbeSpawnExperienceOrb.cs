@@ -1,61 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
-namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_raknet.Packet.MinecraftPacket;
+
+public partial class McpeSpawnExperienceOrb : Packet //Deprecated, todo remove, looks like not even working anymore
 {
-	public partial class McpeSpawnExperienceOrb : Packet  //Deprecated, todo remove, looks like not even working anymore
-	{
+    public int count; // = null;
 
-		public Vector3 position; // = null;
-		public int     count; // = null;
+    public Vector3 position; // = null;
 
-		public McpeSpawnExperienceOrb()
-		{
-			Id = 0x42;
-			IsMcpe = true;
-		}
+    public McpeSpawnExperienceOrb()
+    {
+        Id = 0x42;
+        IsMcpe = true;
+    }
 
-		protected override void EncodePacket()
-		{
-			base.EncodePacket();
+    protected override void EncodePacket()
+    {
+        base.EncodePacket();
 
-			BeforeEncode();
+        BeforeEncode();
 
-			Write(position);
-			WriteSignedVarInt(count);
+        Write(position);
+        WriteSignedVarInt(count);
 
-			AfterEncode();
-		}
+        AfterEncode();
+    }
 
-		partial void BeforeEncode();
-		partial void AfterEncode();
+    partial void BeforeEncode();
+    partial void AfterEncode();
 
-		protected override void DecodePacket()
-		{
-			base.DecodePacket();
+    protected override void DecodePacket()
+    {
+        base.DecodePacket();
 
-			BeforeDecode();
+        BeforeDecode();
 
-			position = ReadVector3();
-			count = ReadSignedVarInt();
+        position = ReadVector3();
+        count = ReadSignedVarInt();
 
-			AfterDecode();
-		}
+        AfterDecode();
+    }
 
-		partial void BeforeDecode();
-		partial void AfterDecode();
+    partial void BeforeDecode();
+    partial void AfterDecode();
 
-		protected override void ResetPacket()
-		{
-			base.ResetPacket();
+    protected override void ResetPacket()
+    {
+        base.ResetPacket();
 
-			position = default(Vector3);
-			count = default(int);
-		}
-
-	}
+        position = default;
+        count = default;
+    }
 }

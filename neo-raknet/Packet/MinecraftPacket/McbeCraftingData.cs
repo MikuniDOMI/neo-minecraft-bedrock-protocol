@@ -4,10 +4,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeCraftingData : Packet
 {
-    public bool                          isClean; // = null;
-    public MaterialReducerRecipe[]       materialReducerRecipes; // = null;
+    public bool isClean; // = null;
+    public MaterialReducerRecipe[] materialReducerRecipes; // = null;
     public PotionContainerChangeRecipe[] potionContainerRecipes; // = null;
-    public PotionTypeRecipe[]            potionTypeRecipes; // = null;
+    public PotionTypeRecipe[] potionTypeRecipes; // = null;
 
     public Recipes recipes; // = null;
 
@@ -47,7 +47,7 @@ public class McpeCraftingData : Packet
     {
         base.ResetPacket();
 
-        recipes = default(Recipes);
+        recipes = default;
         potionTypeRecipes = default;
         potionContainerRecipes = default;
         materialReducerRecipes = default;

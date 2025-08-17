@@ -34,6 +34,6 @@ public class McpePlayerList : Packet
     {
         base.ResetPacket();
 
-        records = default(PlayerRecords);
+        records = default;
     }
 }

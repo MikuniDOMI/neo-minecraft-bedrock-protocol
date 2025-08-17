@@ -34,6 +34,6 @@ public class McpeItemComponent : Packet
     {
         base.ResetPacket();
 
-        entries = default(Itemstates);
+        entries = default;
     }
 }

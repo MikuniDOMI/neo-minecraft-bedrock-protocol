@@ -7,23 +7,23 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeAddEntity : Packet
 {
     public EntityAttributes attributes; // = null;
-    public float            bodyYaw; // = null;
+    public float bodyYaw; // = null;
 
-    public long               entityIdSelf; // = null;
-    public string             entityType; // = null;
-    public float              headYaw; // = null;
-    public EntityLinks        links; // = null;
+    public long entityIdSelf; // = null;
+    public string entityType; // = null;
+    public float headYaw; // = null;
+    public EntityLinks links; // = null;
     public MetadataDictionary metadata; // = null;
-    public float              pitch; // = null;
-    public long               runtimeEntityId; // = null;
-    public float              speedX; // = null;
-    public float              speedY; // = null;
-    public float              speedZ; // = null;
-    public PropertySyncData   syncdata; // = null;
-    public float              x; // = null;
-    public float              y; // = null;
-    public float              yaw; // = null;
-    public float              z; // = null;
+    public float pitch; // = null;
+    public long runtimeEntityId; // = null;
+    public float speedX; // = null;
+    public float speedY; // = null;
+    public float speedZ; // = null;
+    public PropertySyncData syncdata; // = null;
+    public float x; // = null;
+    public float y; // = null;
+    public float yaw; // = null;
+    public float z; // = null;
 
     public McpeAddEntity()
     {
@@ -98,9 +98,9 @@ public class McpeAddEntity : Packet
         yaw = default;
         headYaw = default;
         bodyYaw = default;
-        attributes = default(EntityAttributes);
-        metadata = default(MetadataDictionary);
-        syncdata = default(PropertySyncData);
-        links = default(EntityLinks);
+        attributes = default;
+        metadata = default;
+        syncdata = default;
+        links = default;
     }
 }

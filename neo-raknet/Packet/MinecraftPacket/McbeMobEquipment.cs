@@ -48,7 +48,7 @@ public class McpeMobEquipment : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        item = default(Item);
+        item = default;
         slot = default;
         selectedSlot = default;
         windowsId = default;

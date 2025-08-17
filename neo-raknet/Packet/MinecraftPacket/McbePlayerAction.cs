@@ -4,9 +4,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpePlayerAction : Packet
 {
-    public int              actionId; // = null;
+    public int actionId; // = null;
     public BlockCoordinates coordinates; // = null;
-    public int              face; // = null;
+    public int face; // = null;
     public BlockCoordinates resultCoordinates; // = null;
 
     public long runtimeEntityId; // = null;
@@ -49,8 +49,8 @@ public class McpePlayerAction : Packet
 
         runtimeEntityId = default;
         actionId = default;
-        coordinates = default(BlockCoordinates);
-        resultCoordinates = default(BlockCoordinates);
+        coordinates = default;
+        resultCoordinates = default;
         face = default;
     }
 }

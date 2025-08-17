@@ -4,7 +4,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeAlexEntityAnimation : Packet
 {
-    public string         boneId; // = null;
+    public string boneId; // = null;
     public AnimationKey[] keys; // = null;
 
     public long runtimeEntityId; // = null;

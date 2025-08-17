@@ -1,14 +1,13 @@
+using System.Numerics;
 using neo_raknet.Packet.MinecraftStruct;
 using neo_raknet.Packet.MinecraftStruct.Item;
 using neo_raknet.Utils;
-using System.Numerics;
 
 namespace neo_raknet.Packet.MinecraftPacket;
 // 假设您已经有了这些类型：
 // public struct Item { ... }
 // public struct BlockPos { ... }
 // public struct Vector3 { ... } (或使用您选择的数学库如 System.Numerics.Vector3)
-
 
 public readonly struct LegacySetItemSlot
 {
@@ -32,7 +31,7 @@ public readonly struct InventoryAction
     public Item NewItem { get; }
 
     public InventoryAction(uint sourceType, int windowID, uint sourceFlags,
-                         uint inventorySlot, Item oldItem, Item newItem)
+        uint inventorySlot, Item oldItem, Item newItem)
     {
         SourceType = sourceType;
         WindowID = windowID;
@@ -58,6 +57,7 @@ public readonly struct UseItemTransactionData
     public Vector3 ClickedPosition { get; }
     public uint BlockRuntimeID { get; }
     public uint ClientPrediction { get; }
+
     public UseItemTransactionData(
         int legacyRequestID,
         LegacySetItemSlot[] legacySetItemSlots,
@@ -88,28 +88,29 @@ public readonly struct UseItemTransactionData
         ClientPrediction = clientPrediction;
     }
 }
+
 /// <summary>
-/// 表示玩家方块操作的数据结构
+///     表示玩家方块操作的数据结构
 /// </summary>
 public struct PlayerBlockAction
 {
     /// <summary>
-    /// 要执行的操作类型（使用预定义的常量值）
+    ///     要执行的操作类型（使用预定义的常量值）
     /// </summary>
     public int Action { get; set; }
 
     /// <summary>
-    /// 被交互方块的坐标位置
+    ///     被交互方块的坐标位置
     /// </summary>
     public BlockCoordinates BlockPos { get; set; }
 
     /// <summary>
-    /// 被交互的方块面（0-5对应上下东西南北）
+    ///     被交互的方块面（0-5对应上下东西南北）
     /// </summary>
     public int Face { get; set; }
 
     /// <summary>
-    /// 初始化玩家方块操作
+    ///     初始化玩家方块操作
     /// </summary>
     /// <param name="action">操作类型</param>
     /// <param name="blockPos">方块位置</param>
@@ -124,8 +125,6 @@ public struct PlayerBlockAction
 
 public class McpePlayerAuthInput : Packet
 {
-    public const int PlayerAuthInputBitsetSize = 65;
-
     public enum InputFlags
     {
         InputFlagAscend,
@@ -203,6 +202,13 @@ public class McpePlayerAuthInput : Packet
         InputModeMotionController
     }
 
+    public enum InteractionModels
+    {
+        InteractionModelTouch,
+        InteractionModelCrosshair,
+        InteractionModelClassic
+    }
+
     public enum PlayModes
     {
         PlayModeNormal,
@@ -217,89 +223,86 @@ public class McpePlayerAuthInput : Packet
         PlayModeNumModes
     }
 
-    public enum InteractionModels
-    {
-        InteractionModelTouch,
-        InteractionModelCrosshair,
-        InteractionModelClassic
-    }
-
-    public float Pitch, Yaw;
-    public Vector3 Position;
-
-    public Vector2 MoveVector;
+    public const int PlayerAuthInputBitsetSize = 65;
     public float HeadYaw;
 
     public Bitset InputData;
-    /// <summary>
-    /// Specifies the input mode the player is using
-    /// </summary>
-    public uint InputMode { get; set; }
-
-    /// <summary>
-    /// Specifies the way that the player is playing
-    /// </summary>
-    public uint PlayMode { get; set; }
-
-    /// <summary>
-    /// Represents the interaction model the player is using
-    /// </summary>
-    public uint InteractionModel { get; set; }
-
-    /// <summary>
-    /// The pitch angle for interactions (may differ from view pitch in VR/custom cameras)
-    /// </summary>
-    public float InteractPitch { get; set; }
-
-    /// <summary>
-    /// The yaw angle for interactions (may differ from view yaw in VR/custom cameras)
-    /// </summary>
-    public float InteractYaw { get; set; }
-
-    /// <summary>
-    /// The server tick at which the packet was sent
-    /// </summary>
-    public long Tick { get; set; }
-
-    /// <summary>
-    /// The delta between old and new position (can be calculated server-side)
-    /// </summary>
-    public Vector3 Delta { get; set; }
 
     public UseItemTransactionData ItemInteractionData;
-    public ItemStackRequests ItemStack = new ItemStackRequests();
+    public ItemStackRequests ItemStack = new();
+
+    public Vector2 MoveVector;
+
+    public float Pitch, Yaw;
 
     public PlayerBlockAction[] PlayerBlockAction_;
-    /// <summary>
-    /// 载具旋转角度（使用Vector2表示）
-    /// </summary>
-    public Vector2 VehicleRotation { get; set; }
-
-    /// <summary>
-    /// 客户端预测的载具唯一ID
-    /// </summary>
-    public long ClientPredictedVehicle { get; set; }
-
-    /// <summary>
-    /// 模拟移动方向向量（X/Z值组合）
-    /// </summary>
-    public Vector2 AnalogueMoveVector { get; set; }
-
-    /// <summary>
-    /// 摄像机方向向量（三维）
-    /// </summary>
-    public Vector3 CameraOrientation { get; set; }
-
-    /// <summary>
-    /// 原始移动向量（未经处理的输入值）
-    /// </summary>
-    public Vector2 RawMoveVector { get; set; }
+    public Vector3 Position;
 
     public McpePlayerAuthInput()
     {
         Id = 0x90;
         IsMcpe = true;
     }
+
+    /// <summary>
+    ///     Specifies the input mode the player is using
+    /// </summary>
+    public uint InputMode { get; set; }
+
+    /// <summary>
+    ///     Specifies the way that the player is playing
+    /// </summary>
+    public uint PlayMode { get; set; }
+
+    /// <summary>
+    ///     Represents the interaction model the player is using
+    /// </summary>
+    public uint InteractionModel { get; set; }
+
+    /// <summary>
+    ///     The pitch angle for interactions (may differ from view pitch in VR/custom cameras)
+    /// </summary>
+    public float InteractPitch { get; set; }
+
+    /// <summary>
+    ///     The yaw angle for interactions (may differ from view yaw in VR/custom cameras)
+    /// </summary>
+    public float InteractYaw { get; set; }
+
+    /// <summary>
+    ///     The server tick at which the packet was sent
+    /// </summary>
+    public long Tick { get; set; }
+
+    /// <summary>
+    ///     The delta between old and new position (can be calculated server-side)
+    /// </summary>
+    public Vector3 Delta { get; set; }
+
+    /// <summary>
+    ///     载具旋转角度（使用Vector2表示）
+    /// </summary>
+    public Vector2 VehicleRotation { get; set; }
+
+    /// <summary>
+    ///     客户端预测的载具唯一ID
+    /// </summary>
+    public long ClientPredictedVehicle { get; set; }
+
+    /// <summary>
+    ///     模拟移动方向向量（X/Z值组合）
+    /// </summary>
+    public Vector2 AnalogueMoveVector { get; set; }
+
+    /// <summary>
+    ///     摄像机方向向量（三维）
+    /// </summary>
+    public Vector3 CameraOrientation { get; set; }
+
+    /// <summary>
+    ///     原始移动向量（未经处理的输入值）
+    /// </summary>
+    public Vector2 RawMoveVector { get; set; }
 
     protected override void EncodePacket()
     {
@@ -324,15 +327,11 @@ public class McpePlayerAuthInput : Packet
 
         // 条件性写入
         if (InputData.Load((int)InputFlags.InputFlagPerformItemInteraction))
-        {
             WriteUseItemTransactionData(ItemInteractionData);
-        }
 
         if (InputData.Load((int)InputFlags.InputFlagPerformItemStackRequest))
-        {
             // methods.txt 中有 Write(ItemStackRequests requests)
             Write(ItemStack);
-        }
 
         if (InputData.Load((int)InputFlags.InputFlagPerformBlockActions))
         {
@@ -341,12 +340,8 @@ public class McpePlayerAuthInput : Packet
             WriteSignedVarInt(PlayerBlockAction_?.Length ?? 0);
             // 2. 遍历并写入每个元素
             if (PlayerBlockAction_ != null)
-            {
                 foreach (var action in PlayerBlockAction_)
-                {
                     WritePlayerBlockAction(action);
-                }
-            }
         }
 
         if (InputData.Load((int)InputFlags.InputFlagClientPredictedVehicle))
@@ -383,35 +378,23 @@ public class McpePlayerAuthInput : Packet
 
         // 条件性读取
         if (InputData.Load((int)InputFlags.InputFlagPerformItemInteraction))
-        {
             ItemInteractionData = ReadUseItemTransactionData();
-        }
-        else
-        {
-            // 可以选择重置为默认值或保持原样
-        }
 
+        // 可以选择重置为默认值或保持原样
         if (InputData.Load((int)InputFlags.InputFlagPerformItemStackRequest))
-        {
             // methods.txt 中有 ItemStackRequests ReadItemStackRequests(bool single)
             ItemStack = ReadItemStackRequests(true); // 或 false，取决于具体协议
-        }
         else
-        {
             ItemStack = new ItemStackRequests();
-        }
 
         if (InputData.Load((int)InputFlags.InputFlagPerformBlockActions))
         {
             // 对应 Go 的 protocol.SliceVarint32Length(io, &pk.BlockActions)
             // 1. 读取数组长度 (varint32)
-            int blockActionsCount = ReadSignedVarInt();
+            var blockActionsCount = ReadSignedVarInt();
             // 2. 创建数组并读取元素
             PlayerBlockAction_ = new PlayerBlockAction[blockActionsCount];
-            for (int i = 0; i < blockActionsCount; i++)
-            {
-                PlayerBlockAction_[i] = ReadPlayerBlockAction();
-            }
+            for (var i = 0; i < blockActionsCount; i++) PlayerBlockAction_[i] = ReadPlayerBlockAction();
         }
         else
         {
@@ -463,7 +446,6 @@ public class McpePlayerAuthInput : Packet
         RawMoveVector = Vector2.Zero;
     }
 
-    
 
     // --- Bitset ---
     // 你需要根据之前的对话实现 WriteBitset 和 ReadBitset
@@ -480,22 +462,14 @@ public class McpePlayerAuthInput : Packet
         // 写入 LegacySetItemSlots ([]LegacySetItemSlot)
         WriteSignedVarInt(data.LegacySetItemSlots?.Length ?? 0);
         if (data.LegacySetItemSlots != null)
-        {
             foreach (var slot in data.LegacySetItemSlots)
-            {
                 WriteLegacySetItemSlot(slot);
-            }
-        }
 
         // 写入 Actions ([]InventoryAction)
         WriteSignedVarInt(data.Actions?.Length ?? 0);
         if (data.Actions != null)
-        {
             foreach (var action in data.Actions)
-            {
                 WriteInventoryAction(action);
-            }
-        }
 
         // 写入 ActionType (uint32)
         WriteUnsignedVarInt(data.ActionType);
@@ -515,7 +489,7 @@ public class McpePlayerAuthInput : Packet
 
         // 写入 HeldItem (Item)
         // methods.txt 中有 Write(Item stack, bool writeUniqueId)
-        Write(data.HeldItem, true); // Adjust 'true' if needed based on Item definition
+        Write(data.HeldItem); // Adjust 'true' if needed based on Item definition
 
         // 写入 Position (Vector3)
         Write(data.Position);
@@ -533,55 +507,49 @@ public class McpePlayerAuthInput : Packet
     private UseItemTransactionData ReadUseItemTransactionData()
     {
         // 读取 LegacyRequestID (int32)
-        int legacyRequestID = ReadSignedVarInt();
+        var legacyRequestID = ReadSignedVarInt();
 
         // 读取 LegacySetItemSlots ([]LegacySetItemSlot)
-        int legacySlotsCount = ReadSignedVarInt();
+        var legacySlotsCount = ReadSignedVarInt();
         var legacySlots = new LegacySetItemSlot[legacySlotsCount];
-        for (int i = 0; i < legacySlotsCount; i++)
-        {
-            legacySlots[i] = ReadLegacySetItemSlot();
-        }
+        for (var i = 0; i < legacySlotsCount; i++) legacySlots[i] = ReadLegacySetItemSlot();
 
         // 读取 Actions ([]InventoryAction)
-        int actionsCount = ReadSignedVarInt();
+        var actionsCount = ReadSignedVarInt();
         var actions = new InventoryAction[actionsCount];
-        for (int i = 0; i < actionsCount; i++)
-        {
-            actions[i] = ReadInventoryAction();
-        }
+        for (var i = 0; i < actionsCount; i++) actions[i] = ReadInventoryAction();
 
         // 读取 ActionType (uint32)
-        uint actionType = ReadUnsignedVarInt();
+        var actionType = ReadUnsignedVarInt();
 
         // 读取 TriggerType (uint32)
-        uint triggerType = ReadUnsignedVarInt();
+        var triggerType = ReadUnsignedVarInt();
 
         // 读取 BlockPosition (BlockCoordinates)
         // methods.txt 中有 BlockCoordinates ReadBlockCoordinates()
-        BlockCoordinates blockPosition = ReadBlockCoordinates();
+        var blockPosition = ReadBlockCoordinates();
 
         // 读取 BlockFace (int32)
-        int blockFace = ReadSignedVarInt();
+        var blockFace = ReadSignedVarInt();
 
         // 读取 HotBarSlot (int32)
-        int hotBarSlot = ReadSignedVarInt();
+        var hotBarSlot = ReadSignedVarInt();
 
         // 读取 HeldItem (Item)
         // methods.txt 中有 Item ReadItem(bool readUniqueId)
-        Item heldItem = ReadItem(true); // Adjust 'true' if needed
+        var heldItem = ReadItem(); // Adjust 'true' if needed
 
         // 读取 Position (Vector3)
-        Vector3 position = ReadVector3();
+        var position = ReadVector3();
 
         // 读取 ClickedPosition (Vector3)
-        Vector3 clickedPosition = ReadVector3();
+        var clickedPosition = ReadVector3();
 
         // 读取 BlockRuntimeID (uint32)
-        uint blockRuntimeID = ReadUnsignedVarInt();
+        var blockRuntimeID = ReadUnsignedVarInt();
 
         // 读取 ClientPrediction (uint32)
-        uint clientPrediction = ReadUnsignedVarInt();
+        var clientPrediction = ReadUnsignedVarInt();
 
         // 使用构造函数创建并返回实例
         return new UseItemTransactionData(
@@ -611,26 +579,19 @@ public class McpePlayerAuthInput : Packet
         // 写入 Slots ([]byte)
         WriteUnsignedVarInt((uint)(slot.Slots?.Length ?? 0));
         if (slot.Slots != null)
-        {
             foreach (var s in slot.Slots)
-            {
                 Write(s); // Write(byte)
-            }
-        }
     }
 
     private LegacySetItemSlot ReadLegacySetItemSlot()
     {
         // 读取 ContainerID (byte)
-        byte containerID = ReadByte(); // methods.txt: byte ReadByte()
+        var containerID = ReadByte(); // methods.txt: byte ReadByte()
 
         // 读取 Slots ([]byte)
-        uint slotsCount = ReadUnsignedVarInt(); // 读取长度
+        var slotsCount = ReadUnsignedVarInt(); // 读取长度
         var slots = new byte[slotsCount];
-        for (int i = 0; i < slotsCount; i++)
-        {
-            slots[i] = ReadByte(); // 读取每个 byte
-        }
+        for (var i = 0; i < slotsCount; i++) slots[i] = ReadByte(); // 读取每个 byte
 
         // 使用构造函数创建并返回实例
         return new LegacySetItemSlot(containerID, slots);
@@ -654,32 +615,32 @@ public class McpePlayerAuthInput : Packet
 
         // 写入 OldItem (Item)
         // methods.txt 中有 Write(Item stack, bool writeUniqueId)
-        Write(action.OldItem, true); // Adjust 'true' if needed
+        Write(action.OldItem); // Adjust 'true' if needed
 
         // 写入 NewItem (Item)
-        Write(action.NewItem, true); // Adjust 'true' if needed
+        Write(action.NewItem); // Adjust 'true' if needed
     }
 
     private InventoryAction ReadInventoryAction()
     {
         // 读取 SourceType (uint32)
-        uint sourceType = ReadUnsignedVarInt();
+        var sourceType = ReadUnsignedVarInt();
 
         // 读取 WindowID (int32)
-        int windowID = ReadSignedVarInt();
+        var windowID = ReadSignedVarInt();
 
         // 读取 SourceFlags (uint32)
-        uint sourceFlags = ReadUnsignedVarInt();
+        var sourceFlags = ReadUnsignedVarInt();
 
         // 读取 InventorySlot (uint32)
-        uint inventorySlot = ReadUnsignedVarInt();
+        var inventorySlot = ReadUnsignedVarInt();
 
         // 读取 OldItem (Item)
         // methods.txt 中有 Item ReadItem(bool readUniqueId)
-        Item oldItem = ReadItem(true); // Adjust 'true' if needed
+        var oldItem = ReadItem(); // Adjust 'true' if needed
 
         // 读取 NewItem (Item)
-        Item newItem = ReadItem(true); // Adjust 'true' if needed
+        var newItem = ReadItem(); // Adjust 'true' if needed
 
         // 使用构造函数创建并返回实例
         return new InventoryAction(sourceType, windowID, sourceFlags, inventorySlot, oldItem, newItem);
@@ -703,21 +664,19 @@ public class McpePlayerAuthInput : Packet
     private PlayerBlockAction ReadPlayerBlockAction()
     {
         // 读取 Action (int32)
-        int action = ReadSignedVarInt();
+        var action = ReadSignedVarInt();
 
         // 读取 BlockPos (BlockCoordinates)
         // methods.txt 中有 BlockCoordinates ReadBlockCoordinates()
-        BlockCoordinates blockPos = ReadBlockCoordinates();
+        var blockPos = ReadBlockCoordinates();
 
         // 读取 Face (int32)
-        int face = ReadSignedVarInt();
+        var face = ReadSignedVarInt();
 
         // 使用构造函数创建并返回实例
         return new PlayerBlockAction(action, blockPos, face);
     }
-
 }
-
 
 //public class PlayerBlockActions
 //{

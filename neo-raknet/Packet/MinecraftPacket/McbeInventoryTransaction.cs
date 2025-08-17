@@ -4,38 +4,36 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeInventoryTransaction : Packet
 {
-    public Transaction transaction; // = null;
-
     public enum CraftingAction
     {
-        CraftAddIngredient    = -2,
+        CraftAddIngredient = -2,
         CraftRemoveIngredient = -3,
-        CraftResult           = -4,
-        CraftUseIngredient    = -5,
-        AnvilInput            = -10,
-        AnvilMaterial         = -11,
-        AnvilResult           = -12,
-        AnvilOutput           = -13,
-        EnchantItem           = -15,
-        EnchantLapis          = -16,
-        EnchantResult         = -17,
-        Drop                  = -100
+        CraftResult = -4,
+        CraftUseIngredient = -5,
+        AnvilInput = -10,
+        AnvilMaterial = -11,
+        AnvilResult = -12,
+        AnvilOutput = -13,
+        EnchantItem = -15,
+        EnchantLapis = -16,
+        EnchantResult = -17,
+        Drop = -100
     }
 
     public enum InventorySourceType
     {
-        Container        = 0,
-        Global           = 1,
+        Container = 0,
+        Global = 1,
         WorldInteraction = 2,
-        Creative         = 3,
-        Crafting         = 100,
-        Unspecified      = 99999
+        Creative = 3,
+        Crafting = 100,
+        Unspecified = 99999
     }
 
     public enum ItemReleaseAction
     {
         Release = 0,
-        Use     = 1
+        Use = 1
     }
 
     public enum ItemUseAction
@@ -44,31 +42,33 @@ public class McpeInventoryTransaction : Packet
         Clickblock = 0,
         Use,
         Clickair = 1,
-        Destroy  = 2
+        Destroy = 2
     }
 
     public enum ItemUseOnEntityAction
     {
-        Interact     = 0,
-        Attack       = 1,
+        Interact = 0,
+        Attack = 1,
         ItemInteract = 2
     }
 
     public enum TransactionType
     {
-        Normal            = 0,
+        Normal = 0,
         InventoryMismatch = 1,
-        ItemUse           = 2,
-        ItemUseOnEntity   = 3,
-        ItemRelease       = 4
+        ItemUse = 2,
+        ItemUseOnEntity = 3,
+        ItemRelease = 4
     }
 
     public enum TriggerType
     {
-        Unknown        = 0,
-        PlayerInput    = 1,
+        Unknown = 0,
+        PlayerInput = 1,
         SimulationTick = 2
     }
+
+    public Transaction transaction; // = null;
 
     public McpeInventoryTransaction()
     {
@@ -98,6 +98,6 @@ public class McpeInventoryTransaction : Packet
     {
         base.ResetPacket();
 
-        transaction = default(Transaction);
+        transaction = default;
     }
 }

@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeServerboundLoadingScreen : Packet
 {
     public int? ScreenId; // = null;
-    public int  ScreenType; // = null;
+    public int ScreenType; // = null;
 
     public McpeServerboundLoadingScreen()
     {

@@ -6,7 +6,7 @@ public class McpeLevelEvent : Packet
 {
     public int data; // = null;
 
-    public int     eventId; // = null;
+    public int eventId; // = null;
     public Vector3 position; // = null;
 
     public McpeLevelEvent()
@@ -42,7 +42,7 @@ public class McpeLevelEvent : Packet
         base.ResetPacket();
 
         eventId = default;
-        position = default(Vector3);
+        position = default;
         data = default;
     }
 }

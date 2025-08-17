@@ -2,7 +2,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeRequestChunkRadius : Packet
 {
-    public int  chunkRadius; // = null;
+    public int chunkRadius; // = null;
     public byte maxRadius; // = null;
 
     public McpeRequestChunkRadius()

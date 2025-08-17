@@ -2,10 +2,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeVideoStreamConnect : Packet
 {
-    public byte  action; // = null;
+    public byte action; // = null;
     public float frameSendFrequency; // = null;
-    public int   resolutionX; // = null;
-    public int   resolutionY; // = null;
+    public int resolutionX; // = null;
+    public int resolutionY; // = null;
 
     public string serverUri; // = null;
 

@@ -6,9 +6,9 @@ public class McpeUpdateAbilities : Packet
 {
     public byte commandPermissions; // = null;
 
-    public long          entityUniqueId; // = null;
+    public long entityUniqueId; // = null;
     public AbilityLayers layers; // = null;
-    public byte          playerPermissions; // = null;
+    public byte playerPermissions; // = null;
 
     public McpeUpdateAbilities()
     {
@@ -47,6 +47,6 @@ public class McpeUpdateAbilities : Packet
         entityUniqueId = default;
         playerPermissions = default;
         commandPermissions = default;
-        layers = default(AbilityLayers);
+        layers = default;
     }
 }

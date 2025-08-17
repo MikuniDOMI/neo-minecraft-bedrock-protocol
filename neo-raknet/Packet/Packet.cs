@@ -8,6 +8,7 @@ using neo_raknet.Packet.MinecraftStruct.Entity;
 using neo_raknet.Packet.MinecraftStruct.Item;
 using neo_raknet.Packet.MinecraftStruct.Metadata;
 using neo_raknet.Packet.MinecraftStruct.NBT;
+using neo_raknet.Protocol.Biomes;
 using neo_raknet.Utils;
 using Newtonsoft.Json;
 using System.Buffers;
@@ -842,7 +843,7 @@ namespace neo_raknet.Packet
 			nbtFile.AllowAlternativeRootTag = allowAlternativeRootTag;
 
 			nbt.NbtFile = nbtFile;
-			nbtFile.LoadFromStream(stream, NbtCompression.None);
+			nbtFile.LoadFromStream(stream, NbtCompression.AutoDetect);
 
 			return nbt;
 		}
@@ -1230,16 +1231,30 @@ namespace neo_raknet.Packet
 		public FullContainerName readFullContainerName()
 		{
 			var name = new FullContainerName();
+            name.DynamicContainerID = new Optional<uint>();
 			name.ContainerID = ReadByte();
-            name.DynamicContainerID.HasValue = true;
-			name.DynamicContainerID.Value = ReadByte();
+            var readBool = ReadBool();
+            if (readBool)
+            {
+                name.DynamicContainerID.HasValue = true;
+                name.DynamicContainerID.Value = ReadUint();
+            }
+            else
+            {
+                name.DynamicContainerID.HasValue = readBool;
+            }
 			return name;
 		}
 
 		public void Write(FullContainerName name)
 		{
 			Write(name.ContainerID);
-			Write((byte)name.DynamicContainerID.Value);
+            Write(name.DynamicContainerID.HasValue);
+            if (name.DynamicContainerID.HasValue)
+            {
+                Write(name.DynamicContainerID.Value);
+            }
+			//Write((byte)name.DynamicContainerID.Value);
 		}
 
 		public void Write(StackRequestSlotInfo slotInfo)
@@ -4107,8 +4122,810 @@ namespace neo_raknet.Packet
 
 			return biomes;
 		}
+        // ... (inside your Packet class or a  extension class for Packet) ...
 
-		public bool CanRead()
+        #region BiomeWeight
+
+        public void WriteBiomeWeight(BiomeWeight weight)
+        {
+            Write(weight.Biome); // Write(int16)
+            WriteUnsignedVarInt(weight.Weight); // Write(uint32 as VarInt)
+        }
+
+        public BiomeWeight ReadBiomeWeight()
+        {
+            short biome = ReadShort(false); // Read(int16)
+            uint weight = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            return new BiomeWeight { Biome = biome, Weight = weight };
+        }
+        #endregion
+
+        #region BiomeTemperatureWeight
+
+        public void WriteBiomeTemperatureWeight(BiomeTemperatureWeight tempWeight)
+        {
+            WriteSignedVarInt(tempWeight.Temperature); // Write(int32 as SignedVarInt)
+            WriteUnsignedVarInt(tempWeight.Weight); // Write(uint32 as VarInt)
+        }
+
+        public BiomeTemperatureWeight ReadBiomeTemperatureWeight()
+        {
+            int temperature = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            uint weight = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            return new BiomeTemperatureWeight { Temperature = temperature, Weight = weight };
+        }
+        #endregion
+
+        #region BiomeConditionalTransformation
+
+        public void WriteBiomeConditionalTransformation(BiomeConditionalTransformation transformation)
+        {
+            // Slice(r, &x.WeightedBiomes) -> Write length, then elements
+            WriteSignedVarInt(transformation.WeightedBiomes?.Length ?? 0);
+            if (transformation.WeightedBiomes != null)
+            {
+                foreach (var item in transformation.WeightedBiomes)
+                {
+                    WriteBiomeWeight(item);
+                }
+            }
+            Write(transformation.ConditionJSON); // Write(int16)
+            WriteUnsignedVarInt(transformation.MinPassingNeighbours); // Write(uint32 as VarInt)
+        }
+
+        public BiomeConditionalTransformation ReadBiomeConditionalTransformation()
+        {
+            // Slice(r, &x.WeightedBiomes) -> Read length, then elements
+            int count = ReadSignedVarInt();
+            BiomeWeight[] weightedBiomes = new BiomeWeight[count];
+            for (int i = 0; i < count; i++)
+            {
+                weightedBiomes[i] = ReadBiomeWeight();
+            }
+
+            short conditionJson = ReadShort(false); // Read(int16)
+            uint minPassingNeighbours = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+
+            return new BiomeConditionalTransformation
+            {
+                WeightedBiomes = weightedBiomes,
+                ConditionJSON = conditionJson,
+                MinPassingNeighbours = minPassingNeighbours
+            };
+        }
+        #endregion
+
+        #region BiomeMultiNoiseRules
+
+        public void WriteBiomeMultiNoiseRules(BiomeMultiNoiseRules rules)
+        {
+            Write(rules.Temperature); // Write(float32)
+            Write(rules.Humidity); // Write(float32)
+            Write(rules.Altitude); // Write(float32)
+            Write(rules.Weirdness); // Write(float32)
+            Write(rules.Weight); // Write(float32)
+        }
+
+        public BiomeMultiNoiseRules ReadBiomeMultiNoiseRules()
+        {
+            float temperature = ReadFloat(); // Read(float32)
+            float humidity = ReadFloat(); // Read(float32)
+            float altitude = ReadFloat(); // Read(float32)
+            float weirdness = ReadFloat(); // Read(float32)
+            float weight = ReadFloat(); // Read(float32)
+
+            return new BiomeMultiNoiseRules
+            {
+                Temperature = temperature,
+                Humidity = humidity,
+                Altitude = altitude,
+                Weirdness = weirdness,
+                Weight = weight
+            };
+        }
+        #endregion
+
+        #region BiomeOverworldRules
+
+        public void WriteBiomeOverworldRules(BiomeOverworldRules rules)
+        {
+            // All fields use Slice (protocol.Slice)
+            WriteSignedVarInt(rules.HillsTransformations?.Length ?? 0);
+            if (rules.HillsTransformations != null)
+                foreach (var item in rules.HillsTransformations)
+                    WriteBiomeWeight(item);
+
+            WriteSignedVarInt(rules.MutateTransformations?.Length ?? 0);
+            if (rules.MutateTransformations != null)
+                foreach (var item in rules.MutateTransformations)
+                    WriteBiomeWeight(item);
+
+            WriteSignedVarInt(rules.RiverTransformations?.Length ?? 0);
+            if (rules.RiverTransformations != null)
+                foreach (var item in rules.RiverTransformations)
+                    WriteBiomeWeight(item);
+
+            WriteSignedVarInt(rules.ShoreTransformations?.Length ?? 0);
+            if (rules.ShoreTransformations != null)
+                foreach (var item in rules.ShoreTransformations)
+                    WriteBiomeWeight(item);
+
+            WriteSignedVarInt(rules.PreHillsEdgeTransformations?.Length ?? 0);
+            if (rules.PreHillsEdgeTransformations != null)
+                foreach (var item in rules.PreHillsEdgeTransformations)
+                    WriteBiomeConditionalTransformation(item);
+
+            WriteSignedVarInt(rules.PostShoreEdgeTransformations?.Length ?? 0);
+            if (rules.PostShoreEdgeTransformations != null)
+                foreach (var item in rules.PostShoreEdgeTransformations)
+                    WriteBiomeConditionalTransformation(item);
+
+            WriteSignedVarInt(rules.ClimateTransformations?.Length ?? 0);
+            if (rules.ClimateTransformations != null)
+                foreach (var item in rules.ClimateTransformations)
+                    WriteBiomeTemperatureWeight(item);
+        }
+
+        public BiomeOverworldRules ReadBiomeOverworldRules()
+        {
+            int count1 = ReadSignedVarInt();
+            BiomeWeight[] hills = new BiomeWeight[count1];
+            for (int i = 0; i < count1; i++) hills[i] = ReadBiomeWeight();
+
+            int count2 = ReadSignedVarInt();
+            BiomeWeight[] mutate = new BiomeWeight[count2];
+            for (int i = 0; i < count2; i++) mutate[i] = ReadBiomeWeight();
+
+            int count3 = ReadSignedVarInt();
+            BiomeWeight[] river = new BiomeWeight[count3];
+            for (int i = 0; i < count3; i++) river[i] = ReadBiomeWeight();
+
+            int count4 = ReadSignedVarInt();
+            BiomeWeight[] shore = new BiomeWeight[count4];
+            for (int i = 0; i < count4; i++) shore[i] = ReadBiomeWeight();
+
+            int count5 = ReadSignedVarInt();
+            BiomeConditionalTransformation[] preHills = new BiomeConditionalTransformation[count5];
+            for (int i = 0; i < count5; i++) preHills[i] = ReadBiomeConditionalTransformation();
+
+            int count6 = ReadSignedVarInt();
+            BiomeConditionalTransformation[] postShore = new BiomeConditionalTransformation[count6];
+            for (int i = 0; i < count6; i++) postShore[i] = ReadBiomeConditionalTransformation();
+
+            int count7 = ReadSignedVarInt();
+            BiomeTemperatureWeight[] climate = new BiomeTemperatureWeight[count7];
+            for (int i = 0; i < count7; i++) climate[i] = ReadBiomeTemperatureWeight();
+
+            return new BiomeOverworldRules
+            {
+                HillsTransformations = hills,
+                MutateTransformations = mutate,
+                RiverTransformations = river,
+                ShoreTransformations = shore,
+                PreHillsEdgeTransformations = preHills,
+                PostShoreEdgeTransformations = postShore,
+                ClimateTransformations = climate
+            };
+        }
+        #endregion
+
+        #region BiomeCappedSurface
+
+        public void WriteBiomeCappedSurface(BiomeCappedSurface surface)
+        {
+            // FuncSlice(r, &x.FloorBlocks, r.Int32)
+            WriteSignedVarInt(surface.FloorBlocks?.Length ?? 0);
+            if (surface.FloorBlocks != null)
+                foreach (var item in surface.FloorBlocks)
+                    Write(item, false); // Write(int32, bigEndian=false)
+
+            // FuncSlice(r, &x.CeilingBlocks, r.Int32)
+            WriteSignedVarInt(surface.CeilingBlocks?.Length ?? 0);
+            if (surface.CeilingBlocks != null)
+                foreach (var item in surface.CeilingBlocks)
+                    Write(item, false); // Write(int32, bigEndian=false)
+
+            // OptionalFunc(r, &x.SeaBlock, r.Uint32)
+            Write(surface.SeaBlock.HasValue);
+            if (surface.SeaBlock.HasValue) WriteUnsignedVarInt(surface.SeaBlock.Value);
+
+            // OptionalFunc(r, &x.FoundationBlock, r.Uint32)
+            Write(surface.FoundationBlock.HasValue);
+            if (surface.FoundationBlock.HasValue) WriteUnsignedVarInt(surface.FoundationBlock.Value);
+
+            // OptionalFunc(r, &x.BeachBlock, r.Uint32)
+            Write(surface.BeachBlock.HasValue);
+            if (surface.BeachBlock.HasValue) WriteUnsignedVarInt(surface.BeachBlock.Value);
+        }
+
+        public BiomeCappedSurface ReadBiomeCappedSurface()
+        {
+            // FuncSlice(r, &x.FloorBlocks, r.Int32)
+            int count1 = ReadSignedVarInt();
+            int[] floor = new int[count1];
+            for (int i = 0; i < count1; i++) floor[i] = ReadInt(false); // Read(int32, bigEndian=false)
+
+            // FuncSlice(r, &x.CeilingBlocks, r.Int32)
+            int count2 = ReadSignedVarInt();
+            int[] ceiling = new int[count2];
+            for (int i = 0; i < count2; i++) ceiling[i] = ReadInt(false); // Read(int32, bigEndian=false)
+
+            // OptionalFunc(r, &x.SeaBlock, r.Uint32)
+            bool hasSea = ReadBool();
+            Optional<uint> seaBlock = new Optional<uint>();
+            if (hasSea) seaBlock = new Optional<uint>(ReadUnsignedVarInt());
+
+            // OptionalFunc(r, &x.FoundationBlock, r.Uint32)
+            bool hasFoundation = ReadBool();
+            Optional<uint> foundationBlock = new Optional<uint>();
+            if (hasFoundation) foundationBlock = new Optional<uint>(ReadUnsignedVarInt());
+
+            // OptionalFunc(r, &x.BeachBlock, r.Uint32)
+            bool hasBeach = ReadBool();
+            Optional<uint> beachBlock = new Optional<uint>();
+            if (hasBeach) beachBlock = new Optional<uint>(ReadUnsignedVarInt());
+
+            return new BiomeCappedSurface
+            {
+                FloorBlocks = floor,
+                CeilingBlocks = ceiling,
+                SeaBlock = seaBlock,
+                FoundationBlock = foundationBlock,
+                BeachBlock = beachBlock
+            };
+        }
+        #endregion
+
+        #region BiomeMesaSurface
+
+        public void WriteBiomeMesaSurface(BiomeMesaSurface mesa)
+        {
+            WriteUnsignedVarInt(mesa.ClayMaterial); // Write(uint32 as VarInt)
+            WriteUnsignedVarInt(mesa.HardClayMaterial); // Write(uint32 as VarInt)
+            Write(mesa.BrycePillars); // Write(bool)
+            Write(mesa.HasForest); // Write(bool)
+        }
+
+        public BiomeMesaSurface ReadBiomeMesaSurface()
+        {
+            uint clay = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            uint hardClay = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            bool bryce = ReadBool(); // Read(bool)
+            bool forest = ReadBool(); // Read(bool)
+
+            return new BiomeMesaSurface
+            {
+                ClayMaterial = clay,
+                HardClayMaterial = hardClay,
+                BrycePillars = bryce,
+                HasForest = forest
+            };
+        }
+        #endregion
+
+        #region BiomeSurfaceMaterial
+
+        public void WriteBiomeSurfaceMaterial(BiomeSurfaceMaterial material)
+        {
+            Write(material.TopBlock, false); // Write(int32, bigEndian=false)
+            Write(material.MidBlock, false); // Write(int32, bigEndian=false)
+            Write(material.SeaFloorBlock, false); // Write(int32, bigEndian=false)
+            Write(material.FoundationBlock, false); // Write(int32, bigEndian=false)
+            Write(material.SeaBlock, false); // Write(int32, bigEndian=false)
+            Write(material.SeaFloorDepth, false); // Write(int32, bigEndian=false)
+        }
+
+        public BiomeSurfaceMaterial ReadBiomeSurfaceMaterial()
+        {
+            int top = ReadInt(false); // Read(int32, bigEndian=false)
+            int mid = ReadInt(false); // Read(int32, bigEndian=false)
+            int seaFloor = ReadInt(false); // Read(int32, bigEndian=false)
+            int foundation = ReadInt(false); // Read(int32, bigEndian=false)
+            int sea = ReadInt(false); // Read(int32, bigEndian=false)
+            int seaFloorDepth = ReadInt(false); // Read(int32, bigEndian=false)
+
+            return new BiomeSurfaceMaterial
+            {
+                TopBlock = top,
+                MidBlock = mid,
+                SeaFloorBlock = seaFloor,
+                FoundationBlock = foundation,
+                SeaBlock = sea,
+                SeaFloorDepth = seaFloorDepth
+            };
+        }
+        #endregion
+
+        #region BiomeElementData
+
+        public void WriteBiomeElementData(BiomeElementData data)
+        {
+            Write(data.NoiseFrequencyScale); // Write(float32)
+            Write(data.NoiseLowerBound); // Write(float32)
+            Write(data.NoiseUpperBound); // Write(float32)
+            WriteSignedVarInt(data.HeightMinType); // Write(int32 as SignedVarInt)
+            Write(data.HeightMin); // Write(int16)
+            WriteSignedVarInt(data.HeightMaxType); // Write(int32 as SignedVarInt)
+            Write(data.HeightMax); // Write(int16)
+            WriteBiomeSurfaceMaterial(data.AdjustedMaterials); // Single(r, &x.AdjustedMaterials)
+        }
+
+        public BiomeElementData ReadBiomeElementData()
+        {
+            float freq = ReadFloat(); // Read(float32)
+            float lower = ReadFloat(); // Read(float32)
+            float upper = ReadFloat(); // Read(float32)
+            int minHeightType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short minHeight = ReadShort(false); // Read(int16)
+            int maxHeightType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short maxHeight = ReadShort(false); // Read(int16)
+            BiomeSurfaceMaterial materials = ReadBiomeSurfaceMaterial(); // Single(r, &x.AdjustedMaterials)
+
+            return new BiomeElementData
+            {
+                NoiseFrequencyScale = freq,
+                NoiseLowerBound = lower,
+                NoiseUpperBound = upper,
+                HeightMinType = minHeightType,
+                HeightMin = minHeight,
+                HeightMaxType = maxHeightType,
+                HeightMax = maxHeight,
+                AdjustedMaterials = materials
+            };
+        }
+        #endregion
+
+        #region BiomeMountainParameters
+
+        public void WriteBiomeMountainParameters(BiomeMountainParameters parameters)
+        {
+            Write(parameters.SteepBlock, false); // Write(int32, bigEndian=false)
+            Write(parameters.NorthSlopes); // Write(bool)
+            Write(parameters.SouthSlopes); // Write(bool)
+            Write(parameters.WestSlopes); // Write(bool)
+            Write(parameters.EastSlopes); // Write(bool)
+            Write(parameters.TopSlideEnabled); // Write(bool)
+        }
+
+        public BiomeMountainParameters ReadBiomeMountainParameters()
+        {
+            int steep = ReadInt(false); // Read(int32, bigEndian=false)
+            bool north = ReadBool(); // Read(bool)
+            bool south = ReadBool(); // Read(bool)
+            bool west = ReadBool(); // Read(bool)
+            bool east = ReadBool(); // Read(bool)
+            bool topSlide = ReadBool(); // Read(bool)
+
+            return new BiomeMountainParameters
+            {
+                SteepBlock = steep,
+                NorthSlopes = north,
+                SouthSlopes = south,
+                WestSlopes = west,
+                EastSlopes = east,
+                TopSlideEnabled = topSlide
+            };
+        }
+        #endregion
+
+        #region BiomeCoordinate
+
+        public void WriteBiomeCoordinate(BiomeCoordinate coord)
+        {
+            WriteSignedVarInt(coord.MinValueType); // Write(int32 as SignedVarInt)
+            Write(coord.MinValue); // Write(int16)
+            WriteSignedVarInt(coord.MaxValueType); // Write(int32 as SignedVarInt)
+            Write(coord.MaxValue); // Write(int16)
+            WriteUnsignedVarInt(coord.GridOffset); // Write(uint32 as VarInt)
+            WriteUnsignedVarInt(coord.GridStepSize); // Write(uint32 as VarInt)
+            WriteSignedVarInt(coord.Distribution); // Write(int32 as SignedVarInt)
+        }
+
+        public BiomeCoordinate ReadBiomeCoordinate()
+        {
+            int minType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short minVal = ReadShort(false); // Read(int16)
+            int maxType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short maxVal = ReadShort(false); // Read(int16)
+            uint gridOffset = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            uint gridStep = ReadUnsignedVarInt(); // Read(uint32 as VarInt)
+            int dist = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+
+            return new BiomeCoordinate
+            {
+                MinValueType = minType,
+                MinValue = minVal,
+                MaxValueType = maxType,
+                MaxValue = maxVal,
+                GridOffset = gridOffset,
+                GridStepSize = gridStep,
+                Distribution = dist
+            };
+        }
+        #endregion
+
+        #region BiomeScatterParameter
+
+        public void WriteBiomeScatterParameter(BiomeScatterParameter param)
+        {
+            // Slice(r, &x.Coordinates)
+            WriteSignedVarInt(param.Coordinates?.Length ?? 0);
+            if (param.Coordinates != null)
+                foreach (var item in param.Coordinates)
+                    WriteBiomeCoordinate(item);
+
+            WriteSignedVarInt(param.EvaluationOrder); // Write(int32 as SignedVarInt)
+            WriteSignedVarInt(param.ChancePercentType); // Write(int32 as SignedVarInt)
+            Write(param.ChancePercent); // Write(int16)
+            Write(param.ChanceNumerator, false); // Write(int32, bigEndian=false)
+            Write(param.ChanceDenominator, false); // Write(int32, bigEndian=false)
+            WriteSignedVarInt(param.IterationsType); // Write(int32 as SignedVarInt)
+            Write(param.Iterations); // Write(int16)
+        }
+
+        public BiomeScatterParameter ReadBiomeScatterParameter()
+        {
+            // Slice(r, &x.Coordinates)
+            int count = ReadSignedVarInt();
+            BiomeCoordinate[] coords = new BiomeCoordinate[count];
+            for (int i = 0; i < count; i++)
+            {
+                coords[i] = ReadBiomeCoordinate();
+            }
+
+            int evalOrder = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            int chanceType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short chancePercent = ReadShort(false); // Read(int16)
+            int chanceNum = ReadInt(false); // Read(int32, bigEndian=false)
+            int chanceDen = ReadInt(false); // Read(int32, bigEndian=false)
+            int iterType = ReadSignedVarInt(); // Read(int32 as SignedVarInt)
+            short iter = ReadShort(false); // Read(int16)
+
+            return new BiomeScatterParameter
+            {
+                Coordinates = coords,
+                EvaluationOrder = evalOrder,
+                ChancePercentType = chanceType,
+                ChancePercent = chancePercent,
+                ChanceNumerator = chanceNum,
+                ChanceDenominator = chanceDen,
+                IterationsType = iterType,
+                Iterations = iter
+            };
+        }
+        #endregion
+
+        #region BiomeConsolidatedFeature
+
+        public void WriteBiomeConsolidatedFeature(BiomeConsolidatedFeature feature)
+        {
+            WriteBiomeScatterParameter(feature.Scatter); // Single(r, &x.Scatter)
+            Write(feature.Feature); // Write(int16)
+            Write(feature.Identifier); // Write(int16)
+            Write(feature.Pass); // Write(int16)
+            Write(feature.CanUseInternal); // Write(bool)
+        }
+
+        public BiomeConsolidatedFeature ReadBiomeConsolidatedFeature()
+        {
+            BiomeScatterParameter scatter = ReadBiomeScatterParameter(); // Single(r, &x.Scatter)
+            short feat = ReadShort(false); // Read(int16)
+            short id = ReadShort(false); // Read(int16)
+            short pass = ReadShort(false); // Read(int16)
+            bool canUse = ReadBool(); // Read(bool)
+
+            return new BiomeConsolidatedFeature
+            {
+                Scatter = scatter,
+                Feature = feat,
+                Identifier = id,
+                Pass = pass,
+                CanUseInternal = canUse
+            };
+        }
+        #endregion
+
+        #region BiomeClimate
+
+        public void WriteBiomeClimate(BiomeClimate climate)
+        {
+            Write(climate.Temperature); // Write(float32)
+            Write(climate.Downfall); // Write(float32)
+            Write(climate.RedSporeDensity); // Write(float32)
+            Write(climate.BlueSporeDensity); // Write(float32)
+            Write(climate.AshDensity); // Write(float32)
+            Write(climate.WhiteAshDensity); // Write(float32)
+            Write(climate.SnowAccumulationMin); // Write(float32)
+            Write(climate.SnowAccumulationMax); // Write(float32)
+        }
+
+        public BiomeClimate ReadBiomeClimate()
+        {
+            float temp = ReadFloat(); // Read(float32)
+            float down = ReadFloat(); // Read(float32)
+            float red = ReadFloat(); // Read(float32)
+            float blue = ReadFloat(); // Read(float32)
+            float ash = ReadFloat(); // Read(float32)
+            float whiteAsh = ReadFloat(); // Read(float32)
+            float snowMin = ReadFloat(); // Read(float32)
+            float snowMax = ReadFloat(); // Read(float32)
+
+            return new BiomeClimate
+            {
+                Temperature = temp,
+                Downfall = down,
+                RedSporeDensity = red,
+                BlueSporeDensity = blue,
+                AshDensity = ash,
+                WhiteAshDensity = whiteAsh,
+                SnowAccumulationMin = snowMin,
+                SnowAccumulationMax = snowMax
+            };
+        }
+        #endregion
+
+        #region BiomeChunkGeneration
+
+        public void WriteBiomeChunkGeneration(BiomeChunkGeneration generation)
+        {
+            // OptionalMarshaler(r, &x.Climate)
+            Write(generation.Climate.HasValue);
+            if (generation.Climate.HasValue) WriteBiomeClimate(generation.Climate.Value);
+
+            // OptionalFunc(r, &x.ConsolidatedFeatures, func(s *[]BiomeConsolidatedFeature) { Slice(r, s) })
+            Write(generation.ConsolidatedFeatures.HasValue);
+            if (generation.ConsolidatedFeatures.HasValue)
+            {
+                WriteUnsignedVarInt((uint)(generation.ConsolidatedFeatures.Value?.Length ?? 0));
+                if (generation.ConsolidatedFeatures.Value != null)
+                    foreach (var item in generation.ConsolidatedFeatures.Value)
+                        WriteBiomeConsolidatedFeature(item);
+            }
+
+            // OptionalMarshaler(r, &x.MountainParameters)
+            Write(generation.MountainParameters.HasValue);
+            if (generation.MountainParameters.HasValue) WriteBiomeMountainParameters(generation.MountainParameters.Value);
+
+            // OptionalFunc(r, &x.SurfaceMaterialAdjustments, func(s *[]BiomeElementData) { Slice(r, s) })
+            Write(generation.SurfaceMaterialAdjustments.HasValue);
+            if (generation.SurfaceMaterialAdjustments.HasValue)
+            {
+                WriteUnsignedVarInt((uint)(generation.SurfaceMaterialAdjustments.Value?.Length ?? 0));
+                if (generation.SurfaceMaterialAdjustments.Value != null)
+                    foreach (var item in generation.SurfaceMaterialAdjustments.Value)
+                        WriteBiomeElementData(item);
+            }
+
+            // OptionalMarshaler(r, &x.SurfaceMaterials)
+            Write(generation.SurfaceMaterials.HasValue);
+            if (generation.SurfaceMaterials.HasValue) WriteBiomeSurfaceMaterial(generation.SurfaceMaterials.Value);
+
+            Write(generation.HasSwampSurface); // Write(bool)
+            Write(generation.HasFrozenOceanSurface); // Write(bool)
+            Write(generation.HasEndSurface); // Write(bool)
+
+            // OptionalMarshaler(r, &x.MesaSurface)
+            Write(generation.MesaSurface.HasValue);
+            if (generation.MesaSurface.HasValue) WriteBiomeMesaSurface(generation.MesaSurface.Value);
+
+            // OptionalMarshaler(r, &x.CappedSurface)
+            Write(generation.CappedSurface.HasValue);
+            if (generation.CappedSurface.HasValue) WriteBiomeCappedSurface(generation.CappedSurface.Value);
+
+            // OptionalMarshaler(r, &x.OverworldRules)
+            Write(generation.OverworldRules.HasValue);
+            if (generation.OverworldRules.HasValue) WriteBiomeOverworldRules(generation.OverworldRules.Value);
+
+            // OptionalMarshaler(r, &x.MultiNoiseRules)
+            Write(generation.MultiNoiseRules.HasValue);
+            if (generation.MultiNoiseRules.HasValue) WriteBiomeMultiNoiseRules(generation.MultiNoiseRules.Value);
+
+            // OptionalFunc(r, &x.LegacyRules, func(s *[]BiomeConditionalTransformation) { Slice(r, s) })
+            Write(generation.LegacyRules.HasValue);
+            if (generation.LegacyRules.HasValue)
+            {
+                WriteUnsignedVarInt((uint)(generation.LegacyRules.Value?.Length ?? 0));
+                if (generation.LegacyRules.Value != null)
+                    foreach (var item in generation.LegacyRules.Value)
+                        WriteBiomeConditionalTransformation(item);
+            }
+        }
+
+        public BiomeChunkGeneration ReadBiomeChunkGeneration()
+        {
+            // OptionalMarshaler(r, &x.Climate)
+            bool hasClimate = ReadBool();
+            Optional<BiomeClimate> climate = new Optional<BiomeClimate>();
+            if (hasClimate) climate = new Optional<BiomeClimate>(ReadBiomeClimate());
+
+            // OptionalFunc(r, &x.ConsolidatedFeatures, func(s *[]BiomeConsolidatedFeature) { Slice(r, s) })
+            bool hasConsolidated = ReadBool();
+            Optional<BiomeConsolidatedFeature[]> consolidated = new Optional<BiomeConsolidatedFeature[]>();
+            if (hasConsolidated)
+            {
+                uint count = ReadUnsignedVarInt();
+                BiomeConsolidatedFeature[] features = new BiomeConsolidatedFeature[count];
+                for (int i = 0; i < count; i++)
+                {
+                    features[i] = ReadBiomeConsolidatedFeature();
+                }
+                consolidated = new Optional<BiomeConsolidatedFeature[]>(features);
+            }
+
+            // OptionalMarshaler(r, &x.MountainParameters)
+            bool hasMountain = ReadBool();
+            Optional<BiomeMountainParameters> mountain = new Optional<BiomeMountainParameters>();
+            if (hasMountain) mountain = new Optional<BiomeMountainParameters>(ReadBiomeMountainParameters());
+
+            // OptionalFunc(r, &x.SurfaceMaterialAdjustments, func(s *[]BiomeElementData) { Slice(r, s) })
+            bool hasSurfaceAdj = ReadBool();
+            Optional<BiomeElementData[]> surfaceAdj = new Optional<BiomeElementData[]>();
+            if (hasSurfaceAdj)
+            {
+                uint count = ReadUnsignedVarInt();
+                BiomeElementData[] data = new BiomeElementData[count];
+                for (int i = 0; i < count; i++)
+                {
+                    data[i] = ReadBiomeElementData();
+                }
+                surfaceAdj = new Optional<BiomeElementData[]>(data);
+            }
+
+            // OptionalMarshaler(r, &x.SurfaceMaterials)
+            bool hasSurfaceMat = ReadBool();
+            Optional<BiomeSurfaceMaterial> surfaceMat = new Optional<BiomeSurfaceMaterial>();
+            if (hasSurfaceMat) surfaceMat = new Optional<BiomeSurfaceMaterial>(ReadBiomeSurfaceMaterial());
+
+            bool swamp = ReadBool(); // Read(bool)
+            bool frozenOcean = ReadBool(); // Read(bool)
+            bool end = ReadBool(); // Read(bool)
+
+            // OptionalMarshaler(r, &x.MesaSurface)
+            bool hasMesa = ReadBool();
+            Optional<BiomeMesaSurface> mesa = new Optional<BiomeMesaSurface>();
+            if (hasMesa) mesa = new Optional<BiomeMesaSurface>(ReadBiomeMesaSurface());
+
+            // OptionalMarshaler(r, &x.CappedSurface)
+            bool hasCapped = ReadBool();
+            Optional<BiomeCappedSurface> capped = new Optional<BiomeCappedSurface>();
+            if (hasCapped) capped = new Optional<BiomeCappedSurface>(ReadBiomeCappedSurface());
+
+            // OptionalMarshaler(r, &x.OverworldRules)
+            bool hasOverworld = ReadBool();
+            Optional<BiomeOverworldRules> overworld = new Optional<BiomeOverworldRules>();
+            if (hasOverworld) overworld = new Optional<BiomeOverworldRules>(ReadBiomeOverworldRules());
+
+            // OptionalMarshaler(r, &x.MultiNoiseRules)
+            bool hasMultiNoise = ReadBool();
+            Optional<BiomeMultiNoiseRules> multiNoise = new Optional<BiomeMultiNoiseRules>();
+            if (hasMultiNoise) multiNoise = new Optional<BiomeMultiNoiseRules>(ReadBiomeMultiNoiseRules());
+
+            // OptionalFunc(r, &x.LegacyRules, func(s *[]BiomeConditionalTransformation) { Slice(r, s) })
+            bool hasLegacy = ReadBool();
+            Optional<BiomeConditionalTransformation[]> legacy = new Optional<BiomeConditionalTransformation[]>();
+            if (hasLegacy)
+            {
+                uint count = ReadUnsignedVarInt();
+                BiomeConditionalTransformation[] rules = new BiomeConditionalTransformation[count];
+                for (int i = 0; i < count; i++)
+                {
+                    rules[i] = ReadBiomeConditionalTransformation();
+                }
+                legacy = new Optional<BiomeConditionalTransformation[]>(rules);
+            }
+
+            return new BiomeChunkGeneration
+            {
+                Climate = climate,
+                ConsolidatedFeatures = consolidated,
+                MountainParameters = mountain,
+                SurfaceMaterialAdjustments = surfaceAdj,
+                SurfaceMaterials = surfaceMat,
+                HasSwampSurface = swamp,
+                HasFrozenOceanSurface = frozenOcean,
+                HasEndSurface = end,
+                MesaSurface = mesa,
+                CappedSurface = capped,
+                OverworldRules = overworld,
+                MultiNoiseRules = multiNoise,
+                LegacyRules = legacy
+            };
+        }
+        #endregion
+
+        #region BiomeDefinition
+
+        public void WriteBiomeDefinition(BiomeDefinition definition)
+        {
+            Write(definition.NameIndex); // Write(int16)
+            Write(definition.BiomeID); // Write(int16)
+            Write(definition.Temperature); // Write(float32)
+            Write(definition.Downfall); // Write(float32)
+            Write(definition.RedSporeDensity); // Write(float32)
+            Write(definition.BlueSporeDensity); // Write(float32)
+            Write(definition.AshDensity); // Write(float32)
+            Write(definition.WhiteAshDensity); // Write(float32)
+            Write(definition.Depth); // Write(float32)
+            Write(definition.Scale); // Write(float32)
+            Write(definition.MapWaterColour, false); // Write(int32, bigEndian=false)
+            Write(definition.Rain); // Write(bool)
+
+            // OptionalFunc(r, &x.Tags, func(s *[]uint16) { FuncSlice(r, s, r.Uint16) })
+            Write(definition.Tags.HasValue);
+            if (definition.Tags.HasValue)
+            {
+                WriteUnsignedVarInt((uint)(definition.Tags.Value?.Length ?? 0));
+                if (definition.Tags.Value != null)
+                    foreach (var item in definition.Tags.Value)
+                        Write(item); // Write(uint16) -> methods.txt has Write(ushort)
+            }
+
+            // OptionalMarshaler(r, &x.ChunkGeneration)
+            Write(definition.ChunkGeneration.HasValue);
+            if (definition.ChunkGeneration.HasValue)
+            {
+                WriteBiomeChunkGeneration(definition.ChunkGeneration.Value);
+            }
+        }
+
+        public BiomeDefinition ReadBiomeDefinition()
+        {
+            short nameIndex = ReadShort(false); // Read(int16)
+            short biomeId = ReadShort(false); // Read(int16)
+            float temp = ReadFloat(); // Read(float32)
+            float down = ReadFloat(); // Read(float32)
+            float red = ReadFloat(); // Read(float32)
+            float blue = ReadFloat(); // Read(float32)
+            float ash = ReadFloat(); // Read(float32)
+            float whiteAsh = ReadFloat(); // Read(float32)
+            float depth = ReadFloat(); // Read(float32)
+            float scale = ReadFloat(); // Read(float32)
+            int mapWater = ReadInt(false); // Read(int32, bigEndian=false)
+            bool rain = ReadBool(); // Read(bool)
+
+            // OptionalFunc(r, &x.Tags, func(s *[]uint16) { FuncSlice(r, s, r.Uint16) })
+            bool hasTags = ReadBool();
+            Optional<ushort[]> tags = new Optional<ushort[]>();
+            if (hasTags)
+            {
+                uint count = ReadUnsignedVarInt();
+                ushort[] tagArray = new ushort[count];
+                for (int i = 0; i < count; i++)
+                {
+                    tagArray[i] = ReadUshort(false); // Read(uint16) -> methods.txt has ReadUshort(bool)
+                }
+                tags = new Optional<ushort[]>(tagArray);
+            }
+
+            // OptionalMarshaler(r, &x.ChunkGeneration)
+            bool hasChunkGen = ReadBool();
+            Optional<BiomeChunkGeneration> chunkGen = new Optional<BiomeChunkGeneration>();
+            if (hasChunkGen)
+            {
+                chunkGen = new Optional<BiomeChunkGeneration>(ReadBiomeChunkGeneration());
+            }
+
+            return new BiomeDefinition
+            {
+                NameIndex = nameIndex,
+                BiomeID = biomeId,
+                Temperature = temp,
+                Downfall = down,
+                RedSporeDensity = red,
+                BlueSporeDensity = blue,
+                AshDensity = ash,
+                WhiteAshDensity = whiteAsh,
+                Depth = depth,
+                Scale = scale,
+                MapWaterColour = mapWater,
+                Rain = rain,
+                Tags = tags,
+                ChunkGeneration = chunkGen
+            };
+        }
+        #endregion
+
+        public bool CanRead()
 		{
 			return _reader.Position < _reader.Length;
 		}

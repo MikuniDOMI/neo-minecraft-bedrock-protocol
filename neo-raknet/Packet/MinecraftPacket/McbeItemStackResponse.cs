@@ -34,6 +34,6 @@ public class McpeItemStackResponse : Packet
     {
         base.ResetPacket();
 
-        responses = default(ItemStackResponses);
+        responses = default;
     }
 }

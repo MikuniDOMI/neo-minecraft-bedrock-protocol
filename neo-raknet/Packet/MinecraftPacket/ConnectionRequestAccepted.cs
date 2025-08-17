@@ -7,9 +7,9 @@ public class ConnectionRequestAccepted : Packet
     public long incomingTimestamp; // = null;
     public long serverTimestamp; // = null;
 
-    public IPEndPoint   systemAddress; // = null;
+    public IPEndPoint systemAddress; // = null;
     public IPEndPoint[] systemAddresses; // = null;
-    public short        systemIndex; // = null;
+    public short systemIndex; // = null;
 
     public ConnectionRequestAccepted()
     {

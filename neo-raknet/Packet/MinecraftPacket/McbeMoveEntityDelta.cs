@@ -4,12 +4,12 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeMoveEntityDelta : Packet
 {
-    public const int HasX     = 0x01;
-    public const int HasY     = 0x02;
-    public const int HasZ     = 0x04;
-    public const int HasRotX  = 0x08;
-    public const int HasRotY  = 0x10;
-    public const int HasRotZ  = 0x20;
+    public const int HasX = 0x01;
+    public const int HasY = 0x02;
+    public const int HasZ = 0x04;
+    public const int HasRotX = 0x08;
+    public const int HasRotY = 0x10;
+    public const int HasRotZ = 0x20;
     public const int OnGround = 0x40;
 
     private float _dX;
@@ -17,8 +17,8 @@ public class McpeMoveEntityDelta : Packet
     private float _dZ;
 
     public PlayerLocation currentPosition; // = null;
-    public ushort         flags; // = null;
-    public bool           isOnGround; // = null;
+    public ushort flags; // = null;
+    public bool isOnGround; // = null;
     public PlayerLocation prevSentPosition; // = null;
 
     public long runtimeEntityId; // = null;

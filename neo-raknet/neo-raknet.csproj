@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="fnbt\**" />
+    <EmbeddedResource Remove="fnbt\**" />
+    <None Remove="fnbt\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Packet\MinecraftPacket\McpeAdventureSettings.cs~RFc12c3c95.TMP" />
   </ItemGroup>
 
@@ -19,10 +25,6 @@
     <PackageReference Include="NetCoreServer" Version="8.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="fnbt\" />
   </ItemGroup>
 
 </Project>

@@ -34,6 +34,6 @@ public class McpeGameRulesChanged : Packet
     {
         base.ResetPacket();
 
-        rules = default(GameRules);
+        rules = default;
     }
 }

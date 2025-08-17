@@ -6,7 +6,7 @@ public class McpeSubChunkRequestPacket : Packet
 {
     public BlockCoordinates basePosition; // = null;
 
-    public int                      dimension; // = null;
+    public int dimension; // = null;
     public SubChunkPositionOffset[] offsets; // = null;
 
     public McpeSubChunkRequestPacket()
@@ -42,7 +42,7 @@ public class McpeSubChunkRequestPacket : Packet
         base.ResetPacket();
 
         dimension = default;
-        basePosition = default(BlockCoordinates);
+        basePosition = default;
         offsets = default;
     }
 }

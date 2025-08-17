@@ -7,7 +7,7 @@ public class McpeSetDisplayObjective : Packet
 
     public string displaySlot; // = null;
     public string objectiveName; // = null;
-    public int    sortOrder; // = null;
+    public int sortOrder; // = null;
 
     public McpeSetDisplayObjective()
     {

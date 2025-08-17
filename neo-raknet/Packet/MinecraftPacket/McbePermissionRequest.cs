@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpePermissionRequest : Packet
 {
     public short flagss; // = null;
-    public uint  permission; // = null;
+    public uint permission; // = null;
 
     public long runtimeEntityId; // = null;
 

@@ -3,7 +3,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeShowStoreOffer : Packet
 {
     public string unknown0; // = null;
-    public bool   unknown1; // = null;
+    public bool unknown1; // = null;
 
     public McpeShowStoreOffer()
     {

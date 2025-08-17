@@ -3,11 +3,11 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeEmotePacket : Packet
 {
     public string emoteId; // = null;
-    public byte   flags; // = null;
+    public byte flags; // = null;
     public string platformId; // = null;
 
-    public long   runtimeEntityId; // = null;
-    public uint   tick; // = null;
+    public long runtimeEntityId; // = null;
+    public uint tick; // = null;
     public string xuid; // = null;
 
     public McpeEmotePacket()

@@ -5,9 +5,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeSetSpawnPosition : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public int              dimension; // = null;
+    public int dimension; // = null;
 
-    public int              spawnType; // = null;
+    public int spawnType; // = null;
     public BlockCoordinates unknownCoordinates; // = null;
 
     public McpeSetSpawnPosition()
@@ -45,8 +45,8 @@ public class McpeSetSpawnPosition : Packet
         base.ResetPacket();
 
         spawnType = default;
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         dimension = default;
-        unknownCoordinates = default(BlockCoordinates);
+        unknownCoordinates = default;
     }
 }

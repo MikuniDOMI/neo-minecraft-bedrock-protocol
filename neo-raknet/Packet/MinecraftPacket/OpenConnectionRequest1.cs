@@ -10,7 +10,7 @@ public class OpenConnectionRequest1 : Packet
     }; // = { 0x00, 0xff, 0xff, 0x00, 0xfe, 0xfe, 0xfe, 0xfe, 0xfd, 0xfd, 0xfd, 0xfd, 0x12, 0x34, 0x56, 0x78 };
 
     public short mtuSize;
-    public byte  raknetProtocolVersion; // = null;
+    public byte raknetProtocolVersion; // = null;
 
     public OpenConnectionRequest1()
     {

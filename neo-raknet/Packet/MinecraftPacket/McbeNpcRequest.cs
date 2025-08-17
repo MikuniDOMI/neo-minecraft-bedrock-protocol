@@ -2,10 +2,10 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeNpcRequest : Packet
 {
-    public long   runtimeEntityId; // = null;
-    public byte   unknown0; // = null;
+    public long runtimeEntityId; // = null;
+    public byte unknown0; // = null;
     public string unknown1; // = null;
-    public byte   unknown2; // = null;
+    public byte unknown2; // = null;
 
     public McpeNpcRequest()
     {

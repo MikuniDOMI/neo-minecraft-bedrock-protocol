@@ -6,7 +6,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeBlockEntityData : Packet
 {
     public BlockCoordinates coordinates; // = null;
-    public Nbt              namedtag; // = null;
+    public Nbt namedtag; // = null;
 
     public McpeBlockEntityData()
     {
@@ -38,7 +38,7 @@ public class McpeBlockEntityData : Packet
     {
         base.ResetPacket();
 
-        coordinates = default(BlockCoordinates);
-        namedtag = default(Nbt);
+        coordinates = default;
+        namedtag = default;
     }
 }

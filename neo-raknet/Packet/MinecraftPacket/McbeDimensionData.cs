@@ -34,6 +34,6 @@ public class McpeDimensionData : Packet
     {
         base.ResetPacket();
 
-        definitions = default(DimensionDefinitions);
+        definitions = default;
     }
 }

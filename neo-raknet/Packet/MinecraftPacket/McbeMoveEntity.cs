@@ -4,7 +4,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeMoveEntity : Packet
 {
-    public byte           flags; // = null;
+    public byte flags; // = null;
     public PlayerLocation position; // = null;
 
     public long runtimeEntityId; // = null;
@@ -43,6 +43,6 @@ public class McpeMoveEntity : Packet
 
         runtimeEntityId = default;
         flags = default;
-        position = default(PlayerLocation);
+        position = default;
     }
 }

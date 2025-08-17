@@ -2,7 +2,7 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeEntityEvent : Packet
 {
-    public int  data; // = null;
+    public int data; // = null;
     public byte eventId; // = null;
 
     public long runtimeEntityId; // = null;

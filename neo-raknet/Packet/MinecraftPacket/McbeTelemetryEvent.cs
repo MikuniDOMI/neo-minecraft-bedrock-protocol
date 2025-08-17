@@ -3,8 +3,8 @@ namespace neo_raknet.Packet.MinecraftPacket;
 public class McpeTelemetryEvent : Packet
 {
     public byte[] auxData; // = null;
-    public int    eventData; // = null;
-    public byte   eventType; // = null;
+    public int eventData; // = null;
+    public byte eventType; // = null;
 
     public long runtimeEntityId; // = null;
 

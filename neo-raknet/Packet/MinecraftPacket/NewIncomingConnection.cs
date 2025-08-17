@@ -4,9 +4,9 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class NewIncomingConnection : Packet
 {
-    public IPEndPoint   clientendpoint; // = null;
-    public long         incomingTimestamp; // = null;
-    public long         serverTimestamp; // = null;
+    public IPEndPoint clientendpoint; // = null;
+    public long incomingTimestamp; // = null;
+    public long serverTimestamp; // = null;
     public IPEndPoint[] systemAddresses; // = null;
 
     public NewIncomingConnection()

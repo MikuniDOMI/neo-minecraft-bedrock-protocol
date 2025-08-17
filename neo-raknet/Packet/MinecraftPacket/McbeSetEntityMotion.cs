@@ -4,8 +4,8 @@ namespace neo_raknet.Packet.MinecraftPacket;
 
 public class McpeSetEntityMotion : Packet
 {
-    public long    runtimeEntityId; // = null;
-    public long    tick; // = null;
+    public long runtimeEntityId; // = null;
+    public long tick; // = null;
     public Vector3 velocity; // = null;
 
     public McpeSetEntityMotion()
@@ -41,7 +41,7 @@ public class McpeSetEntityMotion : Packet
         base.ResetPacket();
 
         runtimeEntityId = default;
-        velocity = default(Vector3);
+        velocity = default;
         tick = default;
     }
 }

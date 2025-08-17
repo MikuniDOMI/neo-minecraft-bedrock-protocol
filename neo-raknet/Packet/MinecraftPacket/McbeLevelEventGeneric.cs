@@ -41,6 +41,6 @@ public class McpeLevelEventGeneric : Packet
         base.ResetPacket();
 
         eventId = default;
-        eventData = default(Nbt);
+        eventData = default;
     }
 }

@@ -1,7 +1,5 @@
-﻿namespace neo_raknet.Server
-{
-	internal class Handles
-	{
+﻿namespace neo_raknet.Server;
 
-	}
+internal class Handles
+{
 }

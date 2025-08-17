@@ -41,7 +41,7 @@ public class McpeBlockEvent : Packet
     {
         base.ResetPacket();
 
-        coordinates = default(BlockCoordinates);
+        coordinates = default;
         case1 = default;
         case2 = default;
     }
