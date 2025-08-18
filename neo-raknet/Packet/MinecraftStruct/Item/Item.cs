@@ -1,5 +1,5 @@
-﻿using fNbt;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using fNbt;
 
 namespace neo_raknet.Packet.MinecraftStruct.Item
 {

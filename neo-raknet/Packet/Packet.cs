@@ -10,7 +10,6 @@ using neo_raknet.Packet.MinecraftStruct.Metadata;
 using neo_raknet.Packet.MinecraftStruct.NBT;
 using neo_raknet.Protocol.Biomes;
 using neo_raknet.Utils;
-using Newtonsoft.Json;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
@@ -20,7 +19,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
-using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
+using System.Text.Json.Serialization;
 using Transaction = neo_raknet.Utils.Transaction;
 
 
@@ -5057,21 +5056,6 @@ namespace neo_raknet.Packet
 				sb.AppendLine();
 			}
 			return sb.ToString();
-		}
-
-		public static string ToJson(Packet message)
-		{
-			var jsonSerializerSettings = new JsonSerializerSettings
-			{
-				PreserveReferencesHandling = PreserveReferencesHandling.Arrays,
-				Formatting = Newtonsoft.Json.Formatting.Indented,
-			};
-			jsonSerializerSettings.Converters.Add(new NbtIntConverter());
-			jsonSerializerSettings.Converters.Add(new NbtStringConverter());
-			jsonSerializerSettings.Converters.Add(new IPAddressConverter());
-			jsonSerializerSettings.Converters.Add(new IPEndPointConverter());
-
-			return JsonConvert.SerializeObject(message, jsonSerializerSettings);
 		}
 	}
 

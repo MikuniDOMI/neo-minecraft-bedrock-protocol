@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Xml;
 
 namespace neo_raknet.Utils;
 
@@ -25,7 +25,7 @@ public class SkinResourcePatch : ICloneable
 {
     public GeometryIdentifier Geometry { get; set; }
 
-    [JsonProperty(PropertyName = "persona_reset_resource_definitions")]
+    [JsonPropertyName( "persona_reset_resource_definitions")]
     public bool PersonaResetResourceDefinitions { get; set; }
 
     public object Clone()
@@ -41,7 +41,7 @@ public class GeometryIdentifier : ICloneable
 {
     public string Default { get; set; }
 
-    [JsonProperty(PropertyName = "animated_face")]
+    [JsonPropertyName( "animated_face")]
     public string AnimatedFace { get; set; }
 
     public object Clone()
@@ -150,64 +150,37 @@ public class Skin : ICloneable
         bitmap.Save(filename);
     }
 
-    public static GeometryModel Parse(string json)
-    {
-        var settings = new JsonSerializerSettings();
-        settings.NullValueHandling = NullValueHandling.Ignore;
-        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-        settings.MissingMemberHandling = MissingMemberHandling.Error;
-        settings.Formatting = Formatting.Indented;
-        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-        return JsonConvert.DeserializeObject<GeometryModel>(json, settings);
-    }
-
-    public static string ToJson(GeometryModel geometryModel)
-    {
-        var settings = new JsonSerializerSettings();
-        settings.NullValueHandling = NullValueHandling.Ignore;
-        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-        settings.MissingMemberHandling = MissingMemberHandling.Error;
-        //settings.Formatting = Formatting.Indented;
-        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        settings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
-
-        return JsonConvert.SerializeObject(geometryModel, settings);
-    }
 
 
     public static string ToJson(SkinResourcePatch model)
     {
-        var settings = new JsonSerializerSettings();
-        settings.NullValueHandling = NullValueHandling.Ignore;
-        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-        settings.MissingMemberHandling = MissingMemberHandling.Error;
-        //settings.Formatting = Formatting.Indented;
-        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        settings.Converters.Add(new StringEnumConverter
+        var options = new JsonSerializerOptions
         {
-            NamingStrategy = new CamelCaseNamingStrategy()
-        });
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            IgnoreReadOnlyProperties = false,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = false, // Set to true if you want indented formatting
+        };
 
-        var json = JsonConvert.SerializeObject(model, settings);
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+        var json = JsonSerializer.Serialize(model, options);
 
         return json;
     }
 
     public static SkinResourcePatch ToJSkinResourcePatch(string json)
     {
-        var settings = new JsonSerializerSettings();
-        settings.NullValueHandling = NullValueHandling.Ignore;
-        settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
-        settings.MissingMemberHandling = MissingMemberHandling.Error;
-        //settings.Formatting = Formatting.Indented;
-        settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        settings.Converters.Add(new StringEnumConverter
+        var options = new JsonSerializerOptions
         {
-            NamingStrategy = new CamelCaseNamingStrategy()
-        });
+            PropertyNameCaseInsensitive = true, // Similar to camelCase handling
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
 
-        var obj = JsonConvert.DeserializeObject<SkinResourcePatch>(json, settings);
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+        var obj = JsonSerializer.Deserialize<SkinResourcePatch>(json, options);
 
         return obj;
     }

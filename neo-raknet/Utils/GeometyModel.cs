@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json.Serialization;
 
 namespace neo_raknet.Utils;
 
 public class GeometryModel : ICloneable
 {
-    [JsonProperty(PropertyName = "format_version")]
+    [JsonPropertyName( "format_version")]
     public string FormatVersion { get; set; } = "1.12.0";
 
-    [JsonProperty(PropertyName = "minecraft:geometry")]
+    [JsonPropertyName( "minecraft:geometry")]
     public List<Geometry> Geometry { get; set; } = new();
 
     public object Clone()

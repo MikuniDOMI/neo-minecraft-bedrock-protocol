@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -8,19 +9,19 @@ public class Description : ICloneable
 {
     public string Identifier { get; set; }
 
-    [JsonProperty(PropertyName = "texture_height")]
+    [JsonPropertyName( "texture_height")]
     public int TextureHeight { get; set; }
 
-    [JsonProperty(PropertyName = "texture_width")]
+    [JsonPropertyName( "texture_width")]
     public int TextureWidth { get; set; }
 
-    [JsonProperty(PropertyName = "visible_bounds_height")]
+    [JsonPropertyName( "visible_bounds_height")]
     public float VisibleBoundsHeight { get; set; }
 
-    [JsonProperty(PropertyName = "visible_bounds_offset")]
+    [JsonPropertyName( "visible_bounds_offset")]
     public float[] VisibleBoundsOffset { get; set; }
 
-    [JsonProperty(PropertyName = "visible_bounds_width")]
+    [JsonPropertyName( "visible_bounds_width")]
     public float VisibleBoundsWidth { get; set; }
 
     public object Clone()
@@ -45,19 +46,19 @@ public class Geometry : ICloneable
 
     public List<Bone> Bones { get; set; }
 
-    [JsonProperty(PropertyName = "META_BoneType")]
+    [JsonPropertyName( "META_BoneType")]
     public string BoneType { get; set; }
 
-    [JsonProperty(PropertyName = "META_ModelVersion")]
+    [JsonPropertyName( "META_ModelVersion")]
     public string ModelVersion { get; set; }
 
-    [JsonProperty(PropertyName = "rigtype")]
+    [JsonPropertyName( "rigtype")]
     public string RigType { get; set; }
 
-    [JsonProperty(PropertyName = "texturewidth")]
+    [JsonPropertyName( "texturewidth")]
     public int TextureWidth { get; set; }
 
-    [JsonProperty(PropertyName = "textureheight")]
+    [JsonPropertyName( "textureheight")]
     public int TextureHeight { get; set; }
 
     public bool AnimationArmsDown { get; set; }

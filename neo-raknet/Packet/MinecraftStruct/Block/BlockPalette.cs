@@ -1,62 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace neo_raknet.Packet.MinecraftStruct.Block;
 
 public class BlockPalette : Dictionary<int, BlockStateContainer>
 {
     public static int Version => 17694723;
-
-    public static BlockPalette FromJson(string json)
-    {
-        var pallet = new BlockPalette();
-
-        var result = JsonConvert.DeserializeObject<dynamic>(json);
-        foreach (var obj in result)
-        {
-            var record = new BlockStateContainer();
-            record.Id = obj.Id;
-            record.Name = obj.Name;
-            record.Data = obj.Data;
-            record.RuntimeId = obj.RuntimeId;
-
-            foreach (var stateObj in obj.States)
-                switch ((int)stateObj.Type)
-                {
-                    case 1:
-                    {
-                        record.States.Add(new BlockStateByte
-                        {
-                            Name = stateObj.Name,
-                            Value = stateObj.Value
-                        });
-                        break;
-                    }
-                    case 3:
-                    {
-                        record.States.Add(new BlockStateInt
-                        {
-                            Name = stateObj.Name,
-                            Value = stateObj.Value
-                        });
-                        break;
-                    }
-                    case 8:
-                    {
-                        record.States.Add(new BlockStateString
-                        {
-                            Name = stateObj.Name,
-                            Value = stateObj.Value
-                        });
-                        break;
-                    }
-                }
-
-            pallet.Add(record.RuntimeId, record);
-        }
-
-
-        return pallet;
-    }
 }
 
 public class BlockStateContainer

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace neo_raknet.Utils;
 
@@ -26,7 +27,7 @@ public enum BoneName
 
 public class Locators
 {
-    [JsonProperty(PropertyName = "lead_hold")]
+    [JsonPropertyName("lead_hold")]
     public float[] LeadHold { get; set; }
 }
 
@@ -34,7 +35,7 @@ public class Bone : ICloneable
 {
     public string Name { get; set; }
 
-    [JsonProperty(PropertyName = "META_BoneType")]
+    [JsonPropertyName("META_BoneType")]
     public string BoneType { get; set; }
 
     public string Material { get; set; }

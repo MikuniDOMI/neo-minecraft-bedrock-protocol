@@ -25,11 +25,9 @@ public class McpeCraftingData : Packet
         Write(recipes);
         Write(potionTypeRecipes);
         Write(potionContainerRecipes);
-        WriteUnsignedVarInt(0);
+        Write(materialReducerRecipes);
         Write(isClean);
     }
-
-
     protected override void DecodePacket()
     {
         base.DecodePacket();

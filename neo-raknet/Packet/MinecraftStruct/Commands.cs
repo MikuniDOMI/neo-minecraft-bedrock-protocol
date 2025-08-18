@@ -1,6 +1,7 @@
 ﻿using neo_raknet.Packet.MinecraftStruct.Entity;
-using Newtonsoft.Json;
+
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace neo_raknet.Packet.MinecraftStruct
 {
@@ -17,7 +18,7 @@ namespace neo_raknet.Packet.MinecraftStruct
 
 	public class Version
 	{
-		[JsonProperty(propertyName: "version")]
+		[JsonPropertyName("version")]
 		public int CommandVersion { get; set; }
 
 		public string[] Aliases { get; set; }
@@ -29,13 +30,13 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public bool RequiresChatPerms { get; set; }
 		public bool OutputToSpeech { get; set; }
 
-		[JsonProperty(propertyName: "requires_edu")]
+		[JsonPropertyName("requires_edu")]
 		public bool RequiresEdu { get; set; }
 
-		[JsonProperty(propertyName: "allows_indirect_exec")]
+		[JsonPropertyName("allows_indirect_exec")]
 		public bool AllowsIndirectExec { get; set; }
 
-		[JsonProperty(propertyName: "is_hidden")]
+		[JsonPropertyName("is_hidden")]
 		public bool IsHidden { get; set; }
 
 		public Dictionary<string, Overload> Overloads { get; set; }
@@ -59,7 +60,7 @@ namespace neo_raknet.Packet.MinecraftStruct
 
 	public class Output
 	{
-		[JsonProperty(propertyName: "format_strings")]
+		[JsonPropertyName("format_strings")]
 		public FormatString[] FormatStrings { get; set; }
 
 		public Parameter[] Parameters { get; set; }
@@ -70,19 +71,19 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public string Color { get; set; }
 		public string Format { get; set; }
 
-		[JsonProperty(propertyName: "params_to_use")]
+		[JsonPropertyName("params_to_use")]
 		public string[] ParamsToUse { get; set; }
 
-		[JsonProperty(propertyName: "should_show")]
+		[JsonPropertyName("should_show")]
 		public FormatRule ShouldShow { get; set; }
 	}
 
 	public class FormatRule
 	{
-		[JsonProperty(propertyName: "not_empty")]
+		[JsonPropertyName("not_empty")]
 		public string[] NotEmpty { get; set; }
 
-		[JsonProperty(propertyName: "is_true")]
+		[JsonPropertyName("is_true")]
 		public string[] IsTrue { get; set; }
 	}
 
@@ -96,27 +97,27 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public string Name { get; set; }
 		public string Type { get; set; }
 
-		[JsonProperty(propertyName: "enum_type")]
+		[JsonPropertyName("enum_type")]
 		public string EnumType { get; set; }
 
-		[JsonProperty(propertyName: "enum_values")]
+		[JsonPropertyName("enum_values")]
 		public string[] EnumValues { get; set; }
 
 		public bool Optional { get; set; }
 
-		[JsonProperty(propertyName: "target_data")]
+		[JsonPropertyName("target_data")]
 		public TargetData TargetData { get; set; }
 	}
 
 	public class TargetData
 	{
-		[JsonProperty(propertyName: "players_only")]
+		[JsonPropertyName("players_only")]
 		public bool PlayersOnly { get; set; }
 
-		[JsonProperty(propertyName: "main_target")]
+		[JsonPropertyName("main_target")]
 		public bool MainTarget { get; set; }
 
-		[JsonProperty(propertyName: "allow_dead_players")]
+		[JsonPropertyName("allow_dead_players")]
 		public bool AllowDeadPlayers { get; set; }
 	}
 

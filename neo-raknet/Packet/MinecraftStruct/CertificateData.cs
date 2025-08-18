@@ -1,6 +1,4 @@
 ﻿using Jose;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace neo_raknet.Packet.MinecraftStruct
 {
@@ -43,35 +41,5 @@ namespace neo_raknet.Packet.MinecraftStruct
 
 		public string TitleId { get; set; }
 		public string SandboxId { get; set; }
-	}
-
-	public class NewtonsoftMapper : IJsonMapper
-	{
-		static NewtonsoftMapper()
-		{
-			JWT.DefaultSettings.JsonMapper = new NewtonsoftMapper();
-		}
-
-		public string Serialize(object obj)
-		{
-			var settings = new JsonSerializerSettings
-			{
-				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				NullValueHandling = NullValueHandling.Ignore,
-			};
-
-			return JsonConvert.SerializeObject(obj, Formatting.Indented, settings);
-		}
-
-		public T Parse<T>(string json)
-		{
-			var settings = new JsonSerializerSettings
-			{
-				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				NullValueHandling = NullValueHandling.Ignore,
-			};
-
-			return JsonConvert.DeserializeObject<T>(json, settings);
-		}
 	}
 }

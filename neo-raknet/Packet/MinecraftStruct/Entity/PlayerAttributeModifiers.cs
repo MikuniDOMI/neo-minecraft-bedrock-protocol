@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿
+
+using System.Text.Json.Serialization;
 
 namespace neo_raknet.Packet.MinecraftStruct.Entity;
 
@@ -52,21 +54,17 @@ public class GameRules : HashSet<GameRule>
 
 public class Itemstates : List<Itemstate>
 {
-    public static Itemstates FromJson(string json)
-    {
-        return JsonConvert.DeserializeObject<Itemstates>(json);
-    }
 }
 
 public class Itemstate
 {
-    [JsonProperty("runtime_id")] public short Id { get; set; }
+    [JsonPropertyName("runtime_id")] public short Id { get; set; }
 
-    [JsonProperty("name")] public string Name { get; set; }
+    [JsonPropertyName("name")] public string Name { get; set; }
 
-    [JsonProperty("component_based")] public bool ComponentBased { get; set; }
+    [JsonPropertyName("component_based")] public bool ComponentBased { get; set; }
 
-    [JsonProperty("version")] public int Version { get; set; }
+    [JsonPropertyName("version")] public int Version { get; set; }
 
-    [JsonProperty("components")] public byte[] Components { get; set; }
+    [JsonPropertyName("components")] public byte[] Components { get; set; }
 }
