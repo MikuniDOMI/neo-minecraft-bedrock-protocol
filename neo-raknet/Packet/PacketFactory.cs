@@ -1,10 +1,4 @@
 ﻿using neo_raknet.Packet.MinecraftPacket;
-using NetCoreServer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace neo_raknet.Packet
 {
@@ -354,26 +348,26 @@ namespace neo_raknet.Packet
                         return new McpePositionTrackingDBClientRequest().Decode(buffer);
                     case 155:   // IDDebugInfo
                         return new McpeDebugInfo().Decode(buffer);
-                        break;
+                        
                     case 156:   // IDPacketViolationWarning
                         return new McpePacketViolationWarning().Decode(buffer);
                     case 157:   // IDMotionPredictionHints
                         return new McpeMotionPredictionHints().Decode(buffer);
-                        break;
+                        
                     case 158:   // IDAnimateEntity
                         return new McpeAnimateEntity().Decode(buffer);
-                        break;
+                        
                     case 159:   // IDCameraShake
                         return new McpeCamera().Decode(buffer);
-                        break;
+                        
                     case 160:   // IDPlayerFog
                         return new McpePlayerFog().Decode(buffer);
                     case 161:   // IDCorrectPlayerMovePrediction
                         return new McpeCorrectPlayerMovePrediction().Decode(buffer);
-                        break;
+                        
                     case 162:   // IDItemRegistry
                         return new McpeItemRegistry().Decode(buffer);
-                        break;
+                        
                     case 163:   // IDFilterText
                         return new McpeFilterTextPacket().Decode(buffer);
                     case 164:   // IDClientBoundDebugRenderer
@@ -382,99 +376,99 @@ namespace neo_raknet.Packet
                         return new McpeSyncEntityProperty().Decode(buffer);
                     case 166:   // IDAddVolumeEntity
                         return new McpeAddVolumeEntity().Decode(buffer);
-                        break;
+                        
                     case 167:   // IDRemoveVolumeEntity
                         return new McpeRemoveVolumeEntity().Decode(buffer);
-                        break;
+                        
                     case 168:   // IDSimulationType
                         return new McpeSimulationType().Decode(buffer);
-                        break;
+                        
                     case 169:   // IDNPCDialogue
                         return new McpeNPCDialogue().Decode(buffer);
-                        break;
+                        
                     case 170:   // IDEducationResourceURI
                         return new McpeEducationResourceURI().Decode(buffer);
-                        break;
+                        
                     case 171:   // IDCreatePhoto
                         return new McpeCreatePhoto().Decode(buffer);
-                        break;
+                        
                     case 172:   // IDUpdateSubChunkBlocks
                         return new McpeUpdateSubChunkBlocksPacket().Decode(buffer);
                     case 173:   // IDPhotoInfoRequest
                         return new McpePhotoInfoRequest().Decode(buffer);
-                        break;
+                        
                     case 174:   // IDSubChunk
                         return new McpeSubChunkPacket().Decode(buffer);
                     case 175:   // IDSubChunkRequest
                         return new McpeSubChunkRequestPacket().Decode(buffer);
                     case 176:   // IDClientStartItemCooldown
                         return new McpeClientStartItemCooldown().Decode(buffer);
-                        break;
+                        
                     case 177:   // IDScriptMessage
                         return new McpeScriptMessage().Decode(buffer);
-                        break;
+                        
                     case 178:   // IDCodeBuilderSource
                         return new McpeCodeBuilderSource().Decode(buffer);
-                        break;
+                        
                     case 179:   // IDTickingAreasLoadStatus
                         return new McpeTickingAreasLoadStatus().Decode(buffer);
-                        break;
+                        
                     case 180:   // IDDimensionData
                         return new McpeDimensionData().Decode(buffer);
                     case 181:   // IDAgentAction
                         return new McpeAgentAction().Decode(buffer);
-                        break;
+                        
                     case 182:   // IDChangeMobProperty
                         return new McpeChangeMobProperty().Decode(buffer);
-                        break;
+                        
                     case 183:   // IDLessonProgress
                         return new McpeLessonProgress().Decode(buffer);
-                        break;
+                        
                     case 184:   // IDRequestAbility
                         return new McpeRequestAbility().Decode(buffer);
                     case 185:   // IDRequestPermissions
                         return new McpePermissionRequest().Decode(buffer);
                     case 186:   // IDToastRequest
-                        break;
+                        
                     case 187:   // IDUpdateAbilities
                         return new McpeUpdateAbilities().Decode(buffer);
                     case 188:   // IDUpdateAdventureSettings
                         return new McpeUpdateAdventureSettings().Decode(buffer);
                     case 189:   // IDDeathInfo
                         return new McpeDeathInfo().Decode(buffer);
-                        break;
+                        
                     case 190:   // IDEditorNetwork
                         return new McpeEditorNetwork().Decode(buffer);
-                        break;
+                        
                     case 191:   // IDFeatureRegistry
                         return new McpeFeatureRegistry().Decode(buffer);
-                        break;
+                        
                     case 192:   // IDServerStats
                         return new McpeServerStats().Decode(buffer);
-                        break;
+                        
                     case 193:   // IDRequestNetworkSettings
                         return new McpeRequestNetworkSettings().Decode(buffer);
                     case 194:   // IDGameTestRequest
                         return new McpeGameTestRequest().Decode(buffer);
-                        break;
+                        
                     case 195:   // IDGameTestResults
                         return new McpeGameTestResults().Decode(buffer);
-                        break;
+                        
                     case 196:   // IDUpdateClientInputLocks
                         return new McpeUpdateClientInputLocks().Decode(buffer);
-                        break;
+                        
                     case 197:   // IDClientCheatAbility
                         return new McpeClientCheatAbility().Decode(buffer);
-                        break;
+                        
                     case 198:   // IDCameraPresets
                         return new McpeCameraPresets().Decode(buffer);
-                        break;
+                        
                     case 199:   // IDUnlockedRecipes
                         return new McpeUnlockedRecipes().Decode(buffer);
-                        break;
+                        
                     case 300:   // IDCameraInstruction
                         return new McpeCameraInstruction().Decode(buffer);
-                        break;
+                        
                     // case 301: // _ (skipped)
                     case 302:   // IDTrimData
                         return new McpeTrimData().Decode(buffer);
@@ -484,77 +478,72 @@ namespace neo_raknet.Packet
                         return new McpeAlexEntityAnimation().Decode(buffer);
                     case 305:   // IDRefreshEntitlements
                         return new McpeRefreshEntitlements().Decode(buffer);
-                        break;
+                        
                     case 306:   // IDPlayerToggleCrafterSlotRequest
                         return new McpePlayerToggleCrafterSlotRequest().Decode(buffer);
-                        break;
+                        
                     case 307:   // IDSetPlayerInventoryOptions
                         return new McpeSetInventoryOptions().Decode(buffer);
                     case 308:   // IDSetHud
                         return new McpeSetHud().Decode(buffer);
-                        break;
+                        
                     case 309:   // IDAwardAchievement
                         return new McpeAwardAchievement().Decode(buffer);
-                        break;
+                        
                     case 310:   // IDClientBoundCloseForm
                         return new McpeClientBoundCloseForm().Decode(buffer);
-                        break;
+                        
                     // case 311: // _ (skipped)
                     case 312:   // IDServerBoundLoadingScreen
                         return new McpeServerboundLoadingScreen().Decode(buffer);
                     case 313:   // IDJigsawStructureData
                         return new McpeJigsawStructureData().Decode(buffer);
-                        break;
+                        
                     case 314:   // IDCurrentStructureFeature
                         return new McpeCurrentStructureFeature().Decode(buffer);
-                        break;
+                        
                     case 315:   // IDServerBoundDiagnostics
                         return new McpeServerBoundDiagnostics().Decode(buffer);
-                        break;
+                        
                     case 316:   // IDCameraAimAssist
                         return new McpeCameraAimAssist().Decode(buffer);
-                        break;
+                        
                     case 317:   // IDContainerRegistryCleanup
                         return new McpeContainerRegistryCleanup().Decode(buffer);
-                        break;
+                        
                     case 318:   // IDMovementEffect
                         return new McpeMovementEffect().Decode(buffer);
-                        break;
+                        
                     // case 319: // _ (skipped)
                     case 320:   // IDCameraAimAssistPresets
                         return new McpeCameraAimAssistPresets().Decode(buffer);
-                        break;
+                        
                     case 321:   // IDClientCameraAimAssist
                         return new McpeClientCameraAimAssist().Decode(buffer);
-                        break;
+                        
                     case 322:   // IDClientMovementPredictionSync
                         return new McpeClientMovementPredictionSync().Decode(buffer);
-                        break;
+                        
                     case 323:   // IDUpdateClientOptions
                         return new McpeUpdateClientOptions().Decode(buffer);
-                        break;
+                        
                     case 324:   // IDPlayerVideoCapture
                         return new McpePlayerVideoCapture().Decode(buffer);
-                        break;
+                        
                     case 325:   // IDPlayerUpdateEntityOverrides
                         return new McpePlayerUpdateEntityOverrides().Decode(buffer);
-                        break;
+                        
                     case 326:   // IDPlayerLocation
                         return new McpePlayerLocation().Decode(buffer);
-                        break;
+                        
                     case 327:   // IDClientBoundControlSchemeSet
                         return new McpeClientBoundControlSchemeSet().Decode(buffer);
-                        break;
+                        
                     case 328:   // IDServerScriptDebugDrawer
                         return new McbeServerScriptDebugDrawer().Decode(buffer);
-                        break;
-
                     default:
                         return new UnknownPacket((byte)id, buffer);
                 }
-
-                return null;
-
             }
         }
     }

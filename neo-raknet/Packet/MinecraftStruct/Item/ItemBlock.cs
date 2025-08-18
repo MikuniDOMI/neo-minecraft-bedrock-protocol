@@ -1,6 +1,5 @@
 ﻿using neo_raknet.Packet.MinecraftStruct.Entity;
 using neo_raknet.Packet.MinecraftStruct.World;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
