@@ -43,12 +43,10 @@ namespace neo_raknet.Packet
 		protected private Stream _buffer;
 		private BinaryWriter _writer;
 
-		[JsonIgnore] public ReadOnlyMemory<byte> Bytes { get; private set; }
-		[JsonIgnore] public Stopwatch Timer { get; } = Stopwatch.StartNew();
+        [JsonIgnore] public ReadOnlyMemory<byte> Bytes { get; private set; }
 
-		public Packet()
+        public Packet()
 		{
-			Timer.Start();
 		}
 
 		public void Write(sbyte value)
@@ -4944,9 +4942,7 @@ namespace neo_raknet.Packet
 			ForceClear = false;
 
 			_encodedMessage = null;
-			Bytes = null;
-			Timer.Restart();
-
+		 	Bytes = null;
 			_writer?.Close();
 			_reader?.Close();
 			_buffer?.Close();
