@@ -53,7 +53,95 @@ namespace neo_raknet.Packet
 		{
 			_writer.Write(value);
 		}
+        public  void WritePackSetting(PackSetting setting)
+        {
+            if (setting == null)
+            {
+                // 如果 setting 为 null，可以选择写入默认值或抛出异常
+                // 这里选择写入空名称和默认值类型（例如，空字符串）
+                Write(string.Empty); // Write Name (string)
+                uint defaultType = (int)PackSettingType.String; // 选择一个默认类型
+                WriteUnsignedVarInt(defaultType); // Write Type ID (uint32 as VarInt)
+                Write(string.Empty); // Write Default Value (string)
+                return;
+            }
 
+            // Write Name (string)
+            Write(setting.Name ?? string.Empty);
+
+            // Determine Type ID and write Value based on the actual type of Value
+            // This mirrors the switch statement in the Go Writer.PackSetting method.
+            uint typeId;
+            if (setting.Value is float floatValue)
+            {
+                typeId = (int)PackSettingType.Float;
+                WriteUnsignedVarInt(typeId); // Write Type ID
+                Write(floatValue);          // Write Value (float32)
+            }
+            else if (setting.Value is bool boolValue)
+            {
+                typeId = (int)PackSettingType.Bool;
+                WriteUnsignedVarInt(typeId); // Write Type ID
+                Write(boolValue);            // Write Value (bool)
+            }
+            else if (setting.Value is string stringValue)
+            {
+                typeId = (int)PackSettingType.String;
+                WriteUnsignedVarInt(typeId); // Write Type ID
+                Write(stringValue);          // Write Value (string)
+            }
+            else
+            {
+                // Handle unknown type - This is equivalent to w.UnknownEnumOption in Go
+                // You might want to throw an exception or handle it gracefully.
+                // For now, we'll throw an exception similar to the Go behavior.
+                // Note: methods.txt does not have UnknownEnumOption, so this is application logic.
+                throw new ArgumentException($"Unknown type for PackSetting.Value: {setting.Value?.GetType().Name ?? "null"}. Expected float, bool, or string.");
+            }
+        }
+
+        /// <summary>
+        /// Reads a PackSetting object from the packet buffer.
+        /// This method is added because ReadPackSetting() is not in methods.txt.
+        /// </summary>
+        /// <param name="packet">The packet instance.</param>
+        /// <returns>The PackSetting that was read.</returns>
+        public  PackSetting ReadPackSetting()
+        {
+            var setting = new PackSetting();
+
+            // Read Name (string)
+            setting.Name = ReadString(); // methods.txt: string ReadString()
+
+            // Read Type ID (uint32 as VarInt)
+            uint typeId =ReadUnsignedVarInt(); // methods.txt: uint ReadUnsignedVarInt()
+
+            // Switch based on Type ID to read the correct Value type
+            // This mirrors the switch statement in the Go Reader.PackSetting method.
+            switch ((PackSettingType)typeId)
+            {
+                case PackSettingType.Float:
+                    float floatValue = ReadFloat(); // methods.txt: float ReadFloat()
+                    setting.Value = floatValue;
+                    break;
+                case PackSettingType.Bool:
+                    bool boolValue = ReadBool(); // methods.txt: bool ReadBool()
+                    setting.Value = boolValue;
+                    break;
+                case PackSettingType.String:
+                    string stringValue = ReadString(); // methods.txt: string ReadString()
+                    setting.Value = stringValue;
+                    break;
+                default:
+                    // Handle unknown type ID - This is equivalent to r.UnknownEnumOption in Go
+                    // You might want to throw an exception or handle it gracefully.
+                    // For now, we'll throw an exception similar to the Go behavior.
+                    // Note: methods.txt does not have UnknownEnumOption, so this is application logic.
+                    throw new InvalidOperationException($"Unknown PackSetting type ID: {typeId}. Expected {PackSettingType.Float}, {PackSettingType.Bool}, or {PackSettingType.String}.");
+            }
+
+            return setting;
+        }
         /// <summary>
         /// Writes a Bitset to the packet buffer using Varint encoding.
         /// This mimics the behavior of the Go Writer.Bitset method.

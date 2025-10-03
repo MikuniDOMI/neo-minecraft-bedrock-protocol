@@ -1,5 +1,30 @@
 ﻿namespace neo_raknet.Packet.MinecraftPacket;
+/// <summary>
+/// PlayerArmourDamageEntry 代表对玩家护甲槽位的伤害信息。
+/// </summary>
+public struct PlayerArmourDamageEntry
+{
+    /// <summary>
+    /// ArmourSlot 是要损坏的护甲槽位的索引。
+    /// </summary>
+    public byte ArmourSlot { get; set; } // uint8 -> byte
 
+    /// <summary>
+    /// Damage 是要对指定槽位中的护甲应用的伤害量。
+    /// </summary>
+    public short Damage { get; set; } // int16 -> short
+
+    /// <summary>
+    /// 初始化 PlayerArmourDamageEntry 结构的新实例。
+    /// </summary>
+    /// <param name="armourSlot">护甲槽位索引。</param>
+    /// <param name="damage">伤害量。</param>
+    public PlayerArmourDamageEntry(byte armourSlot, short damage)
+    {
+        ArmourSlot = armourSlot;
+        Damage = damage;
+    }
+}
 public class McbePlayerArmourDamage : Packet
 {
     /// <summary>
@@ -8,66 +33,35 @@ public class McbePlayerArmourDamage : Packet
     [Flags]
     public enum PlayerArmorDamageFlags : byte
     {
-        /// <summary>
-        ///     No armor piece is damaged.
-        /// </summary>
-        None = 0,
+       
 
         /// <summary>
         ///     Helmet will take damage.
         /// </summary>
-        Helmet = 1 << 0, // 1
+        Helmet = 0,
 
         /// <summary>
         ///     Chestplate will take damage.
         /// </summary>
-        Chestplate = 1 << 1, // 2
+        Chestplate =  1,
 
         /// <summary>
         ///     Leggings will take damage.
         /// </summary>
-        Leggings = 1 << 2, // 4
+        Leggings = 2, 
 
         /// <summary>
         ///     Boots will take damage.
         /// </summary>
-        Boots = 1 << 3, // 8
+        Boots = 3, 
 
         /// <summary>
         ///     Body (e.g. horse armor) will take damage.
         /// </summary>
-        Body = 1 << 4 // 16
+        Body = 4 
     }
 
-    /// <summary>
-    ///     Bitset representing damage types or flags (e.g., which armor pieces to damage).
-    /// </summary>
-    public byte Bitset;
-
-    /// <summary>
-    ///     The amount of damage that should be dealt to the body (used in some cases like horse armor).
-    /// </summary>
-    public int BodyDamage;
-
-    /// <summary>
-    ///     The amount of damage that should be dealt to the boots.
-    /// </summary>
-    public int BootsDamage;
-
-    /// <summary>
-    ///     The amount of damage that should be dealt to the chestplate.
-    /// </summary>
-    public int ChestplateDamage;
-
-    /// <summary>
-    ///     The amount of damage that should be dealt to the helmet.
-    /// </summary>
-    public int HelmetDamage;
-
-    /// <summary>
-    ///     The amount of damage that should be dealt to the leggings.
-    /// </summary>
-    public int LeggingsDamage;
+    public List<PlayerArmourDamageEntry> playerArmourDamageEntries;
 
     public McbePlayerArmourDamage()
     {
@@ -78,58 +72,31 @@ public class McbePlayerArmourDamage : Packet
     protected override void EncodePacket()
     {
         base.EncodePacket();
-        Write(Bitset);
-
-        // 根据 Bitset 的标志位，有选择地写入各部位伤害值（使用 Signed VarInt 编码）
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Helmet) != 0)
-            WriteSignedVarInt(HelmetDamage);
-        else
-            HelmetDamage = 0; // 可选：确保未设置时值为 0
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Chestplate) != 0)
-            WriteSignedVarInt(ChestplateDamage);
-        else
-            ChestplateDamage = 0;
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Leggings) != 0)
-            WriteSignedVarInt(LeggingsDamage);
-        else
-            LeggingsDamage = 0;
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Boots) != 0)
-            WriteSignedVarInt(BootsDamage);
-        else
-            BootsDamage = 0;
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Body) != 0)
-            WriteSignedVarInt(BodyDamage);
-        else
-            BodyDamage = 0;
+        int count = playerArmourDamageEntries?.Count ?? 0;
+        WriteVarInt(count);
+        foreach (var entry in playerArmourDamageEntries)
+        {
+                Write(entry.ArmourSlot);
+                Write(entry.Damage);
+        }
     }
 
     protected override void DecodePacket()
     {
         base.DecodePacket();
-        Bitset = ReadByte();
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Helmet) != 0) HelmetDamage = ReadSignedVarInt();
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Chestplate) != 0) ChestplateDamage = ReadSignedVarInt();
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Leggings) != 0) LeggingsDamage = ReadSignedVarInt();
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Boots) != 0) BootsDamage = ReadSignedVarInt();
-
-        if ((Bitset & (byte)PlayerArmorDamageFlags.Body) != 0) BodyDamage = ReadSignedVarInt();
+        playerArmourDamageEntries = new List<PlayerArmourDamageEntry>();
+        int count = ReadVarInt();
+        for (int i = 0; i < count; i++)
+        {
+            byte armourSlot = ReadByte();
+            short damage = ReadShort();
+            playerArmourDamageEntries.Add(new PlayerArmourDamageEntry(armourSlot, damage));
+        }
     }
 
     protected override void ResetPacket()
     {
         base.ResetPacket();
-        Bitset = default;
-        HelmetDamage = default;
-        ChestplateDamage = default;
-        LeggingsDamage = default;
-        BootsDamage = default;
-        BodyDamage = default;
+        playerArmourDamageEntries = default;
     }
 }

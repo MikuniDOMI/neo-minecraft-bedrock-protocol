@@ -541,6 +541,9 @@ namespace neo_raknet.Packet
                         
                     case 328:   // IDServerScriptDebugDrawer
                         return new McbeServerScriptDebugDrawer().Decode(buffer);
+                    case 329:   // IDServerBoundPackSettingChange
+
+
                     default:
                         return new UnknownPacket((byte)id, buffer);
                 }
