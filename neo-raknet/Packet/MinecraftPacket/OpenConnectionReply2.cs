@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class OpenConnectionReply2 : Packet
 {

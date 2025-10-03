@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+using System.Numerics;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 //<field name="Start rotation" type="Vector3" />
 //<field name="End rotation" type="Vector3" />
 //<field name="Duration" type="UnsignedVarInt" />

@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Logger;
+namespace neo_protocol.Logger;
 
 public class Logger
 {

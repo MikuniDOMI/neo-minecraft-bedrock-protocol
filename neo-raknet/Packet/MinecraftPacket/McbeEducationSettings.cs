@@ -1,4 +1,4 @@
-﻿using neo_raknet.Packet;
+using neo_protocol.Packet;
 
 public class EducationExternalLinkSettings
 {

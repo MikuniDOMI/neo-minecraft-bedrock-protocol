@@ -1,6 +1,6 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     ClientStartItemCooldown 数据包：由服务器发送到客户端，用于启动某个物品的冷却时间。

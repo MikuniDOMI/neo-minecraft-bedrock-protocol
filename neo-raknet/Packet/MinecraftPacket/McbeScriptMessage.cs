@@ -1,6 +1,6 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     ScriptMessage 数据包：用于在客户端和服务器之间传递自定义消息。

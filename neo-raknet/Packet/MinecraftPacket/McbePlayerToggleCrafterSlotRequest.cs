@@ -1,6 +1,6 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     PlayerToggleCrafterSlotRequest 数据包：当客户端尝试切换合成器(Crafter)内某个槽位的状态时，由客户端发送。

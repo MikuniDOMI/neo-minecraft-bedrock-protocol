@@ -1,9 +1,9 @@
-﻿using System.Numerics;
+using System.Numerics;
 // Example for Vector2 (mgl32.Vec2) - ADJUST BASED ON YOUR PROJECT
 
 // Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     定义相机瞄准辅助的操作类型。

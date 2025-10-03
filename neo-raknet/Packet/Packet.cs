@@ -1,15 +1,17 @@
-﻿using fNbt;
+using fNbt;
 
 using Microsoft.IO;
-using neo_raknet.Packet.MinecraftPacket;
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Block;
-using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.Item;
-using neo_raknet.Packet.MinecraftStruct.Metadata;
-using neo_raknet.Packet.MinecraftStruct.NBT;
-using neo_raknet.Protocol.Biomes;
-using neo_raknet.Utils;
+using neo_protocol.Packet.MinecraftPacket;
+using neo_protocol.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Item;
+using neo_protocol.Packet.MinecraftStruct.Metadata;
+using neo_protocol.Packet.MinecraftStruct.NBT;
+using neo_protocol.Packet.World;
+using neo_protocol.Protocol.Biomes;
+using neo_protocol.Utils;
+using neo_protocol.Utils.UDP;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.Collections.Concurrent;
@@ -20,10 +22,11 @@ using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
 using System.Text.Json.Serialization;
-using Transaction = neo_raknet.Utils.Transaction;
+using neo_protocol.Utils.Crypo;
+using Transaction = neo_protocol.Utils.Transaction;
 
 
-namespace neo_raknet.Packet
+namespace neo_protocol.Packet
 {
 	public abstract partial class Packet
 	{

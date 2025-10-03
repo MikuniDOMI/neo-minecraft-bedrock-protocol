@@ -1,6 +1,6 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     RefreshEntitlements 数据包：由客户端发送给服务器，用于刷新玩家的授权许可。

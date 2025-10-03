@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Packet.MinecraftStruct.Block;
+namespace neo_protocol.Packet.MinecraftStruct.Block;
 
 public enum BlockFace
 {

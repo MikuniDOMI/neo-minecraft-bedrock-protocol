@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+using System.Numerics;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public partial class McpeSpawnExperienceOrb : Packet //Deprecated, todo remove, looks like not even working anymore
 {

@@ -1,7 +1,7 @@
-﻿using System.Numerics;
-using neo_raknet.Packet.MinecraftPacket.neo_raknet.Protocol;
+using System.Numerics;
+using neo_protocol.Packet.MinecraftPacket.neo_protocol.Protocol;
 
-namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_protocol.Packet.MinecraftPacket
 {
     // For Color/RGBA (replace with your actual RGBA type if different)
     // Assuming necessary namespaces for Vector3 (mgl32.Vec3) and Color (color.RGBA)
@@ -10,7 +10,7 @@ namespace neo_raknet.Packet.MinecraftPacket
 
     // For Vector3 (replace with your actual Vec3 type if different)
 
-    namespace neo_raknet.Protocol // Or your relevant namespace
+    namespace neo_protocol.Protocol // Or your relevant namespace
     {
         /// <summary>
         ///     Represents the different types of shapes that can be drawn by the debug drawer.

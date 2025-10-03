@@ -1,6 +1,6 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     PlayerUpdateEntityOverrides 数据包：由服务器发送，用于单独修改实体的属性。

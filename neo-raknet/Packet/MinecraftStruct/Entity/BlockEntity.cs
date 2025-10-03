@@ -1,6 +1,7 @@
-﻿using fNbt;
+using fNbt;
+using neo_protocol.Packet.MinecraftStruct.Block;
 
-namespace neo_raknet.Packet.MinecraftStruct.Entity;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public class BlockEntity
 {

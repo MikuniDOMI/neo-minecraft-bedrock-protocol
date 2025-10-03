@@ -1,8 +1,8 @@
-﻿using System.Numerics;
-using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.Item;
+using System.Numerics;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Item;
 
-namespace neo_raknet.Packet.MinecraftStruct.Block;
+namespace neo_protocol.Packet.MinecraftStruct.Block;
 
 public class Block : ICloneable
 {

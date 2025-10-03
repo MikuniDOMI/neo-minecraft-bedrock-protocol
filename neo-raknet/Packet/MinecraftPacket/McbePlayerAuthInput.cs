@@ -1,13 +1,13 @@
 using System.Numerics;
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Item;
-using neo_raknet.Utils;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Item;
+using neo_protocol.Utils;
 
-namespace neo_raknet.Packet.MinecraftPacket;
-// ¼ÙÉèÄúÒÑ¾­ÓÐÁËÕâÐ©ÀàÐÍ£º
+namespace neo_protocol.Packet.MinecraftPacket;
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½Í£ï¿½
 // public struct Item { ... }
 // public struct BlockPos { ... }
-// public struct Vector3 { ... } (»òÊ¹ÓÃÄúÑ¡ÔñµÄÊýÑ§¿âÈç System.Numerics.Vector3)
+// public struct Vector3 { ... } (ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ System.Numerics.Vector3)
 
 public readonly struct LegacySetItemSlot
 {
@@ -90,31 +90,31 @@ public readonly struct UseItemTransactionData
 }
 
 /// <summary>
-///     ±íÊ¾Íæ¼Ò·½¿é²Ù×÷µÄÊý¾Ý½á¹¹
+///     ï¿½ï¿½Ê¾ï¿½ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý½á¹¹
 /// </summary>
 public struct PlayerBlockAction
 {
     /// <summary>
-    ///     ÒªÖ´ÐÐµÄ²Ù×÷ÀàÐÍ£¨Ê¹ÓÃÔ¤¶¨ÒåµÄ³£Á¿Öµ£©
+    ///     ÒªÖ´ï¿½ÐµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½Ê¹ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Öµï¿½ï¿½
     /// </summary>
     public int Action { get; set; }
 
     /// <summary>
-    ///     ±»½»»¥·½¿éµÄ×ø±êÎ»ÖÃ
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
     /// </summary>
     public BlockCoordinates BlockPos { get; set; }
 
     /// <summary>
-    ///     ±»½»»¥µÄ·½¿éÃæ£¨0-5¶ÔÓ¦ÉÏÏÂ¶«Î÷ÄÏ±±£©
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½æ£¨0-5ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½
     /// </summary>
     public int Face { get; set; }
 
     /// <summary>
-    ///     ³õÊ¼»¯Íæ¼Ò·½¿é²Ù×÷
+    ///     ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="action">²Ù×÷ÀàÐÍ</param>
-    /// <param name="blockPos">·½¿éÎ»ÖÃ</param>
-    /// <param name="face">·½¿éÃæ</param>
+    /// <param name="action">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+    /// <param name="blockPos">ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½</param>
+    /// <param name="face">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     public PlayerBlockAction(int action, BlockCoordinates blockPos, int face)
     {
         Action = action;
@@ -280,27 +280,27 @@ public class McpePlayerAuthInput : Packet
     public Vector3 Delta { get; set; }
 
     /// <summary>
-    ///     ÔØ¾ßÐý×ª½Ç¶È£¨Ê¹ÓÃVector2±íÊ¾£©
+    ///     ï¿½Ø¾ï¿½ï¿½ï¿½×ªï¿½Ç¶È£ï¿½Ê¹ï¿½ï¿½Vector2ï¿½ï¿½Ê¾ï¿½ï¿½
     /// </summary>
     public Vector2 VehicleRotation { get; set; }
 
     /// <summary>
-    ///     ¿Í»§¶ËÔ¤²âµÄÔØ¾ßÎ¨Ò»ID
+    ///     ï¿½Í»ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½Î¨Ò»ID
     /// </summary>
     public long ClientPredictedVehicle { get; set; }
 
     /// <summary>
-    ///     Ä£ÄâÒÆ¶¯·½ÏòÏòÁ¿£¨X/ZÖµ×éºÏ£©
+    ///     Ä£ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½X/ZÖµï¿½ï¿½Ï£ï¿½
     /// </summary>
     public Vector2 AnalogueMoveVector { get; set; }
 
     /// <summary>
-    ///     ÉãÏñ»ú·½ÏòÏòÁ¿£¨ÈýÎ¬£©
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½
     /// </summary>
     public Vector3 CameraOrientation { get; set; }
 
     /// <summary>
-    ///     Ô­Ê¼ÒÆ¶¯ÏòÁ¿£¨Î´¾­´¦ÀíµÄÊäÈëÖµ£©
+    ///     Ô­Ê¼ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
     /// </summary>
     public Vector2 RawMoveVector { get; set; }
 
@@ -314,7 +314,7 @@ public class McpePlayerAuthInput : Packet
         Write(MoveVector);
         Write(HeadYaw);
 
-        // WriteBitset ÐèÒªÄã×Ô¼ºÊµÏÖ
+        // WriteBitset ï¿½ï¿½Òªï¿½ï¿½ï¿½Ô¼ï¿½Êµï¿½ï¿½
         WriteBitset(InputData, PlayerAuthInputBitsetSize);
 
         WriteUnsignedVarInt(InputMode);
@@ -325,20 +325,20 @@ public class McpePlayerAuthInput : Packet
         WriteUnsignedVarLong(Tick);
         Write(Delta);
 
-        // Ìõ¼þÐÔÐ´Èë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½
         if (InputData.Load((int)InputFlags.InputFlagPerformItemInteraction))
             WriteUseItemTransactionData(ItemInteractionData);
 
         if (InputData.Load((int)InputFlags.InputFlagPerformItemStackRequest))
-            // methods.txt ÖÐÓÐ Write(ItemStackRequests requests)
+            // methods.txt ï¿½ï¿½ï¿½ï¿½ Write(ItemStackRequests requests)
             Write(ItemStack);
 
         if (InputData.Load((int)InputFlags.InputFlagPerformBlockActions))
         {
-            // ¶ÔÓ¦ Go µÄ protocol.SliceVarint32Length(io, &pk.BlockActions)
-            // 1. Ð´ÈëÊý×é³¤¶È (varint32)
+            // ï¿½ï¿½Ó¦ Go ï¿½ï¿½ protocol.SliceVarint32Length(io, &pk.BlockActions)
+            // 1. Ð´ï¿½ï¿½ï¿½ï¿½ï¿½é³¤ï¿½ï¿½ (varint32)
             WriteSignedVarInt(PlayerBlockAction_?.Length ?? 0);
-            // 2. ±éÀú²¢Ð´ÈëÃ¿¸öÔªËØ
+            // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ã¿ï¿½ï¿½Ôªï¿½ï¿½
             if (PlayerBlockAction_ != null)
                 foreach (var action in PlayerBlockAction_)
                     WritePlayerBlockAction(action);
@@ -365,7 +365,7 @@ public class McpePlayerAuthInput : Packet
         MoveVector = ReadVector2();
         HeadYaw = ReadFloat();
 
-        // ReadBitset ÐèÒªÄã×Ô¼ºÊµÏÖ
+        // ReadBitset ï¿½ï¿½Òªï¿½ï¿½ï¿½Ô¼ï¿½Êµï¿½ï¿½
         InputData = ReadBitset(PlayerAuthInputBitsetSize);
 
         InputMode = ReadUnsignedVarInt();
@@ -376,23 +376,23 @@ public class McpePlayerAuthInput : Packet
         Tick = ReadUnsignedVarLong();
         Delta = ReadVector3();
 
-        // Ìõ¼þÐÔ¶ÁÈ¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½È¡
         if (InputData.Load((int)InputFlags.InputFlagPerformItemInteraction))
             ItemInteractionData = ReadUseItemTransactionData();
 
-        // ¿ÉÒÔÑ¡ÔñÖØÖÃÎªÄ¬ÈÏÖµ»ò±£³ÖÔ­Ñù
+        // ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÄ¬ï¿½ï¿½Öµï¿½ò±£³ï¿½Ô­ï¿½ï¿½
         if (InputData.Load((int)InputFlags.InputFlagPerformItemStackRequest))
-            // methods.txt ÖÐÓÐ ItemStackRequests ReadItemStackRequests(bool single)
-            ItemStack = ReadItemStackRequests(true); // »ò false£¬È¡¾öÓÚ¾ßÌåÐ­Òé
+            // methods.txt ï¿½ï¿½ï¿½ï¿½ ItemStackRequests ReadItemStackRequests(bool single)
+            ItemStack = ReadItemStackRequests(true); // ï¿½ï¿½ falseï¿½ï¿½È¡ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
         else
             ItemStack = new ItemStackRequests();
 
         if (InputData.Load((int)InputFlags.InputFlagPerformBlockActions))
         {
-            // ¶ÔÓ¦ Go µÄ protocol.SliceVarint32Length(io, &pk.BlockActions)
-            // 1. ¶ÁÈ¡Êý×é³¤¶È (varint32)
+            // ï¿½ï¿½Ó¦ Go ï¿½ï¿½ protocol.SliceVarint32Length(io, &pk.BlockActions)
+            // 1. ï¿½ï¿½È¡ï¿½ï¿½ï¿½é³¤ï¿½ï¿½ (varint32)
             var blockActionsCount = ReadSignedVarInt();
-            // 2. ´´½¨Êý×é²¢¶ÁÈ¡ÔªËØ
+            // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é²¢ï¿½ï¿½È¡Ôªï¿½ï¿½
             PlayerBlockAction_ = new PlayerBlockAction[blockActionsCount];
             for (var i = 0; i < blockActionsCount; i++) PlayerBlockAction_[i] = ReadPlayerBlockAction();
         }
@@ -435,7 +435,7 @@ public class McpePlayerAuthInput : Packet
         InteractYaw = 0.0f;
         Tick = 0;
         Delta = Vector3.Zero;
-        // ½á¹¹ÌåÍ¨³£ÒÀÀµÄ¬ÈÏÖµ£¬ÒýÓÃÀàÐÍÐèÒªÏÔÊ½ÖØÖÃ
+        // ï¿½á¹¹ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
         // ItemInteractionData = default(UseItemTransactionData);
         ItemStack = new ItemStackRequests();
         PlayerBlockAction_ = Array.Empty<PlayerBlockAction>();
@@ -448,7 +448,7 @@ public class McpePlayerAuthInput : Packet
 
 
     // --- Bitset ---
-    // ÄãÐèÒª¸ù¾ÝÖ®Ç°µÄ¶Ô»°ÊµÏÖ WriteBitset ºÍ ReadBitset
+    // ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä¶Ô»ï¿½Êµï¿½ï¿½ WriteBitset ï¿½ï¿½ ReadBitset
     // private void WriteBitset(Bitset bitset, int size) { ... }
     // private Bitset ReadBitset(int size) { ... }
 
@@ -456,102 +456,102 @@ public class McpePlayerAuthInput : Packet
     // --- UseItemTransactionData ---
     private void WriteUseItemTransactionData(UseItemTransactionData data)
     {
-        // Ð´Èë LegacyRequestID (int32)
+        // Ð´ï¿½ï¿½ LegacyRequestID (int32)
         WriteSignedVarInt(data.LegacyRequestID);
 
-        // Ð´Èë LegacySetItemSlots ([]LegacySetItemSlot)
+        // Ð´ï¿½ï¿½ LegacySetItemSlots ([]LegacySetItemSlot)
         WriteSignedVarInt(data.LegacySetItemSlots?.Length ?? 0);
         if (data.LegacySetItemSlots != null)
             foreach (var slot in data.LegacySetItemSlots)
                 WriteLegacySetItemSlot(slot);
 
-        // Ð´Èë Actions ([]InventoryAction)
+        // Ð´ï¿½ï¿½ Actions ([]InventoryAction)
         WriteSignedVarInt(data.Actions?.Length ?? 0);
         if (data.Actions != null)
             foreach (var action in data.Actions)
                 WriteInventoryAction(action);
 
-        // Ð´Èë ActionType (uint32)
+        // Ð´ï¿½ï¿½ ActionType (uint32)
         WriteUnsignedVarInt(data.ActionType);
 
-        // Ð´Èë TriggerType (uint32)
+        // Ð´ï¿½ï¿½ TriggerType (uint32)
         WriteUnsignedVarInt(data.TriggerType);
 
-        // Ð´Èë BlockPosition (BlockCoordinates)
-        // methods.txt ÖÐÓÐ Write(BlockCoordinates coord)
+        // Ð´ï¿½ï¿½ BlockPosition (BlockCoordinates)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Write(BlockCoordinates coord)
         Write(data.BlockPosition);
 
-        // Ð´Èë BlockFace (int32)
+        // Ð´ï¿½ï¿½ BlockFace (int32)
         WriteSignedVarInt(data.BlockFace);
 
-        // Ð´Èë HotBarSlot (int32)
+        // Ð´ï¿½ï¿½ HotBarSlot (int32)
         WriteSignedVarInt(data.HotBarSlot);
 
-        // Ð´Èë HeldItem (Item)
-        // methods.txt ÖÐÓÐ Write(Item stack, bool writeUniqueId)
+        // Ð´ï¿½ï¿½ HeldItem (Item)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Write(Item stack, bool writeUniqueId)
         Write(data.HeldItem); // Adjust 'true' if needed based on Item definition
 
-        // Ð´Èë Position (Vector3)
+        // Ð´ï¿½ï¿½ Position (Vector3)
         Write(data.Position);
 
-        // Ð´Èë ClickedPosition (Vector3)
+        // Ð´ï¿½ï¿½ ClickedPosition (Vector3)
         Write(data.ClickedPosition);
 
-        // Ð´Èë BlockRuntimeID (uint32)
+        // Ð´ï¿½ï¿½ BlockRuntimeID (uint32)
         WriteUnsignedVarInt(data.BlockRuntimeID);
 
-        // Ð´Èë ClientPrediction (uint32)
+        // Ð´ï¿½ï¿½ ClientPrediction (uint32)
         WriteUnsignedVarInt(data.ClientPrediction);
     }
 
     private UseItemTransactionData ReadUseItemTransactionData()
     {
-        // ¶ÁÈ¡ LegacyRequestID (int32)
+        // ï¿½ï¿½È¡ LegacyRequestID (int32)
         var legacyRequestID = ReadSignedVarInt();
 
-        // ¶ÁÈ¡ LegacySetItemSlots ([]LegacySetItemSlot)
+        // ï¿½ï¿½È¡ LegacySetItemSlots ([]LegacySetItemSlot)
         var legacySlotsCount = ReadSignedVarInt();
         var legacySlots = new LegacySetItemSlot[legacySlotsCount];
         for (var i = 0; i < legacySlotsCount; i++) legacySlots[i] = ReadLegacySetItemSlot();
 
-        // ¶ÁÈ¡ Actions ([]InventoryAction)
+        // ï¿½ï¿½È¡ Actions ([]InventoryAction)
         var actionsCount = ReadSignedVarInt();
         var actions = new InventoryAction[actionsCount];
         for (var i = 0; i < actionsCount; i++) actions[i] = ReadInventoryAction();
 
-        // ¶ÁÈ¡ ActionType (uint32)
+        // ï¿½ï¿½È¡ ActionType (uint32)
         var actionType = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ TriggerType (uint32)
+        // ï¿½ï¿½È¡ TriggerType (uint32)
         var triggerType = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ BlockPosition (BlockCoordinates)
-        // methods.txt ÖÐÓÐ BlockCoordinates ReadBlockCoordinates()
+        // ï¿½ï¿½È¡ BlockPosition (BlockCoordinates)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ BlockCoordinates ReadBlockCoordinates()
         var blockPosition = ReadBlockCoordinates();
 
-        // ¶ÁÈ¡ BlockFace (int32)
+        // ï¿½ï¿½È¡ BlockFace (int32)
         var blockFace = ReadSignedVarInt();
 
-        // ¶ÁÈ¡ HotBarSlot (int32)
+        // ï¿½ï¿½È¡ HotBarSlot (int32)
         var hotBarSlot = ReadSignedVarInt();
 
-        // ¶ÁÈ¡ HeldItem (Item)
-        // methods.txt ÖÐÓÐ Item ReadItem(bool readUniqueId)
+        // ï¿½ï¿½È¡ HeldItem (Item)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Item ReadItem(bool readUniqueId)
         var heldItem = ReadItem(); // Adjust 'true' if needed
 
-        // ¶ÁÈ¡ Position (Vector3)
+        // ï¿½ï¿½È¡ Position (Vector3)
         var position = ReadVector3();
 
-        // ¶ÁÈ¡ ClickedPosition (Vector3)
+        // ï¿½ï¿½È¡ ClickedPosition (Vector3)
         var clickedPosition = ReadVector3();
 
-        // ¶ÁÈ¡ BlockRuntimeID (uint32)
+        // ï¿½ï¿½È¡ BlockRuntimeID (uint32)
         var blockRuntimeID = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ ClientPrediction (uint32)
+        // ï¿½ï¿½È¡ ClientPrediction (uint32)
         var clientPrediction = ReadUnsignedVarInt();
 
-        // Ê¹ÓÃ¹¹Ôìº¯Êý´´½¨²¢·µ»ØÊµÀý
+        // Ê¹ï¿½Ã¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         return new UseItemTransactionData(
             legacyRequestID,
             legacySlots,
@@ -573,10 +573,10 @@ public class McpePlayerAuthInput : Packet
     // --- LegacySetItemSlot ---
     private void WriteLegacySetItemSlot(LegacySetItemSlot slot)
     {
-        // Ð´Èë ContainerID (byte)
+        // Ð´ï¿½ï¿½ ContainerID (byte)
         Write(slot.ContainerID);
 
-        // Ð´Èë Slots ([]byte)
+        // Ð´ï¿½ï¿½ Slots ([]byte)
         WriteUnsignedVarInt((uint)(slot.Slots?.Length ?? 0));
         if (slot.Slots != null)
             foreach (var s in slot.Slots)
@@ -585,15 +585,15 @@ public class McpePlayerAuthInput : Packet
 
     private LegacySetItemSlot ReadLegacySetItemSlot()
     {
-        // ¶ÁÈ¡ ContainerID (byte)
+        // ï¿½ï¿½È¡ ContainerID (byte)
         var containerID = ReadByte(); // methods.txt: byte ReadByte()
 
-        // ¶ÁÈ¡ Slots ([]byte)
-        var slotsCount = ReadUnsignedVarInt(); // ¶ÁÈ¡³¤¶È
+        // ï¿½ï¿½È¡ Slots ([]byte)
+        var slotsCount = ReadUnsignedVarInt(); // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
         var slots = new byte[slotsCount];
-        for (var i = 0; i < slotsCount; i++) slots[i] = ReadByte(); // ¶ÁÈ¡Ã¿¸ö byte
+        for (var i = 0; i < slotsCount; i++) slots[i] = ReadByte(); // ï¿½ï¿½È¡Ã¿ï¿½ï¿½ byte
 
-        // Ê¹ÓÃ¹¹Ôìº¯Êý´´½¨²¢·µ»ØÊµÀý
+        // Ê¹ï¿½Ã¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         return new LegacySetItemSlot(containerID, slots);
     }
 
@@ -601,48 +601,48 @@ public class McpePlayerAuthInput : Packet
     // --- InventoryAction ---
     private void WriteInventoryAction(InventoryAction action)
     {
-        // Ð´Èë SourceType (uint32)
+        // Ð´ï¿½ï¿½ SourceType (uint32)
         WriteUnsignedVarInt(action.SourceType);
 
-        // Ð´Èë WindowID (int32)
+        // Ð´ï¿½ï¿½ WindowID (int32)
         WriteSignedVarInt(action.WindowID);
 
-        // Ð´Èë SourceFlags (uint32)
+        // Ð´ï¿½ï¿½ SourceFlags (uint32)
         WriteUnsignedVarInt(action.SourceFlags);
 
-        // Ð´Èë InventorySlot (uint32)
+        // Ð´ï¿½ï¿½ InventorySlot (uint32)
         WriteUnsignedVarInt(action.InventorySlot);
 
-        // Ð´Èë OldItem (Item)
-        // methods.txt ÖÐÓÐ Write(Item stack, bool writeUniqueId)
+        // Ð´ï¿½ï¿½ OldItem (Item)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Write(Item stack, bool writeUniqueId)
         Write(action.OldItem); // Adjust 'true' if needed
 
-        // Ð´Èë NewItem (Item)
+        // Ð´ï¿½ï¿½ NewItem (Item)
         Write(action.NewItem); // Adjust 'true' if needed
     }
 
     private InventoryAction ReadInventoryAction()
     {
-        // ¶ÁÈ¡ SourceType (uint32)
+        // ï¿½ï¿½È¡ SourceType (uint32)
         var sourceType = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ WindowID (int32)
+        // ï¿½ï¿½È¡ WindowID (int32)
         var windowID = ReadSignedVarInt();
 
-        // ¶ÁÈ¡ SourceFlags (uint32)
+        // ï¿½ï¿½È¡ SourceFlags (uint32)
         var sourceFlags = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ InventorySlot (uint32)
+        // ï¿½ï¿½È¡ InventorySlot (uint32)
         var inventorySlot = ReadUnsignedVarInt();
 
-        // ¶ÁÈ¡ OldItem (Item)
-        // methods.txt ÖÐÓÐ Item ReadItem(bool readUniqueId)
+        // ï¿½ï¿½È¡ OldItem (Item)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Item ReadItem(bool readUniqueId)
         var oldItem = ReadItem(); // Adjust 'true' if needed
 
-        // ¶ÁÈ¡ NewItem (Item)
+        // ï¿½ï¿½È¡ NewItem (Item)
         var newItem = ReadItem(); // Adjust 'true' if needed
 
-        // Ê¹ÓÃ¹¹Ôìº¯Êý´´½¨²¢·µ»ØÊµÀý
+        // Ê¹ï¿½Ã¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         return new InventoryAction(sourceType, windowID, sourceFlags, inventorySlot, oldItem, newItem);
     }
 
@@ -650,30 +650,30 @@ public class McpePlayerAuthInput : Packet
     // --- PlayerBlockAction ---
     private void WritePlayerBlockAction(PlayerBlockAction action)
     {
-        // Ð´Èë Action (int32)
+        // Ð´ï¿½ï¿½ Action (int32)
         WriteSignedVarInt(action.Action);
 
-        // Ð´Èë BlockPos (BlockCoordinates)
-        // methods.txt ÖÐÓÐ Write(BlockCoordinates coord)
+        // Ð´ï¿½ï¿½ BlockPos (BlockCoordinates)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ Write(BlockCoordinates coord)
         Write(action.BlockPos);
 
-        // Ð´Èë Face (int32)
+        // Ð´ï¿½ï¿½ Face (int32)
         WriteSignedVarInt(action.Face);
     }
 
     private PlayerBlockAction ReadPlayerBlockAction()
     {
-        // ¶ÁÈ¡ Action (int32)
+        // ï¿½ï¿½È¡ Action (int32)
         var action = ReadSignedVarInt();
 
-        // ¶ÁÈ¡ BlockPos (BlockCoordinates)
-        // methods.txt ÖÐÓÐ BlockCoordinates ReadBlockCoordinates()
+        // ï¿½ï¿½È¡ BlockPos (BlockCoordinates)
+        // methods.txt ï¿½ï¿½ï¿½ï¿½ BlockCoordinates ReadBlockCoordinates()
         var blockPos = ReadBlockCoordinates();
 
-        // ¶ÁÈ¡ Face (int32)
+        // ï¿½ï¿½È¡ Face (int32)
         var face = ReadSignedVarInt();
 
-        // Ê¹ÓÃ¹¹Ôìº¯Êý´´½¨²¢·µ»ØÊµÀý
+        // Ê¹ï¿½Ã¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         return new PlayerBlockAction(action, blockPos, face);
     }
 }

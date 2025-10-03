@@ -1,6 +1,6 @@
-using neo_raknet.Utils.UDP;
+using neo_protocol.Utils.UDP;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class OpenConnectionRequest1 : Packet
 {

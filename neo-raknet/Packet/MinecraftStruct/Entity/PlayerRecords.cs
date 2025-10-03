@@ -1,6 +1,6 @@
-﻿using neo_raknet.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Block;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct.Entity
 {
 	public class Records : List<BlockCoordinates>
 	{

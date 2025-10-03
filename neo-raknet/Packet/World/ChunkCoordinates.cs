@@ -1,4 +1,7 @@
-﻿namespace neo_raknet.Packet.MinecraftStruct
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+
+namespace neo_protocol.Packet.World
 {
 	public struct ChunkCoordinates : IEquatable<ChunkCoordinates>
 	{

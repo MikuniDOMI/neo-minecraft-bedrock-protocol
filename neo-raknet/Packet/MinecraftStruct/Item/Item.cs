@@ -1,7 +1,7 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using fNbt;
 
-namespace neo_raknet.Packet.MinecraftStruct.Item
+namespace neo_protocol.Packet.MinecraftStruct.Item
 {
 	public class Item : ICloneable
 	{

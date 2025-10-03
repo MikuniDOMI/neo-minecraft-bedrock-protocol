@@ -1,8 +1,8 @@
-﻿// For List<T> if needed, though arrays are used below
+// For List<T> if needed, though arrays are used below
 
 // Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     定义了可以被 SetHud 数据包控制的 HUD 元素。

@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using neo_raknet.Packet.MinecraftStruct.Entity;
+using System.Linq.Expressions;
+using neo_protocol.Packet.MinecraftStruct.Entity;
 
-namespace neo_raknet.Packet.MinecraftStruct.Item
+namespace neo_protocol.Packet.MinecraftStruct.Item
 {
 	public interface ICustomItemFactory
 	{
@@ -39,8 +39,6 @@ namespace neo_raknet.Packet.MinecraftStruct.Item
 
 				if (name.Equals("item"))
 				{
-					//if (Log.IsDebugEnabled)
-					//	Log.Debug($"Missing implementation for item ID={idx}");
 					continue;
 				}
 
@@ -88,13 +86,6 @@ namespace neo_raknet.Packet.MinecraftStruct.Item
 
 		public static short GetItemIdByName(string itemName)
 		{
-			itemName = itemName.ToLowerInvariant().Replace("_", "").Replace("minecraft:", "");
-
-			if (NameToId.ContainsKey(itemName))
-			{
-				return NameToId[itemName];
-			}
-
 			return (short)0;
 		}
 

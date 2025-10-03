@@ -1,7 +1,7 @@
-﻿
+
 using System.Text.Json.Serialization;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class GeometryModel : ICloneable
 {

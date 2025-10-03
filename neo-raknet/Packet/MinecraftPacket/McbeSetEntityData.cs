@@ -1,7 +1,7 @@
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Metadata;
+using neo_protocol.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Metadata;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeSetEntityData : Packet
 {

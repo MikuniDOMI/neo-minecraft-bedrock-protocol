@@ -1,8 +1,8 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text.Json.Serialization;
 
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public enum Face
 {

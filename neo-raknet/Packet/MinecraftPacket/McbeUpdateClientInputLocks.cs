@@ -1,9 +1,9 @@
-﻿using System.Numerics;
+using System.Numerics;
 // For Vector3 (mgl32.Vec3) - ADJUST BASED ON YOUR PROJECT
 
 // Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     定义了可以被 UpdateClientInputLocks 数据包锁定的客户端输入类型。

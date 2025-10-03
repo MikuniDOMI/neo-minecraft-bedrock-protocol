@@ -1,10 +1,10 @@
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.Item;
-using neo_raknet.Packet.MinecraftStruct.Metadata;
-using neo_raknet.Utils;
+using neo_protocol.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Item;
+using neo_protocol.Packet.MinecraftStruct.Metadata;
+using neo_protocol.Utils;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeAddPlayer : Packet
 {

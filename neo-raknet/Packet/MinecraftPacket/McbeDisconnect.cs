@@ -1,4 +1,4 @@
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeDisconnect : Packet
 {
@@ -28,7 +28,7 @@ public class McpeDisconnect : Packet
         CrossPlatformDisabled,
         CantConnect,
         SessionNotFound,
-        // 跳过了一个值 (26)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (26)
         ServerFull = 27,
         InvalidPlatformSkin,
         EditionVersionMismatch,
@@ -40,10 +40,10 @@ public class McpeDisconnect : Packet
         ServerNotFound,
         OutdatedServer,
         OutdatedClient,
-        // 跳过了一个值 (38)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (38)
         MultiplayerDisabled = 39,
         NoWiFi,
-        // 跳过了一个值 (41)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (41)
         NoReason = 42,
         Disconnected,
         InvalidPlayer,
@@ -66,13 +66,13 @@ public class McpeDisconnect : Packet
         IncompatiblePack,
         OutOfStorage,
         InvalidLevel,
-        // 跳过了一个值 (67)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (67)
         BlockMismatch = 68,
         InvalidHeights,
         InvalidWidths,
-        // 跳过了两个值 (71, 72)
+        // 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷值 (71, 72)
         Shutdown = 73,
-        // 跳过了一个值 (74)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (74)
         LoadingStateTimeout = 75,
         ResourcePackLoadingFailed,
         SearchingForSessionLoadingScreenFailed,
@@ -92,7 +92,7 @@ public class McpeDisconnect : Packet
         NetherNetNegotiationTimeout,
         NetherNetInactivityTimeout,
         StaleConnectionBeingReplaced,
-        // 跳过了一个值 (97)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (97)
         BadPacket = 98,
         NetherNetFailedToCreateOffer,
         NetherNetFailedToCreateAnswer,
@@ -112,7 +112,7 @@ public class McpeDisconnect : Packet
         RequestServerShutdown,
         ClientGameSetupCancelled,
         ClientGameSetupFailed,
-        // 跳过了一个值 (119)
+        // 锟斤拷锟斤拷锟斤拷一锟斤拷值 (119)
         NetherNetSignalingSigninFailed = 120,
         SessionAccessDenied,
         ServiceSigninIssue,

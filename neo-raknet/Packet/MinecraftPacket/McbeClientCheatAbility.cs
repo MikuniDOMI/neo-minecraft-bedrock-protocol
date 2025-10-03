@@ -1,9 +1,9 @@
-﻿using neo_raknet.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Entity;
 // Assuming base Packet class is here or adjust accordingly
 
 // Assuming AbilityData, AbilityLayer, etc. are in this namespace
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     ClientCheatAbility 数据包的功能与 UpdateAbilities 相同。目前尚不清楚为什么要将它们分开。

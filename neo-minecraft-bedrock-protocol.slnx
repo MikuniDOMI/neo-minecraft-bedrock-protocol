@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="neo-raknet-console/neo-raknet-console.csproj" />
   <Project Path="neo-raknet-Protocol-generation/neo-raknet-Protocol-generation.csproj" />
-  <Project Path="neo-raknet/neo-raknet.csproj" />
+  <Project Path="neo-raknet/neo-protocol.csproj" />
 </Solution>

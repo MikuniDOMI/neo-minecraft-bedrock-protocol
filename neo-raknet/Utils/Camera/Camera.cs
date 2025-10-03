@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Utils.Camera;
+namespace neo_protocol.Utils.Camera;
 
 public struct CameraAimAssistPriority
 {

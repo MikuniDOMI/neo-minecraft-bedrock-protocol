@@ -1,6 +1,6 @@
-﻿using Jose;
+using Jose;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Utils.Crypo
 {
 
 	public class HandshakeData

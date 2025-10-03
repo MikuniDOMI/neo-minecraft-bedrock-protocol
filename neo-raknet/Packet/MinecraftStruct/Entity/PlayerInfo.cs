@@ -1,6 +1,7 @@
-﻿using neo_raknet.Utils;
+using neo_protocol.Utils;
+using neo_protocol.Utils.Crypo;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct.Entity
 {
 	public class PlayerInfo
 	{

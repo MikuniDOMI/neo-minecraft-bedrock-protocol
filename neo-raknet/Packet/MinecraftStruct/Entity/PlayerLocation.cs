@@ -1,7 +1,8 @@
-﻿using neo_raknet.Utils;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Utils;
 using System.Numerics;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct.Entity
 {
 	public class PlayerLocation : ICloneable
 	{

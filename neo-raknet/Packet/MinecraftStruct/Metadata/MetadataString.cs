@@ -23,11 +23,11 @@
 
 #endregion
 
-using neo_raknet.Utils;
+using neo_protocol.Utils;
 using System.Text;
 
 
-namespace neo_raknet.Packet.MinecraftStruct.Metadata
+namespace neo_protocol.Packet.MinecraftStruct.Metadata
 {
 	public class MetadataString : MetadataEntry
 	{

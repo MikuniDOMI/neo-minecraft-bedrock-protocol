@@ -1,10 +1,10 @@
-﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class PersonaPiece
 {

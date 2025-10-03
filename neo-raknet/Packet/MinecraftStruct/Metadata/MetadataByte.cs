@@ -1,4 +1,4 @@
-namespace neo_raknet.Packet.MinecraftStruct.Metadata
+namespace neo_protocol.Packet.MinecraftStruct.Metadata
 {
 	public class MetadataByte : MetadataEntry
 	{

@@ -1,11 +1,11 @@
 using System.Numerics;
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Block;
-using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.NBT;
-using neo_raknet.Utils;
+using neo_protocol.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.NBT;
+using neo_protocol.Utils;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class SpawnSettings
 {

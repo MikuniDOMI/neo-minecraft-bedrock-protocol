@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct.Entity
 {
 	public class AbilityLayers : List<AbilityLayer>
 	{

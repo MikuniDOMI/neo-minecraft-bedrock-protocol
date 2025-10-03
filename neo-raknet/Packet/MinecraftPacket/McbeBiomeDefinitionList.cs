@@ -1,6 +1,6 @@
-using neo_raknet.Protocol.Biomes;
+using neo_protocol.Protocol.Biomes;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeBiomeDefinitionList : Packet
 {

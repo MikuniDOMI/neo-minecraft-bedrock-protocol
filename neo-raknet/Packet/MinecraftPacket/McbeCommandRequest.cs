@@ -1,6 +1,6 @@
-using neo_raknet.Utils;
+using neo_protocol.Utils;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeCommandRequest : Packet
 {

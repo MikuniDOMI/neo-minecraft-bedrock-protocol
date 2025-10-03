@@ -1,9 +1,9 @@
-﻿using System.Numerics;
-using neo_raknet.Packet.MinecraftPacket;
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.Item;
+using System.Numerics;
+using neo_protocol.Packet.MinecraftPacket;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Item;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class ItemStackRequests : List<ItemStackActionList>
 {

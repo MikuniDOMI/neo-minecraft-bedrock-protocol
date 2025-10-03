@@ -1,11 +1,11 @@
-﻿using neo_raknet.Utils.Camera;
+using neo_protocol.Utils.Camera;
 // Assuming base Packet class is here or adjust accordingly
 
 // For List<T> if needed, though arrays are used in structs
 // Assuming your CameraAimAssist* structs are available in this scope or a referenced namespace
 // using YourNamespace.CameraAimAssistStructs;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     定义对相机瞄准辅助预设执行的操作类型。

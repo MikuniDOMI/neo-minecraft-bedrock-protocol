@@ -1,6 +1,6 @@
-using neo_raknet.Packet.MinecraftStruct.Item;
+using neo_protocol.Packet.MinecraftStruct.Item;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeMobArmorEquipment : Packet
 {

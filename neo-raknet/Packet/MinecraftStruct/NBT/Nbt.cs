@@ -1,6 +1,6 @@
-﻿using fNbt;
+using fNbt;
 
-namespace neo_raknet.Packet.MinecraftStruct.NBT
+namespace neo_protocol.Packet.MinecraftStruct.NBT
 {
 	public class Nbt
 	{

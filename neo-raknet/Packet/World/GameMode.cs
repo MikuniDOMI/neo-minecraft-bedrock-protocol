@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Packet.MinecraftStruct.World
+namespace neo_protocol.Packet.World
 {
 	public enum GameMode
 	{

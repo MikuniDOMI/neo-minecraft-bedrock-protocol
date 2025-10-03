@@ -1,6 +1,8 @@
-﻿using System.Numerics;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.World;
+using System.Numerics;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct.Block
 {
 	public struct BlockCoordinates : IEquatable<BlockCoordinates>
 	{

@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 /// <summary>
 /// PlayerArmourDamageEntry 代表对玩家护甲槽位的伤害信息。
 /// </summary>

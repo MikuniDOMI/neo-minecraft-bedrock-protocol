@@ -1,11 +1,11 @@
-﻿using neo_raknet.Utils;
+using neo_protocol.Utils;
 
 
 // Assuming base Packet class is here or adjust accordingly
 // Assuming your FullContainerName class/type is available in this scope or a referenced namespace
 // using YourNamespace.Protocol; // Or wherever FullContainerName is defined
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     ContainerRegistryCleanup 数据包：由服务器发送，以触发客户端动态容器注册表的清理。

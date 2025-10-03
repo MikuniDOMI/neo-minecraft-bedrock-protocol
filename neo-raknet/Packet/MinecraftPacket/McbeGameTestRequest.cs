@@ -1,10 +1,10 @@
-﻿using neo_raknet.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Block;
 // Assuming base Packet class is here or adjust accordingly
 
 // Assuming BlockCoordinates is defined in your project, e.g.:
-// using neo_raknet.Packet.MinecraftStruct; 
+// using neo_protocol.Packet.MinecraftStruct; 
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     定义了 GameTest 请求的旋转角度。

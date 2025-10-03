@@ -1,8 +1,8 @@
-﻿// McpeEducationResourceURI.cs
+// McpeEducationResourceURI.cs
 
 // 假设基础 Packet 类在此命名空间或需相应调整
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     EducationSharedResourceURI 代表一个教育版共享资源的 URI。

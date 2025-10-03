@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
-namespace neo_raknet.Packet.MinecraftStruct.Block;
+namespace neo_protocol.Packet.MinecraftStruct.Block;
 
 public class BlockPalette : Dictionary<int, BlockStateContainer>
 {

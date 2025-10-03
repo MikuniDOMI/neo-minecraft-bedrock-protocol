@@ -1,7 +1,7 @@
-﻿using fNbt;
-using neo_raknet.Packet.MinecraftStruct.Item;
+using fNbt;
+using neo_protocol.Packet.MinecraftStruct.Item;
 
-namespace neo_raknet.Packet
+namespace neo_protocol.Packet
 {
 	public enum EnchantingType
 	{

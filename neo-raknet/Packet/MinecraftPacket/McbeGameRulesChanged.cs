@@ -1,6 +1,6 @@
-using neo_raknet.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Entity;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeGameRulesChanged : Packet
 {

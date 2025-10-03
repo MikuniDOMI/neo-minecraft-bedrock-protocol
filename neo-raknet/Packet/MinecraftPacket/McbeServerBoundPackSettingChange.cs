@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using neo_raknet.Utils;
+using neo_protocol.Utils;
 
-namespace neo_raknet.Packet.MinecraftPacket
+namespace neo_protocol.Packet.MinecraftPacket
 {
     public class McbeServerBoundPackSettingChange : Packet
     {

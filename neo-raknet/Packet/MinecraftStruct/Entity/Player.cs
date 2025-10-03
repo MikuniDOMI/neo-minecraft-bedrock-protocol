@@ -1,9 +1,10 @@
-﻿using System.Net;
-using neo_raknet.Packet.MinecraftPacket;
-using neo_raknet.Packet.MinecraftStruct.World;
-using neo_raknet.Utils;
+using System.Net;
+using neo_protocol.Packet.MinecraftPacket;
+using neo_protocol.Packet.World;
+using neo_protocol.Utils;
+using neo_protocol.Utils.Crypo;
 
-namespace neo_raknet.Packet.MinecraftStruct.Entity;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public class Player : Entity
 {

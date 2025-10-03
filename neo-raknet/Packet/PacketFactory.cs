@@ -1,6 +1,6 @@
-﻿using neo_raknet.Packet.MinecraftPacket;
+using neo_protocol.Packet.MinecraftPacket;
 
-namespace neo_raknet.Packet
+namespace neo_protocol.Packet
 {
     public static class PacketFactory
     {

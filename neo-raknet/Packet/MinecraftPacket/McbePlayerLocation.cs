@@ -1,9 +1,9 @@
-﻿using System.Numerics;
+using System.Numerics;
 // Example for Vector3 (mgl32.Vec3) - ADJUST BASED ON YOUR PROJECT
 
 // Assuming base Packet class is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     PlayerLocation 数据包：由服务器发送给客户端，用于在定位器栏上更新玩家位置或将其完全移除。

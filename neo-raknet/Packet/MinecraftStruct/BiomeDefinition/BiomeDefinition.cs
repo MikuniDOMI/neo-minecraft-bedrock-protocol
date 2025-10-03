@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic; // For List<T>
 using System.Numerics; // If needed for any Vector types, though not in these structs
-namespace neo_raknet.Protocol.Biomes // Adjust namespace as needed
+namespace neo_protocol.Protocol.Biomes // Adjust namespace as needed
 {
     // --- Enums (Based on Go const iota) ---
 

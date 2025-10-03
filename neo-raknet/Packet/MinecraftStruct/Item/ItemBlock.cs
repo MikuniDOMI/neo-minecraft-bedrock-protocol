@@ -1,5 +1,4 @@
-﻿using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.World;
+using neo_protocol.Packet.MinecraftStruct.Entity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace neo_raknet.Packet.MinecraftStruct.Item
+namespace neo_protocol.Packet.MinecraftStruct.Item
 {
 	public class ItemBlock : Item
 	{

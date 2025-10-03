@@ -1,6 +1,6 @@
-﻿using neo_raknet.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Block;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class MapInfo : ICloneable
 {

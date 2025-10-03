@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+using System.Numerics;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class Bitset
 {

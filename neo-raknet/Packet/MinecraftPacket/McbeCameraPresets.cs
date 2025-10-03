@@ -1,8 +1,8 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 // 假设 CameraPreset 在你的协议命名空间中定义
-// using neo_raknet.Protocol;
+// using neo_protocol.Protocol;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     CameraPresets 数据包：向客户端提供自定义相机预设列表。

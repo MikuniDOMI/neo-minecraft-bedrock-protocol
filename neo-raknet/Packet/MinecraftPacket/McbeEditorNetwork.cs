@@ -1,4 +1,4 @@
-﻿using neo_raknet.Packet.MinecraftStruct.NBT;
+using neo_protocol.Packet.MinecraftStruct.NBT;
 // For map[string]any -> Dictionary<string, object>
 // Assuming base Packet class is here or adjust accordingly
 
@@ -6,7 +6,7 @@
 // The Go code imports "github.com/sandertv/gophertunnel/minecraft/nbt"
 // You might need to adjust the using statement above based on where your NBT library's types are located.
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     EditorNetwork 数据包：从服务器发送到客户端，反之亦然，用于传递与编辑器模式相关的信息。

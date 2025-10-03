@@ -1,9 +1,9 @@
-﻿using neo_raknet.Utils.Camera;
+using neo_protocol.Utils.Camera;
 // Assuming base Packet class is here or adjust accordingly
 
 // Assuming the structs are in this namespace
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     CameraInstruction 数据包：给自定义相机提供特定的操作指令。

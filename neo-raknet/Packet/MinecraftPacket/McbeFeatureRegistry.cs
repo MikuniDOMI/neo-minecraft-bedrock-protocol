@@ -1,8 +1,8 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 // Assuming GenerationFeature is defined in your project, e.g.:
-// using neo_raknet.Protocol;
+// using neo_protocol.Protocol;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     GenerationFeature 代表一个世界生成特征。

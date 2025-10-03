@@ -1,6 +1,6 @@
-﻿using neo_raknet.Packet.MinecraftStruct.Item;
+using neo_protocol.Packet.MinecraftStruct.Item;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class ItemStacks : List<Item>
 {

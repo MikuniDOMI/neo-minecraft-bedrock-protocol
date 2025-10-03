@@ -1,9 +1,8 @@
-﻿using neo_raknet.Packet.MinecraftStruct.Entity;
-
+using neo_protocol.Packet.MinecraftStruct.Entity;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Utils.UDP.Command
 {
 	public class CommandSet : Dictionary<string, Command>
 	{
@@ -180,7 +179,7 @@ namespace neo_raknet.Packet.MinecraftStruct
 		public string Selector { get; set; }
 
 		public Player[] Players { get; set; }
-		public Entity.Entity[] Entities { get; set; }
+		public Entity[] Entities { get; set; }
 
 		public override string ToString()
 		{

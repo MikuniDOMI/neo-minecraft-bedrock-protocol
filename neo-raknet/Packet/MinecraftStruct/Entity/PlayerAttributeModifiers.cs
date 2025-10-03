@@ -1,8 +1,8 @@
-﻿
+
 
 using System.Text.Json.Serialization;
 
-namespace neo_raknet.Packet.MinecraftStruct.Entity;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public class AttributeModifiers : Dictionary<string, AttributeModifier>
 {

@@ -1,9 +1,10 @@
-﻿using fNbt;
-using neo_raknet.Packet.MinecraftStruct.Entity;
-using neo_raknet.Packet.MinecraftStruct.Item;
-using neo_raknet.Utils;
+using fNbt;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.Entity;
+using neo_protocol.Packet.MinecraftStruct.Item;
+using neo_protocol.Utils;
 using System.Collections.Concurrent;
-namespace neo_raknet.Packet.MinecraftStruct
+namespace neo_protocol.Packet.MinecraftStruct
 {
 	public interface IInventory
 	{

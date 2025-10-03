@@ -1,6 +1,6 @@
-﻿using neo_raknet.Packet.MinecraftStruct.NBT;
+using neo_protocol.Packet.MinecraftStruct.NBT;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     Represents an entry for an item in the ItemRegistry packet.

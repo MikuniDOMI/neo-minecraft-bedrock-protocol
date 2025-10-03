@@ -1,4 +1,4 @@
-﻿namespace neo_raknet;
+namespace neo_protocol;
 
 public enum PacketID
 {

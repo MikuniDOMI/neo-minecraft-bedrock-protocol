@@ -1,9 +1,9 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public class Description : ICloneable
 {

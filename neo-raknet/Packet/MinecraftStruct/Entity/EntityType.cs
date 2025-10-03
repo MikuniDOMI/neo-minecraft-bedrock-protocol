@@ -1,6 +1,6 @@
-﻿using fNbt;
+using fNbt;
 
-namespace neo_raknet.Packet.MinecraftStruct.Entity;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public enum EntityType
 {

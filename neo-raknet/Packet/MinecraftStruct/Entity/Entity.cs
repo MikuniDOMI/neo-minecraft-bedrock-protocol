@@ -1,7 +1,7 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Numerics;
 
-namespace neo_raknet.Packet.MinecraftStruct.Entity;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public class Entity
 {

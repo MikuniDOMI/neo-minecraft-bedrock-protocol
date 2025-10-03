@@ -1,6 +1,6 @@
-﻿using Microsoft.IO;
+using Microsoft.IO;
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public static class MemoryStreamManger
 {

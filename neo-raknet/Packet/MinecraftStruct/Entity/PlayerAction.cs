@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Utils;
+namespace neo_protocol.Packet.MinecraftStruct.Entity;
 
 public enum PlayerAction
 {

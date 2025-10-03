@@ -1,13 +1,13 @@
-﻿// 假设必要的命名空间用于 Vector3/BlockPos。
+// 假设必要的命名空间用于 Vector3/BlockPos。
 // 您可能需要根据实际使用的向量/位置库调整 'using' 或类型名称。
 // 对于 BlockPos，我们假设它是一个您定义的自定义结构/类型。
 
-using neo_raknet.Packet.MinecraftStruct;
-using neo_raknet.Packet.MinecraftStruct.NBT;
+using neo_protocol.Packet.MinecraftStruct.Block;
+using neo_protocol.Packet.MinecraftStruct.NBT;
 // 假设基类 Packet 在这里，或进行相应调整
 // 假设 Nbt 和相关类型在这里
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     AddVolumeEntity 数据包：将体积实体的定义和元数据从服务器发送到客户端。

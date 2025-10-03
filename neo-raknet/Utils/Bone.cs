@@ -1,7 +1,7 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 
-namespace neo_raknet.Utils;
+namespace neo_protocol.Utils;
 
 public enum BoneName
 {

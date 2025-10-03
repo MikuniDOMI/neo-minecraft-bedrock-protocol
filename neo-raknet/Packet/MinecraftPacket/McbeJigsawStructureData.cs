@@ -1,9 +1,9 @@
-﻿using neo_raknet.Packet.MinecraftStruct.NBT;
+using neo_protocol.Packet.MinecraftStruct.NBT;
 // Assuming base Packet class is here or adjust accordingly
 
 // Assuming Nbt type is here or adjust accordingly
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     JigsawStructureData 数据包：由服务器发送，用于告知客户端所有关于拼图结构的规则。

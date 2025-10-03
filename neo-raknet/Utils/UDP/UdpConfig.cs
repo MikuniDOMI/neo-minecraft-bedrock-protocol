@@ -1,4 +1,4 @@
-﻿namespace neo_raknet.Utils.UDP;
+namespace neo_protocol.Utils.UDP;
 
 public static class UdpConfig
 {

@@ -1,7 +1,7 @@
-﻿// Assuming base Packet class is here or adjust accordingly
+// Assuming base Packet class is here or adjust accordingly
 // Assuming your Optional<T> type is available in this scope or a referenced namespace
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     Represents the different graphics modes available to the client.

@@ -1,6 +1,7 @@
-using neo_raknet.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct;
+using neo_protocol.Packet.MinecraftStruct.Block;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class McpeSubChunkPacket : Packet
 {

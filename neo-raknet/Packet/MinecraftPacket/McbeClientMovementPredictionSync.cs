@@ -1,12 +1,12 @@
-﻿using System.Numerics;
-using neo_raknet.Utils;
+using System.Numerics;
+using neo_protocol.Utils;
 // Assuming base Packet class is here or adjust accordingly
 
 // For Bitset's BigInteger if needed in the Bitset class itself
 // Assuming your Bitset class is available in this scope or a referenced namespace
 // using YourNamespace.Bitset; 
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 /// <summary>
 ///     ClientMovementPredictionSync 数据包：如果客户端收到了来自服务器的移动修正，

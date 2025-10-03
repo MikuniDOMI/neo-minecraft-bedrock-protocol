@@ -1,7 +1,7 @@
-using neo_raknet.Packet.MinecraftStruct;
-using Version = neo_raknet.Packet.MinecraftStruct.Version;
+using neo_protocol.Utils.UDP.Command;
+using Version = neo_protocol.Utils.UDP.Command.Version;
 
-namespace neo_raknet.Packet.MinecraftPacket;
+namespace neo_protocol.Packet.MinecraftPacket;
 
 public class EnumData
 {
